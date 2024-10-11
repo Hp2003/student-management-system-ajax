@@ -1,0 +1,16 @@
+students :- 
+    - id int not null auto_increment 
+    - first_name varchar(150) not null
+    - last_name varchar(150) not null
+    - email not null varchar(255) unique
+    - gender enum (male, female, other)
+    - created_at date_time current not_null
+    - updated_at date_time updated_time 
+    - course_id int not null fk_course(id)
+    - phone_number varchar(10) not null unique
+
+courses :-
+    - id int not null auto_increment 
+    - name varchar(100) not null 
+    - created_at date_time current not_null
+    - updated_at date_time updated_time 
