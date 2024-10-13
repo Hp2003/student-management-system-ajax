@@ -1,4 +1,5 @@
 <?php 
+
 class Dbconnect{
     private $hostname = 'localhost';
     private $username = 'root';
