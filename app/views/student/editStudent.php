@@ -6,6 +6,7 @@ error_reporting(E_ALL);
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Course.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Student.php');
 
+$navbar = include_once('../nav.php');
 $course = new Course();
 $courses = $course->get_formatted_course();
 
@@ -27,6 +28,7 @@ $student = new Student($_GET['id']);
 </head>
 
 <body>
+    <?php $navbar ?>
     <div class="container mt-5">
         <h1 class="text-center">Update Student</h1>
         <form action="../../controllers/StudentController.php" method="POST">

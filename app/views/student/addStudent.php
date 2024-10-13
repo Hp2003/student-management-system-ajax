@@ -1,5 +1,6 @@
 <?php 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Course.php');
+$navbar = include_once('../nav.php');
 $course = new Course();
 $courses = $course->get();
 ?>
@@ -15,6 +16,7 @@ $courses = $course->get();
 </head>
 
 <body>
+    <?php $navbar ?>
     <div class="container">
         <form action="../../controllers/StudentController.php" method="POST">
             <input type="hidden" name="operation" value="add">

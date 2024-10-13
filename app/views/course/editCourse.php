@@ -4,6 +4,7 @@
     error_reporting(E_ALL);
 
     require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Course.php');
+    $navbar = include_once('../nav.php');
     $course = new Course($_GET['id']);
 
 ?>
@@ -18,6 +19,7 @@
 </head>
 
 <body>
+    <?php $navbar ?>
     <div class="container mt-5 w-25">
         <h1>Edit Course</h1>
         <form action="../../controllers/CourseController.php" method="post">
@@ -27,7 +29,7 @@
                 <label for="exampleInputEmail1" class="form-label" >Course Name : </label>
                 <input type="text" name="name" class="form-control" value="<?php echo $course->name ?>" id="" required>
             </div>
-            <button type="submit" class="btn btn-primary w-100">Edit Course</button>
+            <button type="submit" class="btn btn-primary w-100">Update Course</button>
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

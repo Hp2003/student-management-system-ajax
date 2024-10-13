@@ -140,7 +140,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $student_controller->course_id = $_POST['course_id'];
 
         if($student_controller->update()){
-            header('Location:' . ($_SERVER['HTTP_ACCEPT'] ? 'http://' : 'https://')  .  $_SERVER['HTTP_HOST'] . '/hiren/mvc2/app/views/student'  );
+            header('Location:' . '/hiren/mvc2/app/views/student'  );
         }
         
     }
@@ -150,7 +150,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $student_controller->id = $_POST['id'];
         
         if($student_controller->delete()){
-            header('Location:' . ($_SERVER['HTTP_ACCEPT'] ? 'http://' : 'https://')  .  $_SERVER['HTTP_HOST'] . '/hiren/mvc2/app/views/student'  );
+            header('Location:' . '/hiren/mvc2/app/views/student'  );
         }
 
     }

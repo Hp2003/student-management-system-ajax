@@ -1,3 +1,6 @@
+<?php 
+$navbar = include_once('../nav.php');
+?>
 <!doctype html>
 <html lang="en">
 
@@ -9,6 +12,7 @@
 </head>
 
 <body>
+    <?php $navbar ?>
     <div class="container mt-5 w-25">
         <form action="../../controllers/CourseController.php" method="post">
             <div class="mb-3">
