@@ -1,5 +1,5 @@
 <?php 
-require_once('../models/Course.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Course.php');
 $course = new Course();
 $courses = $course->get();
 ?>
@@ -16,7 +16,7 @@ $courses = $course->get();
 
 <body>
     <div class="container">
-        <form action="../controllers/StudentController.php" method="POST">
+        <form action="../../controllers/StudentController.php" method="POST">
             <input type="hidden" name="operation" value="add">
             <div class="mb-3">
                 <label class="form-label">First name : </label>

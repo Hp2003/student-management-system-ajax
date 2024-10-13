@@ -110,6 +110,7 @@ class StudentController {
 }
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
+
     if($_POST['operation'] === 'add'){
 
         $student_controller = new StudentController();
@@ -122,11 +123,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
         // var_dump($student_controller->save());
         if($student_controller->save()){
-            header('Location: ' . "../views/student.php");
+            header('Location:' . ($_SERVER['HTTP_ACCEPT'] ? 'http://' : 'https://')  .  $_SERVER['HTTP_HOST'] . '/hiren/mvc2/app/views/student'  );
         }
         
     }
     else if($_POST['operation'] === 'edit'){
+
         $student_controller = new StudentController();
 
         $student_controller->id = $_POST['id'];
@@ -138,7 +140,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $student_controller->course_id = $_POST['course_id'];
 
         if($student_controller->update()){
-            header('Location: ' . "../views/student.php");
+            header('Location:' . ($_SERVER['HTTP_ACCEPT'] ? 'http://' : 'https://')  .  $_SERVER['HTTP_HOST'] . '/hiren/mvc2/app/views/student'  );
         }
         
     }
@@ -148,7 +150,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $student_controller->id = $_POST['id'];
         
         if($student_controller->delete()){
-            header('Location: ' . "../views/student.php");
+            header('Location:' . ($_SERVER['HTTP_ACCEPT'] ? 'http://' : 'https://')  .  $_SERVER['HTTP_HOST'] . '/hiren/mvc2/app/views/student'  );
         }
 
     }
