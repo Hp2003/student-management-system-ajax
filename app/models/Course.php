@@ -1,5 +1,5 @@
 <?php 
-require_once('../Dbconnect.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/Dbconnect.php');
 
 class Course extends Dbconnect {
 

@@ -3,12 +3,9 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-
-require_once('../../utils/Validator.php');
-require_once('../models/Course.php');
+// require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/utils/Validator.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Course.php');
 class CourseController {
-
-    use Validator;
 
     public $id;
     public $name;
@@ -74,11 +71,13 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $course_controller = new CourseController();
         $course_controller->update();        
     }
+
     elseif($_POST['operation'] === 'delete') {
         $course_controller = new CourseController();
         $course_controller->id = $_POST['id'];
         $course_controller->delete();
     }
+
     else{
         $course_controller = new CourseController();
         $course_controller->name = $_POST['name'];
@@ -87,5 +86,5 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         
     }
-    header('Location: ' . '/hiren/mvc2/app/views/course.php');
+    header('Location:' .  '/hiren/mvc2/app/views/course'  );
 }

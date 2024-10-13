@@ -3,12 +3,16 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once('../models/Course.php');
-require_once('../models/Student.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Course.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Student.php');
 
+$navbar = include_once('../nav.php');
 $course = new Course();
 $courses = $course->get_formatted_course();
 
+if(!isset($_GET['id']) || empty($_GET['id'])){
+    header('Location:' . ($_SERVER['HTTP_ACCEPT'] ? 'http://' : 'https://')  .  $_SERVER['HTTP_HOST'] . '/hiren/mvc2/app/views/404.php'  )   ;
+}
 $student = new Student($_GET['id']);
 
 ?>
@@ -24,9 +28,10 @@ $student = new Student($_GET['id']);
 </head>
 
 <body>
+    <?php $navbar ?>
     <div class="container mt-5">
         <h1 class="text-center">Update Student</h1>
-        <form action="../controllers/StudentController.php" method="POST">
+        <form action="../../controllers/StudentController.php" method="POST">
             <input type="hidden" name="operation" value="edit">
             <input type="hidden" name="id" value="<?php echo $student->id ?>">
             <div class="mb-3">
