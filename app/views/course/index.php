@@ -3,7 +3,7 @@
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 
-    require_once('../models/Course.php');
+    require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Course.php');
     $course = new Course();
     $courses = $course->get();
 ?>
@@ -43,10 +43,10 @@
             <td><?php echo date( 'd-m-Y H : i', strtotime($course['created_at'])) ?></td>
             <td><?php echo date( 'd-m-Y H : i', strtotime($course['updated_at'])) ?></td>
             <td>
-                <a type="button" href="<?php echo "/hiren/mvc2/app/views/editCourseForm.php?id=" . $course['id'] ?>" class="btn btn-primary">Edit</a>
+                <a type="button" href="<?php echo "../course/editCourse.php?id=" . $course['id'] ?>" class="btn btn-primary">Edit</a>
             </td>
             <td>
-              <form action="../controllers/CourseController.php" method="POST">
+              <form action="../../controllers/CourseController.php" method="POST">
                 <input type="hidden" name="operation" value="delete">
                 <input type="hidden" name="id" value="<?php echo $course['id']?>">
                 <button type="submit" class="btn btn-danger">Delete</button>
