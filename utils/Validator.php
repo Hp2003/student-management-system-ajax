@@ -1,4 +1,6 @@
 <?php 
+require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Course.php');
+
 /**
  * 
  * Main trait used to make validation in all modules
@@ -11,7 +13,7 @@ trait Validator {
      * @param int|bool|string|float $data
      * @return int|bool|string|float
      */
-    protected function test_input($data) {
+    public function test_input($data) {
 
         $data = trim($data);
         $data = stripslashes($data);
@@ -28,7 +30,7 @@ trait Validator {
      * @param string $email
      * @return bool
      */
-    protected function test_email($email) {
+    public function test_email($email) {
 
         if(filter_var($email, FILTER_VALIDATE_EMAIL)){
             return true;
@@ -44,7 +46,7 @@ trait Validator {
      * @param string $phone
      * @return bool
      */
-    protected function test_phone_number($phone) {
+    public function test_phone_number($phone) {
 
         if(preg_match('/^\d{10}$/', $phone)) {
             return true;
@@ -60,7 +62,7 @@ trait Validator {
      * @param string $name
      * @return bool
      */
-    protected function test_name($name) {
+    public function test_name($name) {
 
         if(preg_match("/^[a-zA-Z-']*$/", $name)){
             return true;
@@ -68,4 +70,39 @@ trait Validator {
         return false;
 
     }
+
+    /**
+     * checks if gender is valid or not according to enum in db
+     *
+     * @param string $gender
+     * @return bool
+     */
+    public function test_gender($gender) {
+
+        $genders = array('male', 'female', 'other');
+        if(in_array($gender, $genders)){
+            return true;
+        }
+        return false;
+        
+    }
+
+    /**
+     * checks if course is available in db or not
+     *
+     * @param int $course_id
+     * @return bool
+     */ 
+    public function test_course($course_id) {
+
+        $course = new Course() ;
+        $courses = $course->get_formatted_course();
+        if($courses[$course_id]){
+            return true;
+        }
+        return false;
+
+    }
+
 }
+
