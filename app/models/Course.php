@@ -1,5 +1,6 @@
 <?php 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/Dbconnect.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Student.php');
 
 class Course extends Dbconnect {
 
@@ -116,6 +117,11 @@ class Course extends Dbconnect {
      */
     public function delete() {
 
+        // Setting course value to null for all students with this course
+        $student = new Student();
+        $student->set_course_to_null($this->id);
+
+        // Deleting course
         $conn = $this->connect();
         $sql = "DELETE FROM $this->table WHERE id = ? ";
         $statement = $conn->prepare($sql);
@@ -146,6 +152,5 @@ class Course extends Dbconnect {
         return $courses;
 
     }
-    
 
 }

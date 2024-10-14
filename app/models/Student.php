@@ -189,4 +189,23 @@ class Student extends Dbconnect {
         return false;
     }
 
+    /**
+     * Sets course to null to all students with given course_id
+     *
+     * @param int $course_id
+     * @return bool
+     */
+    public function set_course_to_null($course_id) {
+
+        $conn = $this->connect();
+        $sql = "UPDATE $this->table SET course_id = NULL WHERE course_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('i', $course_id);
+        $result = $stmt->execute();
+        $conn->close();
+
+        return $result;
+
+    }
+
 }
