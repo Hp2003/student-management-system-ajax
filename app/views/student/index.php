@@ -13,6 +13,7 @@ $students = $studnet->get();
 $course = new Course();
 $courses = $course->get_formatted_course();
 
+$pattern = "/^(\d{3})(\d{3})(\d{4})$/";
 ?>
 <!doctype html>
 <html lang="en">
@@ -61,9 +62,9 @@ $courses = $course->get_formatted_course();
             <td><?php echo $student['gender'] ?></td>
             <td><?php echo $courses[$student['course_id']] ?? 'N/A' ?></td>
             <td><?php echo $student['course_id'] ? 'Active' : 'Inactive' ?></td>
-            <td><?php echo $student['phone_number'] ?></td>
-            <td><?php echo date('d-m-Y H : i', strtotime($student['created_at'])) ?></td>
-            <td><?php echo date('d-m-Y H : i', strtotime($student['updated_at'])) ?></td>
+            <td><?php echo preg_replace($pattern, '$1-$2-$3', $student['phone_number']) ?></td>
+            <td><?php echo date('d-m-Y h : i a', strtotime($student['created_at'])) ?></td>
+            <td><?php echo date('d-m-Y h : i a', strtotime($student['updated_at'])) ?></td>
             <td><a type="button" href="<?php echo "/hiren/mvc2/app/views/student/editStudent.php?id=" . $student['id']  ?>" class="btn btn-primary">Edit</a></td>
             <td>
               <form action="../../controllers/StudentController.php" method="POST">

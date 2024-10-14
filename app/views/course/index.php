@@ -46,8 +46,8 @@ $courses = $course->get();
           <tr>
             <th scope="row"><?php echo $course['id'] ?></th>
             <td><?php echo $course['name'] ?></td>
-            <td><?php echo date('d-m-Y H : i', strtotime($course['created_at'])) ?></td>
-            <td><?php echo date('d-m-Y H : i', strtotime($course['updated_at'])) ?></td>
+            <td><?php echo date('d-m-Y h : i a', strtotime($course['created_at'])) ?></td>
+            <td><?php echo date('d-m-Y h : i a', strtotime($course['updated_at'])) ?></td>
             <td>
               <a type="button" href="<?php echo "../course/editCourse.php?id=" . $course['id'] ?>" class="btn btn-primary">Edit</a>
             </td>
