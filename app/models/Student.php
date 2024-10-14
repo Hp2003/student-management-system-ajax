@@ -125,4 +125,35 @@ class Student extends Dbconnect {
 
         return $result;
     }
+    
+    /**
+     * Finds a single student using given column if available return student in array
+     * else return empty array throw an error if column name is empty
+     *
+     * @param string $column
+     * 
+     * @return array
+     */
+    public function find_with_column($column, $value) {
+
+        if( empty($column)){
+            throw new Error('Column name is required');
+            return 0;
+        }
+
+        $conn = $this->connect();
+        $sql = "SELECT * FROM students WHERE $column = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('s', $value);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $conn->close();
+        
+        if($result->num_rows > 0) {
+            return $result->fetch_assoc();
+        }
+        return [];
+
+    }
+
 }
