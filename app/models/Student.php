@@ -131,7 +131,7 @@ class Student extends Dbconnect {
      * else return empty array throw an error if column name is empty
      *
      * @param string $column
-     * 
+     * @param string $value
      * @return array
      */
     public function find_with_column($column, $value) {
@@ -142,7 +142,7 @@ class Student extends Dbconnect {
         }
 
         $conn = $this->connect();
-        $sql = "SELECT * FROM students WHERE $column = ?";
+        $sql = "SELECT * FROM $this->table WHERE $column = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('s', $value);
         $stmt->execute();
@@ -154,6 +154,39 @@ class Student extends Dbconnect {
         }
         return [];
 
+    }
+
+    /**
+     * Matches if given value is unique for currnet student 
+     * throws error if $column or $value is not given
+     * id should be provided in constructor param
+     * returns bool 
+     *
+     * @param string $column
+     * @param int|string|float $value
+     * @return bool
+     */
+    public function check_unique_except($column, $value) {
+
+        if(!isset($this->id)){
+            throw new Error('Please privide id in constructor');
+        }
+        if(empty($column)) {
+            throw new Error('Please provide column name');
+        }
+
+        $conn = $this->connect();
+        $sql = "SELECT id FROM $this->table WHERE $column = ? AND id != ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('si', $value, $this->id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $conn->close();
+        
+        if($result->num_rows > 0) {
+            return true;
+        }
+        return false;
     }
 
 }
