@@ -23,6 +23,9 @@ $courses = $course->get();
 
 <body>
   <?php $navbar?>
+  <?php if(count($courses ) <= 0){ ?>
+    <h1 class="text-center mt-5"> No records available :( </h1>
+  <?php }else{?>
   <div class="container mt-5">
     <table class="table table-striped">
       <thead>
@@ -62,6 +65,7 @@ $courses = $course->get();
       </tbody>
     </table>
   </div>
+  <?php } ?>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 
