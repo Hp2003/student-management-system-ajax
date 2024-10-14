@@ -6,6 +6,8 @@ error_reporting(E_ALL);
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Course.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Student.php');
 
+if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+
 $navbar = include_once('../nav.php');
 $course = new Course();
 $courses = $course->get_formatted_course();
@@ -14,6 +16,9 @@ if(!isset($_GET['id']) || empty($_GET['id'])){
     header('Location:' . ($_SERVER['HTTP_ACCEPT'] ? 'http://' : 'https://')  .  $_SERVER['HTTP_HOST'] . '/hiren/mvc2/app/views/404.php'  )   ;
 }
 $student = new Student($_GET['id']);
+$errors = $_SESSION['edit_student_errors'] ?? [];
+$inputs = $_SESSION['edit_student_inputs'] ?? [];
+
 
 ?>
 
@@ -36,32 +41,40 @@ $student = new Student($_GET['id']);
             <input type="hidden" name="id" value="<?php echo $student->id ?>">
             <div class="mb-3">
                 <label class="form-label">First name : </label>
-                <input type="text" name="first_name" class="form-control" value="<?php echo $student->first_name ?>" id="">
+                <input type="text" name="first_name" class="form-control" value="<?php echo $inputs['first_name'] ?? $student->first_name ?>" id="">
+                <span class="text-danger" > <?php echo $errors['first_name'] ?? '' ?></span>
             </div>
             <div class="mb-3">
                 <label class="form-label">Last name : </label>
-                <input type="text" name="last_name" class="form-control" value="<?php echo $student->last_name ?>" id="">
+                <input type="text" name="last_name" class="form-control" value="<?php echo $inputs['last_name'] ?? $student->last_name ?>" id="">
+                <span class="text-danger" > <?php echo $errors['last_name'] ?? '' ?></span>
             </div>
             <div class="mb-3">
                 <label class="form-label">Email : </label>
-                <input type="email" name="email" class="form-control" value="<?php echo $student->email ?>" id="">
+                <input type="email" name="email" class="form-control" value="<?php echo $inputs['email'] ?? $student->email ?>" id="">
+                <span class="text-danger" > <?php echo $errors['email'] ?? '' ?></span>
             </div>
             <div class="mb-3">
                 <label class="form-label">Phone number : </label>
-                <input type="number" name="phone_number" class="form-control" value="<?php echo $student->phone_number ?>" id="">
+                <input type="number" name="phone_number" class="form-control" value="<?php echo $inputs['phone_number'] ?? $student->phone_number ?>" id="">
+                <span class="text-danger" > <?php echo $errors['phone_number'] ?? '' ?></span>
             </div>
             <div class="mb-3">
                 <label class="form-label">Gender : </label>
-                Male : <input type="radio" name="gender" value="male" class="mx-2" checked = <?php echo $student->gender === 'male' ? 'checked' : '' ?> id="">
-                Female : <input type="radio" name="gender" value="female" class="mx-2" <?php echo $student->gender === 'female' ? 'selected' : '' ?> id="">
-                Other : <input type="radio" name="gender" value="other" class="mx-2" <?php echo $student->gender === 'other' ? 'selected' : '' ?> id="">
+                Male : <input type="radio" name="gender" value="male" class="mx-2" checked = <?php echo ($inputs['gender'] ?? $student->gender) === 'male' ? 'checked' : '' ?> id="">
+                Female : <input type="radio" name="gender" value="female" class="mx-2" <?php echo ($inputs['gender'] ?? $student->gender) === 'female' ? 'checked' : '' ?> id="">
+                Other : <input type="radio" name="gender" value="other" class="mx-2" <?php echo ($inputs['gender'] ?? $student->gender) === 'other' ? 'checked' : '' ?> id="">
+                <span class="text-danger" > <?php echo $errors['gender'] ?? '' ?></span>
             </div>
-            <select class="form-select" name="course_id" aria-label="Default select example">
-                <option value="">Course</option>
-                <?php foreach($courses as $id => $name){ ?>
-                <option value="<?php echo $id ?>" <?php echo $id === $student->course_id ? 'selected'  : '' ?> ><?php echo $name?></option>
-            <?php }?>
-            </select>
+            <div class="mb-3">
+                <select class="form-select" name="course_id" aria-label="Default select example">
+                    <option value="">Course</option>
+                    <?php foreach($courses as $id => $name){ ?>
+                    <option value="<?php echo $id ?>" <?php echo $id === ($inputs['course_id'] ?? $student->course_id) ? 'selected'  : '' ?> ><?php echo $name?></option>
+                <?php }?>
+                </select>
+                <span class="text-danger" > <?php echo $errors['course_id'] ?? '' ?></span>
+            </div>
             <button type="submit" class="btn btn-primary mt-3">Update Student</button>
         </form>
     </div>
@@ -69,3 +82,7 @@ $student = new Student($_GET['id']);
 </body>
 
 </html>
+<?php 
+    unset($_SESSION['edit_student_errors']);
+    unset($_SESSION['edit_student_inputs']);
+?>
