@@ -68,3 +68,8 @@ $inputs = $_SESSION['add_student_inputs'] ?? [];
 </body>
 
 </html>
+
+<?php 
+unset($_SESSION['add_student_errors']);
+unset($_SESSION['add_student_inputs']);
+?>

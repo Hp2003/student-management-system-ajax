@@ -34,9 +34,6 @@ class StudentController {
             return false;
         }
 
-        unset($_SESSION['add_student_errors']);
-        unset($_SESSION['add_student_inputs']);
-
         $student = new Student();
         $student->first_name = $this->first_name;
         $student->last_name = $this->last_name;
@@ -157,6 +154,18 @@ class StudentController {
             $errors['phone_number'] = 'please enter a valid phone number eg: 1234567890';
         }
 
+        // Checking for duplicate entrys
+        $student = new Student();
+
+        if(count($student->find_with_column('email', $this->email)) > 0){
+            $errors['email'] = 'Given email is already available';
+        }
+
+        if(count($student->find_with_column('phone_number', $this->phone_number)) > 0){
+            $errors['phone_number'] = 'Given phone number is already available';
+        }
+
+        // var_dump($student->email);
         return $errors;
 
     }
