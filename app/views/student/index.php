@@ -34,6 +34,7 @@
           <th scope="col">email</th>
           <th scope="col">gender</th>
           <th scope="col">course</th>
+          <th scope="col">status</th>
           <th scope="col">phone</th>
           <th scope="col">created_at</th>
           <th scope="col">updated_at</th>
@@ -50,6 +51,7 @@
           <td><?php echo $student['email']?></td>
           <td><?php echo $student['gender']?></td>
           <td><?php echo $courses[$student['course_id']] ?? 'N/A' ?></td>
+          <td><?php echo $student['course_id'] ? 'Active' : 'Inactive' ?></td>
           <td><?php echo $student['phone_number'] ?></td>
           <td><?php echo date('d-m-Y H : i', strtotime($student['created_at']))?></td>
           <td><?php echo date('d-m-Y H : i', strtotime($student['updated_at']))?></td>
