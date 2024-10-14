@@ -55,12 +55,15 @@ $inputs = $_SESSION['add_student_inputs'] ?? [];
                 Other : <input type="radio" name="gender" value="other" class="mx-2" id="" <?php echo ($inputs['gender'] ?? '') === 'other' ? 'checked' : '' ?>>
             </div>
             <span class="text-danger" > <?php echo $errors['gender'] ?? '' ?></span>
-            <select class="form-select" name="course_id" aria-label="Default select example" >
-                <?php foreach($courses as $course){ ?>
-                <option value="<?php echo $course['id']?>" <?php echo ($inputs['course_id'] ?? '') == $course['id'] ? 'selected' : ''  ?> ><?php echo $course['name'] ?? '' ?></option>
-            <?php }?>
-            </select>
-            <span class="text-danger" > <?php echo $errors['course'] ?? '' ?></span>
+            <div class="mb-3">
+                <select class="form-select" name="course_id" aria-label="Default select example" >
+                    <option value="">Course</option>
+                    <?php foreach($courses as $course){ ?>
+                    <option value="<?php echo $course['id']?>" <?php echo ($inputs['course_id'] ?? '') == $course['id'] ? 'selected' : ''  ?> ><?php echo $course['name'] ?? '' ?></option>
+                <?php }?>
+                </select>
+                <span class="text-danger" > <?php echo $errors['course_id'] ?? '' ?></span>
+            </div>
             <button type="submit" class="btn btn-primary mt-3">Add Student</button>
         </form>
     </div>

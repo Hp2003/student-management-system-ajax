@@ -89,6 +89,8 @@ class StudentController
     public function update()
     {
 
+        // var_dump(empty($this->course_id));
+
         $errors = $this->validate_inputs();
         $student = new Student($this->id);
 
@@ -116,8 +118,7 @@ class StudentController
         $student->gender = $this->gender;
         $student->course_id = $this->course_id;
 
-        // return $student->update();
-        return false;
+        return $student->update();
 
     }
 
@@ -159,10 +160,10 @@ class StudentController
             $errors['gender'] = 'gender is required';
         }
         if (empty($this->course_id)) {
-            $errors['course'] = 'please select a course';
+            $errors['course_id'] = 'please select a course';
         }
 
-        if (count($errors) > 0) {
+        if ($errors['email'] || $errors['phone_number'] || $errors['course_id']) {
             return $errors;
         }
 
@@ -185,13 +186,14 @@ class StudentController
             $errors['last_name'] = "first name should only contain a-z or ' ";
         }
         if (!$this->test_course($this->course_id)) {
-            $errors['course_id'] = 'please enter a valid course';
+            $errors['course_id'] = 'please select a valid course';
         }
         if (!$this->test_phone_number($this->phone_number)) {
             $errors['phone_number'] = 'please enter a valid phone number eg: 1234567890';
         }
-
-        // var_dump($student->email);
+        if(!$this->test_gender($this->gender)){
+            $errors['gender'] = 'please select a valid gender';
+        }
         return $errors;
     }
 }
@@ -206,7 +208,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $student_controller->email = $_POST['email'] ?? '';
         $student_controller->phone_number = $_POST['phone_number'] ?? '';
         $student_controller->gender = $_POST['gender'] ?? '';
-        $student_controller->course_id = $_POST['course_id'] ?? '';
+        $student_controller->course_id = empty($_POST['course_id']) ? NULL : $_POST['course_id'];
 
 
         if ($student_controller->save()) {
@@ -218,17 +220,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $student_controller = new StudentController();
 
-        $student_controller->id = $_POST['id'];
-        $student_controller->first_name = $_POST['first_name'];
-        $student_controller->last_name = $_POST['last_name'];
-        $student_controller->email = $_POST['email'];
-        $student_controller->phone_number = $_POST['phone_number'];
-        $student_controller->gender = $_POST['gender'];
-        $student_controller->course_id = $_POST['course_id'];
+        $student_controller->id = $_POST['id'] ?? '';
+        $student_controller->first_name = $_POST['first_name'] ?? '';
+        $student_controller->last_name = $_POST['last_name'] ?? '';
+        $student_controller->email = $_POST['email'] ?? '';
+        $student_controller->phone_number = $_POST['phone_number'] ?? '';
+        $student_controller->gender = $_POST['gender'] ?? '';
+        $student_controller->course_id = empty($_POST['course_id']) ? NULL : $_POST['course_id'];
 
+        // $student_controller->update();
         if ($student_controller->update()) {
             header('Location:' . '/hiren/mvc2/app/views/student');
-        }else{
+        } else {
             header('Location:' . $_SERVER['HTTP_REFERER']);
         }
     } else if ($_POST['operation'] === 'delete') {
