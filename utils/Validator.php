@@ -1,26 +1,27 @@
-<?php 
+<?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Course.php');
 
 /**
  * 
  * Main trait used to make validation in all modules
  * 
- */ 
-trait Validator {
+ */
+trait Validator
+{
     /**
      * Filters input and return senitized data
      *
      * @param int|bool|string|float $data
      * @return int|bool|string|float
      */
-    public function test_input($data) {
+    public function test_input($data)
+    {
 
         $data = trim($data);
         $data = stripslashes($data);
         $data = htmlspecialchars($data);
 
         return $data;
-
     }
 
     /**
@@ -30,13 +31,13 @@ trait Validator {
      * @param string $email
      * @return bool
      */
-    public function test_email($email) {
+    public function test_email($email)
+    {
 
-        if(filter_var($email, FILTER_VALIDATE_EMAIL)){
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return true;
         }
         return false;
-
     }
 
     /**
@@ -46,13 +47,13 @@ trait Validator {
      * @param string $phone
      * @return bool
      */
-    public function test_phone_number($phone) {
+    public function test_phone_number($phone)
+    {
 
-        if(preg_match('/^\d{10}$/', $phone)) {
+        if (preg_match('/^\d{10}$/', $phone)) {
             return true;
         }
         return false;
-
     }
 
     /**
@@ -62,13 +63,13 @@ trait Validator {
      * @param string $name
      * @return bool
      */
-    public function test_name($name) {
+    public function test_name($name)
+    {
 
-        if(preg_match("/^[a-zA-Z-']*$/", $name)){
+        if (preg_match("/^[a-zA-Z-']*$/", $name)) {
             return true;
         }
         return false;
-
     }
 
     /**
@@ -77,14 +78,14 @@ trait Validator {
      * @param string $gender
      * @return bool
      */
-    public function test_gender($gender) {
+    public function test_gender($gender)
+    {
 
         $genders = array('male', 'female', 'other');
-        if(in_array($gender, $genders)){
+        if (in_array($gender, $genders)) {
             return true;
         }
         return false;
-        
     }
 
     /**
@@ -92,17 +93,34 @@ trait Validator {
      *
      * @param int $course_id
      * @return bool
-     */ 
-    public function test_course($course_id) {
+     */
+    public function test_course($course_id)
+    {
 
-        $course = new Course() ;
+        $course = new Course();
         $courses = $course->get_formatted_course();
-        if($courses[$course_id]){
+        if ($courses[$course_id]) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * checks if course is available in db using course name
+     *
+     * @param string $course_name
+     * @return bool
+     */
+    public function test_duplicate_course($course_name)
+    {
+
+        $course = new Course();
+        $courses = $course->get_formatted_course();
+        $course_names = array_values($courses);
+        if (in_array($course_name, $course_names)) {
             return true;
         }
         return false;
 
     }
-
 }
-

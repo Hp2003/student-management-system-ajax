@@ -1,11 +1,17 @@
-<?php 
+<?php
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/utils/Validator.php');
+if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+
+require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/utils/Validator.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Course.php');
-class CourseController {
+
+class CourseController
+{
+
+    use Validator;
 
     public $id;
     public $name;
@@ -17,13 +23,17 @@ class CourseController {
      *
      * @return int
      */
-    public function save() {
+    public function save()
+    {
 
         $course = new Course();
         $course->name = $this->name;
         $result = $course->save();
+        if ($result === FALSE) {
+            $_SESSION['duplicate_course_error'] = 'The course name is already avaialble';
+            $this->set_values_to_session('add_course_form_input_values');
+        } 
         return $result;
-
     }
 
     /**
@@ -31,10 +41,11 @@ class CourseController {
      *
      * @return array
      */
-    public function validate() {
+    public function validate()
+    {
         $errors = [];
 
-        if(empty($this->name)){
+        if (empty($this->name)) {
             $errors[] = ['name' => 'Name is required'];
         }
     }
@@ -44,12 +55,17 @@ class CourseController {
      *
      * @return bool
      */
-    public function update() {
-        
-        $course = new Course($_POST['id']);
+    public function update()
+    {
+        $is_duplicate = $this->test_duplicate_course(strtoupper($this->name));
+        if ($is_duplicate) {
+            $_SESSION['update_form_duplicate_course_error'] = 'The course name is already avaialble';
+            $this->set_values_to_session('update_course_form_input_values');
+            return false;
+        }
+        $course = new Course($this->id);
         $course->name = $_POST['name'];
         return $course->update();
-
     }
 
     /**
@@ -57,34 +73,48 @@ class CourseController {
      *
      * @return bool
      */
-    public function delete() {
-        
+    public function delete()
+    {
+
         $course = new Course($this->id);
         return $course->delete();
-
     }
 
+    /**
+     * Adds input values to session to show user
+     * @param string $name
+     *
+     * @return void
+     */
+    public function set_values_to_session($key_name) {
+        $_SESSION[$key_name] = array (
+            'name' => $this->name,
+        );
+    }
 }
 
-if($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if($_POST['operation'] === 'edit'){
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ($_POST['operation'] === 'edit') {
         $course_controller = new CourseController();
-        $course_controller->update();        
-    }
-
-    elseif($_POST['operation'] === 'delete') {
+        $course_controller->name = $_POST['name'] ?? '';
+        $course_controller->id = $_POST['id'] ?? '';
+        if ($course_controller->update() === FALSE) {
+            header('Location:' .  $_SERVER['HTTP_REFERER']);
+        } else {
+            header('Location:' .  '/hiren/mvc2/app/views/course');
+        }
+    } elseif ($_POST['operation'] === 'delete') {
         $course_controller = new CourseController();
         $course_controller->id = $_POST['id'];
         $course_controller->delete();
-    }
-
-    else{
+        header('Location:' .  '/hiren/mvc2/app/views/course');
+    } else {
         $course_controller = new CourseController();
         $course_controller->name = $_POST['name'];
-        if($course_controller->save() === FALSE ) {
-            // $_SESSION['add_course_failed'] = true;
+        if ($course_controller->save() === FALSE) {
+            header('Location:' .  $_SERVER['HTTP_REFERER']);
+        } else {
+            header('Location:' .  '/hiren/mvc2/app/views/course');
         }
-        
     }
-    header('Location:' .  '/hiren/mvc2/app/views/course'  );
 }
