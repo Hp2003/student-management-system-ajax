@@ -87,7 +87,7 @@ class StudentController
      */
     public function update()
     {
-
+        
         // var_dump(empty($this->course_id));
 
         $errors = $this->validate_inputs();
@@ -226,7 +226,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $student_controller->gender = $_POST['gender'] ?? '';
         $student_controller->course_id = empty($_POST['course_id']) ? NULL : $_POST['course_id'];
 
-        // $student_controller->update();
         if ($student_controller->update()) {
             header('Location:' . '/hiren/mvc2/app/views/student');
         } else {
