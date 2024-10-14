@@ -70,7 +70,6 @@ class StudentController
     private function set_values_to_session($key)
     {
 
-
         $_SESSION[$key] = array(
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
@@ -119,7 +118,6 @@ class StudentController
         $student->course_id = $this->course_id;
 
         return $student->update();
-
     }
 
     /**
@@ -159,11 +157,11 @@ class StudentController
         if (empty($this->gender)) {
             $errors['gender'] = 'gender is required';
         }
-        if (empty($this->course_id)) {
-            $errors['course_id'] = 'please select a course';
-        }
+        // if (empty($this->course_id)) {
+        //     $errors['course_id'] = 'please select a course';
+        // }
 
-        if ($errors['email'] || $errors['phone_number'] || $errors['course_id']) {
+        if ($errors['email'] || $errors['phone_number']) {
             return $errors;
         }
 
@@ -185,13 +183,13 @@ class StudentController
         if (!$this->test_name($this->last_name)) {
             $errors['last_name'] = "first name should only contain a-z or ' ";
         }
-        if (!$this->test_course($this->course_id)) {
+        if (!$this->test_course($this->course_id) && $this->course_id != NULL) {
             $errors['course_id'] = 'please select a valid course';
         }
         if (!$this->test_phone_number($this->phone_number)) {
             $errors['phone_number'] = 'please enter a valid phone number eg: 1234567890';
         }
-        if(!$this->test_gender($this->gender)){
+        if (!$this->test_gender($this->gender)) {
             $errors['gender'] = 'please select a valid gender';
         }
         return $errors;
