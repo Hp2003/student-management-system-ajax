@@ -3,7 +3,7 @@
 class Dbconnect{
     private $hostname = 'localhost';
     private $username = 'root';
-    private $password = '';
+    private $password = 'Admin@123';
     private $databse = 'project1';
 
     /* 
