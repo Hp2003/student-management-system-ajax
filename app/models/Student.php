@@ -212,4 +212,27 @@ class Student extends Dbconnect {
 
     }
 
+    /**
+     * returns total number of students associated to a course
+     *
+     * @param int $course_id
+     * @return int
+     */
+    public function get_total_students($course_id) {
+
+        $conn = $this->connect();
+        $sql = "SELECT COUNT(*) AS total FROM $this->table WHERE course_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('i', $course_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $conn->close();
+        
+        if($result->num_rows > 0) {
+            return $result->fetch_assoc()['total'];
+        }
+        return 0;
+
+    }
+
 }

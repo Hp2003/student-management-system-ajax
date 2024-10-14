@@ -6,10 +6,14 @@ error_reporting(E_ALL);
 if(session_status() !== PHP_SESSION_ACTIVE) session_start();
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Course.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Student.php');
 
 $navbar = include_once('../nav.php');
 $course = new Course();
 $courses = $course->get();
+
+$student = new Student();
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -32,6 +36,7 @@ $courses = $course->get();
         <tr>
           <th scope="col">id</th>
           <th scope="col">name</th>
+          <th scope="col">students</th>
           <th scope="col">created_at</th>
           <th scope="col">updated_at</th>
           <th scope="col"></th>
@@ -46,6 +51,7 @@ $courses = $course->get();
           <tr>
             <th scope="row"><?php echo $course['id'] ?></th>
             <td><?php echo $course['name'] ?></td>
+            <td><?php echo $student->get_total_students($course['id']) ?></td>
             <td><?php echo date('d-m-Y h : i a', strtotime($course['created_at'])) ?></td>
             <td><?php echo date('d-m-Y h : i a', strtotime($course['updated_at'])) ?></td>
             <td>
