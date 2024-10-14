@@ -1,3 +1,10 @@
+<?php 
+  $full_path_array = explode('/', $_SERVER['SCRIPT_FILENAME']);
+  $folder = $full_path_array[count($full_path_array) - 2];
+  $file = $full_path_array[count($full_path_array) - 1];
+
+  $file_name = $folder . '/' . $file;
+?>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Navbar</a>
@@ -7,16 +14,16 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/hiren/mvc2/app/views/student">Student</a>
+            <a class="nav-link <?php echo $file_name === 'student/index.php' ? 'active' : '' ?>" href="/hiren/mvc2/app/views/student">Student</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/hiren/mvc2/app/views/course">Course</a>
+            <a class="nav-link <?php echo $file_name === 'course/index.php' ? 'active' : '' ?>" href="/hiren/mvc2/app/views/course">Course</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/hiren/mvc2/app/views/student/addStudent.php">Add Student</a>
+            <a class="nav-link <?php echo $file_name === 'student/addStudent.php' ? 'active' : '' ?>" href="/hiren/mvc2/app/views/student/addStudent.php">Add Student</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/hiren/mvc2/app/views/course/addCourse.php">Add Course</a>
+            <a class="nav-link <?php echo $file_name === 'course/addCourse.php' ? 'active' : '' ?>" href="/hiren/mvc2/app/views/course/addCourse.php">Add Course</a>
           </li>
         </ul>
       </div>
