@@ -3,9 +3,14 @@
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 
+    if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+
     require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Course.php');
     $navbar = include_once('../nav.php');
     $course = new Course($_GET['id']);
+
+    $duplicate_course_error = $_SESSION['update_form_duplicate_course_error'] ?? '';
+    $error_value = $_SESSION['update_course_form_input_values'] ?? [];
 
 ?>
 <!doctype html>
@@ -27,7 +32,8 @@
                 <input type="hidden" name="operation" value="edit">
                 <input type="hidden" name="id" value="<?php echo $course->id ?>">
                 <label for="exampleInputEmail1" class="form-label" >Course Name : </label>
-                <input type="text" name="name" class="form-control" value="<?php echo $course->name ?>" id="" required>
+                <input type="text" name="name" class="form-control" value="<?php echo $error_value['name'] ?? $course->name  ?>"  id="" required>
+                <span class="text-danger"><?php echo $duplicate_course_error ?></span>
             </div>
             <button type="submit" class="btn btn-primary w-100">Update Course</button>
         </form>
@@ -36,3 +42,7 @@
 </body>
 
 </html>
+<?php 
+    unset($_SESSION['update_form_duplicate_course_error']);
+    unset($_SESSION['update_course_form_input_values']);
+?>

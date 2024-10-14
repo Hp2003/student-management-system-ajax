@@ -42,9 +42,10 @@ class Course extends Dbconnect {
 
     /**
      * Inserts new course in db returns inserted id.
-     * If record inserted successfully otherwise returns FALSE.
+     * If record inserted successfully otherwise returns FALSE 
+     * if entry is duplicate.
      *
-     * @return int|bool
+     * @return int|bool|string
      */
     public function save() {
 
@@ -52,12 +53,21 @@ class Course extends Dbconnect {
         $query = "INSERT INTO $this->table (name) 
         VALUES(?)";
         $statement = $conn->prepare($query);
-        $statement->bind_param('s', $this->name);
-        $statement->execute();
+        $name = strtoupper($this->name);
+        $statement->bind_param('s', $name);
         $id = $conn->insert_id;
-        $conn->close();
+        // $conn->close();
         
-        return $id !== false ? $id  : false;
+        try {
+            $statement->execute();
+            return $id !== false ? $id  : false;
+        }catch (Exception $e){
+            if($conn->errno === 1062){
+                return FALSE;
+            }
+        }finally {
+            $conn->close();
+        }
 
     }
 

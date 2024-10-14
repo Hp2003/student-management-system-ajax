@@ -1,5 +1,11 @@
 <?php 
 $navbar = include_once('../nav.php');
+
+if(session_status() !== PHP_SESSION_ACTIVE) session_start();
+
+$duplicate_course_error = $_SESSION['duplicate_course_error'] ?? '';
+$error_inputs = $_SESSION['add_course_form_input_values'];
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -15,9 +21,11 @@ $navbar = include_once('../nav.php');
     <?php $navbar ?>
     <div class="container mt-5 w-25">
         <form action="../../controllers/CourseController.php" method="post">
+            <input type="hidden" name="operation" value="add">
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label" >Course Name : </label>
-                <input type="text" name="name" class="form-control" id="" required>
+                <input type="text" name="name" class="form-control" id="" value="<?php echo $error_inputs['name'] ?>" required>
+                <span class="text-danger"><?php echo $duplicate_course_error ?></span>
             </div>
             <button type="submit" class="btn btn-primary w-100">Add Course</button>
         </form>
@@ -26,3 +34,7 @@ $navbar = include_once('../nav.php');
 </body>
 
 </html>
+<?php 
+    unset($_SESSION['duplicate_course_error']);
+    unset($_SESSION['add_course_form_input_values']);
+?>
