@@ -49,7 +49,7 @@
           <td><?php echo $student['last_name']?></td>
           <td><?php echo $student['email']?></td>
           <td><?php echo $student['gender']?></td>
-          <td><?php echo $courses[$student['course_id']] ?></td>
+          <td><?php echo $courses[$student['course_id']] ?? 'N/A' ?></td>
           <td><?php echo $student['phone_number'] ?></td>
           <td><?php echo date('d-m-Y H : i', strtotime($student['created_at']))?></td>
           <td><?php echo date('d-m-Y H : i', strtotime($student['updated_at']))?></td>

@@ -57,6 +57,7 @@ $student = new Student($_GET['id']);
                 Other : <input type="radio" name="gender" value="other" class="mx-2" <?php echo $student->gender === 'other' ? 'selected' : '' ?> id="">
             </div>
             <select class="form-select" name="course_id" aria-label="Default select example">
+                <option value="">Course</option>
                 <?php foreach($courses as $id => $name){ ?>
                 <option value="<?php echo $id ?>" <?php echo $id === $student->course_id ? 'selected'  : '' ?> ><?php echo $name?></option>
             <?php }?>
