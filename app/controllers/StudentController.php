@@ -194,7 +194,21 @@ class StudentController
         }
         return $errors;
     }
+
+    /**
+     * Returns page numbers 
+     *
+     * @param int $page
+     * @return array
+     */
+    public function get_pagination($page) {
+        
+    }
 }
+
+
+
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 

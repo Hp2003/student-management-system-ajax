@@ -1,7 +1,12 @@
 <?php 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/Dbconnect.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/utils/Paginator.php');
+
 
 class Student extends Dbconnect {
+
+    use Paginator;
+
     public $id;
     public $first_name;
     public $last_name;
@@ -11,7 +16,7 @@ class Student extends Dbconnect {
     public $updated_at; // has default value
     public $course_id;
     public $phone_number;
-    private $table = 'students';
+    protected $table = 'students';
 
     /**
      * set values of object to given id (if given)
@@ -233,6 +238,10 @@ class Student extends Dbconnect {
         }
         return 0;
 
+    }
+
+    public function paginate($page) {
+        return $this->pagination($page);
     }
 
 }
