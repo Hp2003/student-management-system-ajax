@@ -20,6 +20,7 @@ $student = new Student();
   $pages = $pagination_data['pagination_numbers'];
   unset($pagination_data['pagination_numbers']);
   $courses = $pagination_data;
+
 ?>
 <!doctype html>
 <html lang="en">

@@ -16,11 +16,10 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
 
 $student = new Student();
 $pagination_data = $student->paginate($_GET['page'] ?? 1);
-// $students = $pagination_data[0];
+
 $pages = $pagination_data['pagination_numbers'];
 unset($pagination_data['pagination_numbers']);
 $students = $pagination_data;
-
 
 ?>
 <!doctype html>

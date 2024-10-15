@@ -5,7 +5,7 @@ trait Paginator {
 
     private $page ; // current page
     private $total_page;  // total pages can be generated from current table
-    private $limit = 2;
+    private $limit = 10;
     private $from;
     private $to;
     /**
@@ -41,7 +41,8 @@ trait Paginator {
      * @return array
      */
     public function pagination_numbers() {
-        $total_page = $this->total_page = round($this->get_total_records() / $this->limit);
+        $total_page = !is_int(($this->get_total_records() / $this->limit)) ? ($this->get_total_records() / $this->limit) + 1 :  $this->get_total_records() / $this->limit;
+        $this->total_page  = $total_page;
         $to = $this->to = $this->get_to();
         $total_records = $this->get_total_records();
         $prev_page = $this->get_prev_page();
@@ -101,12 +102,12 @@ trait Paginator {
 
     public function get_last_page() {
         $total_pages = $this->total_page;
-
+        $page = $this->page;
         if( ( $this->page + 10) === $total_pages ){
-            $this->page += 9;
+            $page += 9;
         }
        
-        return ( $this->page + 10) < $total_pages ? $this->page + 9 : $total_pages;
+        return ( $page + 10) < $total_pages ? $page + 9 : $total_pages;
     }
 
     /**
@@ -119,15 +120,17 @@ trait Paginator {
         $end = 10;
         $start = $this->page;
 
-        if($start > $this->total_page){
+        if($start > $this->total_page ){
             return 0;
         }
 
-        if($start >= $this->total_page - 4 && $start - 9 > 0){
+        if($start >= $this->total_page - 4 && ($this->total_page - 4  > 0) ){
             return $this->total_page - 9;
+            // return 3;
         }
-        if($start > $end / 2 && ( $this->page <= $this->total_page )) {
-            return $start - ($end / 2) + 1;
+        if($start > ($end / 2) && ( $start <= $this->total_page )) {
+            return $start - 6;
+            // return 5;
         }
         
         return 1;
@@ -150,7 +153,7 @@ trait Paginator {
             return $start + 5;
         }
 
-        if($end < $this->total_page && ( $this->page < $end )){
+        if($end < $this->total_page && ( $this->page < $end ) && $this->page + 5 < $this->total_page ){
             return $end;
         }
 
