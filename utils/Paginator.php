@@ -5,7 +5,7 @@ trait Paginator {
 
     private $page ; // current page
     private $total_page;  // total pages can be generated from current table
-    private $limit = 10;
+    private $limit = 1;
     private $from;
     private $to;
     /**

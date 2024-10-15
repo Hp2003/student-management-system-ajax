@@ -9,23 +9,18 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/controllers/StudentCon
 
 $navbar = include_once('../nav.php');
 
-$studnet = new Student();
-$students = $studnet->get();
 $course = new Course();
 $courses = $course->get_formatted_course();
 
 $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
 
-if (!empty($_GET['page'])) {
-  $student = new Student();
-  $pagination_data = $student->paginate($_GET['page']);
-  // $students = $pagination_data[0];
-  $pages = $pagination_data['pagination_numbers'];
-  unset($pagination_data['pagination_numbers']);
-  $students = $pagination_data;
-}
+$student = new Student();
+$pagination_data = $student->paginate($_GET['page'] ?? 1);
+// $students = $pagination_data[0];
+$pages = $pagination_data['pagination_numbers'];
+unset($pagination_data['pagination_numbers']);
+$students = $pagination_data;
 
-$current_page = $_GET['page'];
 
 ?>
 <!doctype html>
@@ -92,31 +87,7 @@ $current_page = $_GET['page'];
       </table>
   </div>
 
-  <?php if ($pages['total_pages'] > 1) { ?>
-    <div class="container d-flex justify-content-center">
-      <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <?php if ($pages['prev_page']) { ?>
-            <li class="page-item"><a class="page-link" href="<?php echo $_SERVER['PHP_SELF'] . "?page=" . $pages['prev_page'] ?>">Previous</a></li>
-            <?php if ($pages['from'] != 1) { ?>
-              <li class="page-item"><a class="page-link" href="<?php echo $_SERVER['PHP_SELF'] . "?page=1" ?>">1</a></li>
-              <li class="page-item"><a class="page-link disabled" href="#">...</a></li>
-            <?php } ?>
-          <?php } ?>
-          <?php for ($page = $pages['from']; $page <= $pages['to']; $page++) { ?>
-            <li class="page-item"><a class="page-link <?php echo $current_page == $page ? 'active' : '' ?>" href="<?php echo $_SERVER['PHP_SELF'] . "?page=$page" ?>"><?php echo $page ?></a></li>
-          <?php } ?>
-          <?php if ($pages['next_page']) { ?>
-            <?php if ($pages['to'] != $pages['total_pages']) { ?>
-              <li class="page-item"><a class="page-link disabled" href="#">...</a></li>
-              <li class="page-item"><a class="page-link" href="<?php echo $_SERVER['PHP_SELF'] . "?page=" . $pages['total_pages'] ?>"><?php echo $pages['total_pages'] ?></a></li>
-            <?php } ?>
-            <li class="page-item"><a class="page-link" href="<?php echo $_SERVER['PHP_SELF'] . "?page=" . $pages['next_page'] ?>">Next</a></li>
-          <?php } ?>
-        </ul>
-      </nav>
-    </div>
-  <?php } ?>
+  <?php require_once('../paginator.php') ?>
 <?php } ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
