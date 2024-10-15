@@ -5,7 +5,7 @@ trait Paginator {
 
     private $page ; // current page
     private $total_page;  // total pages can be generated from current table
-    private $limit = 10;
+    private $limit = 1;
     private $from;
     private $to;
     /**
@@ -102,12 +102,12 @@ trait Paginator {
 
     public function get_last_page() {
         $total_pages = $this->total_page;
-
+        $page = $this->page;
         if( ( $this->page + 10) === $total_pages ){
-            $this->page += 9;
+            $page += 9;
         }
        
-        return ( $this->page + 10) < $total_pages ? $this->page + 9 : $total_pages;
+        return ( $page + 10) < $total_pages ? $page + 9 : $total_pages;
     }
 
     /**
@@ -124,14 +124,13 @@ trait Paginator {
             return 0;
         }
 
-        // return $this->total_page - 4;
         if($start >= $this->total_page - 4 && ($this->total_page - 4  > 0) ){
             return $this->total_page - 9;
-            // return 1;
+            // return 3;
         }
-        if($start > $end / 2 && ( $start <= $this->total_page )) {
-            return $start - ($end / 2) + 1;
-            // return 1;
+        if($start > ($end / 2) && ( $start <= $this->total_page )) {
+            return $start - 6;
+            // return 5;
         }
         
         return 1;
