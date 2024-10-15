@@ -5,7 +5,7 @@ trait Paginator {
 
     private $page ; // current page
     private $total_page;  // total pages can be generated from current table
-    private $limit = 10;
+    private $limit = 1;
     private $from;
     private $to;
     /**
@@ -134,7 +134,7 @@ trait Paginator {
             // return 3;
         }
         if($start > ($end / 2) && ( $start <= $this->total_page )) {
-            return $start - 6;
+            return $start - 5;
             // return 5;
         }
         
