@@ -119,15 +119,18 @@ trait Paginator {
         $end = 10;
         $start = $this->page;
 
-        if($start > $this->total_page){
+        if($start > $this->total_page ){
             return 0;
         }
 
-        if($start >= $this->total_page - 4 ){
+        // return $this->total_page - 4;
+        if($start >= $this->total_page - 4 && ($this->total_page - 4  > 0) ){
             return $this->total_page - 9;
+            // return 1;
         }
-        if($start > $end / 2 && ( $this->page <= $this->total_page )) {
+        if($start > $end / 2 && ( $start <= $this->total_page )) {
             return $start - ($end / 2) + 1;
+            // return 1;
         }
         
         return 1;
