@@ -14,14 +14,12 @@ $courses = $course->get();
 
 $student = new Student();
 
-if(!empty($_GET['page'])){
   $course = new Course();
-  $pagination_data = $course->paginate($_GET['page']);
-  // $students = $pagination_data[0];
+  $pagination_data = $course->paginate($_GET['page'] ?? 1);
+
   $pages = $pagination_data['pagination_numbers'];
   unset($pagination_data['pagination_numbers']);
   $courses = $pagination_data;
-}
 ?>
 <!doctype html>
 <html lang="en">

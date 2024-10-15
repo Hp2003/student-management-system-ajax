@@ -5,7 +5,7 @@ if(!empty($_GET['page'])){
 }
 ?>
 <?php if ($pages['total_pages'] > 1) { ?>
-    <div class="container d-flex justify-content-center">
+    <div class="container d-flex justify-content-center h-auto user-select-none">
       <nav aria-label="Page navigation example">
         <ul class="pagination">
           <?php if ($pages['prev_page']) { ?>
