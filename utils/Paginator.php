@@ -100,6 +100,11 @@ trait Paginator {
         return false;
     }
 
+    /**
+     * Returns last page of pagination
+     *
+     * @return int
+     */
     public function get_last_page() {
         $total_pages = $this->total_page;
         $page = $this->page;
