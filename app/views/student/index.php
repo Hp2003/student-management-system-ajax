@@ -21,7 +21,7 @@ $pages = $pagination_data['pagination_numbers'];
 unset($pagination_data['pagination_numbers']);
 $students = $pagination_data;
 
-
+var_dump($pages);
 ?>
 <!doctype html>
 <html lang="en">
