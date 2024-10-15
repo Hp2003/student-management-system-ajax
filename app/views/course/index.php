@@ -14,6 +14,12 @@ $courses = $course->get();
 
 $student = new Student();
 
+  $course = new Course();
+  $pagination_data = $course->paginate($_GET['page'] ?? 1);
+
+  $pages = $pagination_data['pagination_numbers'];
+  unset($pagination_data['pagination_numbers']);
+  $courses = $pagination_data;
 ?>
 <!doctype html>
 <html lang="en">
@@ -71,6 +77,7 @@ $student = new Student();
       </tbody>
     </table>
   </div>
+  <?php require_once('../paginator.php') ?>
   <?php } ?>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
