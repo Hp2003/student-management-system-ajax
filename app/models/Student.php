@@ -5,9 +5,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-class Student extends Dbconnect {
-
-    use Paginator;
+class Student extends Paginator {
 
     public $id;
     public $first_name;
@@ -52,6 +50,12 @@ class Student extends Dbconnect {
 
         }
 
+    }
+
+
+    public function connect() {
+        $conn = new Dbconnect();
+        return $conn->connect();
     }
 
     /**
@@ -246,6 +250,27 @@ class Student extends Dbconnect {
 
     public function paginate($page, $limit, $column, $type) {
         return $this->pagination($page, $limit, $column, $type);
+    }
+
+    /**
+     * returns array of formatted courses key = id, val = name
+     *
+     * @return array
+     */
+    public function get_formatted_course(){
+        $courses = [];
+        $conn = $this->connect();
+        $sql = "SELECT id, name FROM $this->table ";
+
+        $result = $conn->query($sql);
+        $conn->close();
+        if($result->num_rows > 0){
+            while($row = $result->fetch_assoc()){
+                $courses[$row['id']] = $row['name'];
+            }
+        }
+        return $courses;
+
     }
 
 }

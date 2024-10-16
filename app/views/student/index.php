@@ -102,7 +102,7 @@ $limit = $_GET['limit'] ?? 5;
               <td><?php echo $student['last_name'] ?></td>
               <td><?php echo $student['email'] ?></td>
               <td><?php echo $student['gender'] ?></td>
-              <td><?php echo $courses[$student['course_id']] ?? 'N/A' ?></td>
+              <td><?php echo $student['course_name'] ?? 'N/A' ?></td>
               <td><?php echo $student['status'] ? 'Active' : 'Inactive' ?></td>
               <td><?php echo preg_replace($pattern, '$1-$2-$3', $student['phone_number']) ?></td>
               <td><?php echo date('d-m-Y h : i a', strtotime($student['created_at'])) ?></td>

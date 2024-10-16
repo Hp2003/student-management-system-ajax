@@ -3,15 +3,13 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/Dbconnect.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Student.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/utils/Paginator.php');
 
-class Course extends Dbconnect {
-
-    use Paginator;
+class Course extends Paginator  {
 
     public $id;
     public $name;
     public $created_at;
     public $updated_at;
-    private $table = 'courses';
+    protected $table = 'courses';
 
     /**
      * Finds uesr with given id
@@ -42,6 +40,16 @@ class Course extends Dbconnect {
             
         }
 
+    }
+
+    /**
+     * makes connection with database
+     *
+     * @return object
+     */
+    public function connect() {
+        $conn = new Dbconnect();
+        return $conn->connect();
     }
 
     /**
