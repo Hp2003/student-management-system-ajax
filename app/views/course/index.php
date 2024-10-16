@@ -36,16 +36,16 @@ $courses = $pagination_data;
     <h1 class="text-center mt-5"> No records available :( </h1>
   <?php } else { ?>
     <div class="container mt-5">
-    <div class="container d-flex justify-content-end">
-      <form action="<?php echo $_SERVER['REQUEST_URI']  ?>" class="w-25 limit-form">
-        <select class="form-select limit" aria-label="Default select example" name="limit"  onchange="submit()">
-          <option value="5" <?php  echo ($_GET['limit'] ?? 5) == 5 ? 'selected' : '' ?>  >5</option>
-          <option value="10" <?php echo  ($_GET['limit'] ?? 5) == 10 ? 'selected' : '' ?>  >10</option>
-          <option value="20" <?php echo  ($_GET['limit'] ?? 5) == 20 ? 'selected' : '' ?>  >20</option>
-          <option value="50" <?php echo  ($_GET['limit'] ?? 5) == 50 ? 'selected' : '' ?>  >50</option>
-        </select>
-      </form>
-    </div>
+      <div class="container d-flex justify-content-end">
+        <form action="<?php echo $_SERVER['REQUEST_URI']  ?>" class="w-25 limit-form">
+          <select class="form-select limit" aria-label="Default select example" name="limit" onchange="submit()">
+            <option value="5" <?php echo ($_GET['limit'] ?? 5) == 5 ? 'selected' : '' ?>>5</option>
+            <option value="10" <?php echo ($_GET['limit'] ?? 5) == 10 ? 'selected' : '' ?>>10</option>
+            <option value="20" <?php echo ($_GET['limit'] ?? 5) == 20 ? 'selected' : '' ?>>20</option>
+            <option value="50" <?php echo ($_GET['limit'] ?? 5) == 50 ? 'selected' : '' ?>>50</option>
+          </select>
+        </form>
+      </div>
       <table class="table table-striped">
         <thead>
           <tr>
@@ -94,7 +94,7 @@ $courses = $pagination_data;
       let limit = document.querySelector('.limit').value;
       let form = document.querySelector('.limit-form');
 
-      
+
     }
   </script>
 </body>
