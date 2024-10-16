@@ -123,23 +123,36 @@ trait Paginator {
     public function get_from() {
 
         $end = 10;
-        $start = $this->page;
+        $page = $this->page;
+        $total_page = $this->total_page;
+        // if($start > $this->total_page ){
+        //     return 0;
+        // }
 
-        if($start > $this->total_page ){
-            return 0;
+        // if($start >= $this->total_page - 4 && ($this->total_page - 4  > 0) ){
+        //     return $this->total_page - 9;
+        //     // return 3;
+        // }
+        // if($start > ($end / 2) && ( $start <= $this->total_page )) {
+        //     return $start - 5;
+        //     // return 5;
+        // }
+
+        if($page > $total_page) {
+            return false;
         }
 
-        if($start >= $this->total_page - 4 && ($this->total_page - 4  > 0) ){
-            return $this->total_page - 9;
-            // return 3;
+        if($total_page < 10 ){
+            return $total_page;
         }
-        if($start > ($end / 2) && ( $start <= $this->total_page )) {
-            return $start - 5;
-            // return 5;
+        if($page - ( $total_page - $page ) >= $total_page - 10) {
+            return $total_page - 9 ;
         }
-        
-        return 1;
-
+        if($page < $total_page && $page - 4 > 0 ) {
+            return $page - 4;
+        }else{
+            return $end;
+        }
     }
     
     /**
