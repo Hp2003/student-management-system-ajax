@@ -1,11 +1,12 @@
-<?php 
+<?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/Dbconnect.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/utils/Paginator.php');
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-class Student extends Paginator {
+class Student extends Paginator
+{
 
     public $id;
     public $first_name;
@@ -23,9 +24,9 @@ class Student extends Paginator {
      *
      * @param int $id
      */
-    public function __construct($id = null)
+    public function find($id = null)
     {
-        if($id !== null){
+        if ($id !== null) {
 
             // getting student
             $conn = $this->connect();
@@ -35,7 +36,7 @@ class Student extends Paginator {
             $statement->execute();
             $result = $statement->get_result();
             $conn->close();
-            $student = $result->fetch_assoc(); 
+            $student = $result->fetch_assoc();
 
             // setting values to current object
             $this->id = $student['id'];
@@ -47,13 +48,16 @@ class Student extends Paginator {
             // $this->updated_at = $statement['updated_at'];
             $this->course_id = $student['course_id'];
             $this->phone_number = $student['phone_number'];
-
         }
-
     }
 
-
-    public function connect() {
+    /**
+     * makes connection with database
+     *
+     * @return object
+     */
+    public function connect()
+    {
         $conn = new Dbconnect();
         return $conn->connect();
     }
@@ -63,11 +67,12 @@ class Student extends Paginator {
      *
      * @return bool
      */
-    public function save() {
+    public function save()
+    {
 
         $course_id = empty($this->course_id) ? NULL : $this->course_id;
 
-        $status = !($course_id === NULL) ;
+        $status = !($course_id === NULL);
         $conn = $this->connect();
 
         $query = "INSERT INTO $this->table (first_name, last_name, email, gender, course_id, phone_number, status)
@@ -76,9 +81,8 @@ class Student extends Paginator {
         $statement->bind_param('ssssisi', $this->first_name, $this->last_name, $this->email, $this->gender, $course_id, $this->phone_number, $status);
         $statement->execute();
         $conn->close();
-        
-        return true;
 
+        return true;
     }
 
     /**
@@ -86,21 +90,21 @@ class Student extends Paginator {
      *
      * @return bool
      */
-    public function update() {
+    public function update()
+    {
 
         $course_id = empty($this->course_id) ? NULL : $this->course_id;
-        $status = !($course_id === NULL) ;
+        $status = !($course_id === NULL);
 
         $query = "UPDATE $this->table SET first_name = ?, last_name = ?, email = ?, phone_number = ?, gender = ?, course_id = ?, status = ?  WHERE id = ? ";
 
         $conn = $this->connect();
         $statement = $conn->prepare($query);
         $statement->bind_param('sssssiii', $this->first_name, $this->last_name, $this->email, $this->phone_number, $this->gender, $course_id, $status, $this->id);
-        $result = $statement->execute();    
+        $result = $statement->execute();
         $conn->close();
 
         return $result;
-
     }
 
     /**
@@ -108,7 +112,8 @@ class Student extends Paginator {
      *
      * @return array
      */
-    public function get() {
+    public function get()
+    {
 
         $students = [];
         $conn = $this->connect();
@@ -116,14 +121,13 @@ class Student extends Paginator {
         $result = $conn->query($sql);
         $conn->close();
 
-        if($result->num_rows > 0){
-            while($row = $result->fetch_assoc()) {
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
                 $students[] = $row;
             }
         }
 
         return $students;
-
     }
 
     /**
@@ -131,7 +135,8 @@ class Student extends Paginator {
      *
      * @return bool
      */
-    public function delete() {
+    public function delete()
+    {
 
         $conn = $this->connect();
         $sql = "DELETE FROM $this->table WHERE id = ? ";
@@ -142,7 +147,7 @@ class Student extends Paginator {
 
         return $result;
     }
-    
+
     /**
      * Finds a single student using given column if available return student in array
      * else return empty array throw an error if column name is empty
@@ -151,9 +156,10 @@ class Student extends Paginator {
      * @param string $value
      * @return array
      */
-    public function find_with_column($column, $value) {
+    public function find_with_column($column, $value)
+    {
 
-        if( empty($column)){
+        if (empty($column)) {
             throw new Error('Column name is required');
             return 0;
         }
@@ -165,12 +171,11 @@ class Student extends Paginator {
         $stmt->execute();
         $result = $stmt->get_result();
         $conn->close();
-        
-        if($result->num_rows > 0) {
+
+        if ($result->num_rows > 0) {
             return $result->fetch_assoc();
         }
         return [];
-
     }
 
     /**
@@ -183,12 +188,13 @@ class Student extends Paginator {
      * @param int|string|float $value
      * @return bool
      */
-    public function check_unique_except($column, $value) {
+    public function check_unique_except($column, $value)
+    {
 
-        if(!isset($this->id)){
+        if (!isset($this->id)) {
             throw new Error('Please privide id in constructor');
         }
-        if(empty($column)) {
+        if (empty($column)) {
             throw new Error('Please provide column name');
         }
 
@@ -199,8 +205,8 @@ class Student extends Paginator {
         $stmt->execute();
         $result = $stmt->get_result();
         $conn->close();
-        
-        if($result->num_rows > 0) {
+
+        if ($result->num_rows > 0) {
             return true;
         }
         return false;
@@ -212,7 +218,8 @@ class Student extends Paginator {
      * @param int $course_id
      * @return bool
      */
-    public function set_course_to_null($course_id) {
+    public function set_course_to_null($course_id)
+    {
 
         $conn = $this->connect();
         $sql = "UPDATE $this->table SET course_id = NULL WHERE course_id = ?";
@@ -222,7 +229,6 @@ class Student extends Paginator {
         $conn->close();
 
         return $result;
-
     }
 
     /**
@@ -231,7 +237,8 @@ class Student extends Paginator {
      * @param int $course_id
      * @return int
      */
-    public function get_total_students($course_id) {
+    public function get_total_students($course_id)
+    {
 
         $conn = $this->connect();
         $sql = "SELECT COUNT(*) AS total FROM $this->table WHERE course_id = ?";
@@ -240,15 +247,15 @@ class Student extends Paginator {
         $stmt->execute();
         $result = $stmt->get_result();
         $conn->close();
-        
-        if($result->num_rows > 0) {
+
+        if ($result->num_rows > 0) {
             return $result->fetch_assoc()['total'];
         }
         return 0;
-
     }
 
-    public function paginate($page, $limit, $column, $type) {
+    public function paginate($page, $limit, $column, $type)
+    {
         return $this->pagination($page, $limit, $column, $type);
     }
 
@@ -257,20 +264,19 @@ class Student extends Paginator {
      *
      * @return array
      */
-    public function get_formatted_course(){
+    public function get_formatted_course()
+    {
         $courses = [];
         $conn = $this->connect();
         $sql = "SELECT id, name FROM $this->table ";
 
         $result = $conn->query($sql);
         $conn->close();
-        if($result->num_rows > 0){
-            while($row = $result->fetch_assoc()){
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
                 $courses[$row['id']] = $row['name'];
             }
         }
         return $courses;
-
     }
-
 }

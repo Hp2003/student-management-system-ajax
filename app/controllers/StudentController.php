@@ -91,10 +91,10 @@ class StudentController
         // var_dump(empty($this->course_id));
 
         $errors = $this->validate_inputs();
-        $student = new Student($this->id);
 
         // Checking for duplicate entrys
-        $student = new Student($this->id);
+        $student = new Student();
+        $student->find($this->id);
 
         if ($student->check_unique_except('email', $this->email)) {
             $errors['email'] = 'Given email is already available';
@@ -128,7 +128,8 @@ class StudentController
     public function delete()
     {
 
-        $student = new Student($this->id);
+        $student = new Student();
+        $student->find($this->id);
         return $student->delete();
     }
 
