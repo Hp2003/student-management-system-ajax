@@ -36,15 +36,15 @@ $courses = $pagination_data;
     <h1 class="text-center mt-5"> No records available :( </h1>
   <?php } else { ?>
     <div class="container mt-5">
-      <div class="container d-flex justify-content-end">
-        <form action="<?php echo $_SERVER['REQUEST_URI']  ?>" class="w-25 limit-form">
+      <div class="container d-flex justify-content-end ">
+        <form action="/hiren/mvc2/app/views/course/" class="w-25 limit-form d-flex">
           <select class="form-select limit" aria-label="Default select example" name="limit" >
             <option value="5" <?php echo ($_GET['limit'] ?? 5) == 5 ? 'selected' : '' ?>>5</option>
             <option value="10" <?php echo ($_GET['limit'] ?? 5) == 10 ? 'selected' : '' ?>>10</option>
             <option value="20" <?php echo ($_GET['limit'] ?? 5) == 20 ? 'selected' : '' ?>>20</option>
             <option value="50" <?php echo ($_GET['limit'] ?? 5) == 50 ? 'selected' : '' ?>>50</option>
           </select>
-          <input type="button" value="filter" class="btn btn-primary">
+          <input type="submit" value="filter" class="btn btn-primary">
         </form>
       </div>
       <table class="table table-striped">
