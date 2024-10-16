@@ -107,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $course_controller = new CourseController();
         $course_controller->id = $_POST['id'];
         $course_controller->delete();
-        header('Location:' .  '/hiren/mvc2/app/views/course');
+        header('Location:' .  $_SERVER['HTTP_REFERER']);
     } else {
         $course_controller = new CourseController();
         $course_controller->name = $_POST['name'];

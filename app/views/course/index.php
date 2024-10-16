@@ -21,6 +21,7 @@ $student = new Student();
   unset($pagination_data['pagination_numbers']);
   $courses = $pagination_data;
 
+  echo $_SERVER['HTTP_REFERER'];
 ?>
 <!doctype html>
 <html lang="en">

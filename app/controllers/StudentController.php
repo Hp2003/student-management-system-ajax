@@ -251,7 +251,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $student_controller->id = $_POST['id'];
 
         if ($student_controller->delete()) {
-            header('Location:' . '/hiren/mvc2/app/views/student');
+            header('Location:' . $_SERVER['HTTP_REFERER']);
         }
     }
 }
