@@ -3,9 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/Dbconnect.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Student.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/utils/Paginator.php');
 
-class Course extends Dbconnect {
-
-    use Paginator;
+class Course extends Paginator  {
 
     public $id;
     public $name;
@@ -42,6 +40,11 @@ class Course extends Dbconnect {
             
         }
 
+    }
+
+    public function connect() {
+        $conn = new Dbconnect();
+        return $conn->connect();
     }
 
     /**

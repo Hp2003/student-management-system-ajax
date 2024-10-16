@@ -1,7 +1,7 @@
 <?php 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/Dbconnect.php');
 
-trait Paginator {
+class Paginator extends Dbconnect {
 
     private $page ; // current page
     private $total_page;  // total pages can be generated from current table
@@ -26,10 +26,11 @@ trait Paginator {
         $data = [];
         $offset = $this->limit * ( $page - 1 );
         $sql = "";
-        // if(empty($order_by)){
-        //     $sql = "SELECT * FROM $this->table ORDER BY id DESC  LIMIT  ? OFFSET  ? ";
-        // }
-        $sql = "SELECT * FROM $this->table ORDER BY $order_by $type LIMIT ? OFFSET ?";
+
+        if($this->table === 'students'){
+            // $sql = "SELECT * FROM $this->table ORDER BY $order_by $type LIMIT ? OFFSET ?";
+            $sql = "select students.*, courses.name as course_name from students left join courses on students.course_id = courses.id ORDER BY $order_by $type LIMIT ? OFFSET ?  ";
+        }
 
 
         $stmt = $conn->prepare($sql);
@@ -53,7 +54,6 @@ trait Paginator {
      * @return array
      */
     public function pagination_numbers() {
-        // $total_page = !is_int(($this->get_total_records() / $this->limit)) ? ($this->get_total_records() / $this->limit) + 1 :  $this->get_total_records() / $this->limit;
         $total_page = ceil($this->get_total_records() / $this->limit);
         $this->total_page  = $total_page;
         $to = $this->to = $this->get_to();
