@@ -161,7 +161,7 @@ class StudentController
         //     $errors['course_id'] = 'please select a course';
         // }
 
-        if ($errors['email'] || $errors['phone_number']) {
+        if (!empty($errors['email']) || !empty($errors['phone_number'])) {
             return $errors;
         }
 
@@ -171,7 +171,7 @@ class StudentController
         $this->email = $this->test_input($this->email);
         $this->phone_number = $this->test_input($this->phone_number);
         $this->gender = $this->test_input($this->gender);
-        $this->course_id = $this->test_input($this->course_id);
+        // $this->course_id = $this->test_input($this->course_id);
 
         // Validating all inputs
         if (!$this->test_email($this->email)) {
@@ -221,7 +221,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $student_controller->phone_number = $_POST['phone_number'] ?? '';
         $student_controller->gender = $_POST['gender'] ?? '';
         $student_controller->course_id = empty($_POST['course_id']) ? NULL : $_POST['course_id'];
-
 
         if ($student_controller->save()) {
             header('Location:' . '/hiren/mvc2/app/views/student');

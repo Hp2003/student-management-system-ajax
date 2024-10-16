@@ -13,18 +13,25 @@ trait Paginator {
      *
      * @return array
      */
-    public function pagination($page, $limit) {
+    public function pagination($page, $limit, $order_by = "", $type = "") {
 
         if($page <= 0 ) {
             return [];
         }
+        $type = $type === "" ? "DESC" : $type;
+        $order_by = $order_by === "" ? "id"  : $order_by;
         $this->limit = $limit;
         $this->page = $page;
         $conn = $this->connect();
         $data = [];
         $offset = $this->limit * ( $page - 1 );
+        $sql = "";
+        // if(empty($order_by)){
+        //     $sql = "SELECT * FROM $this->table ORDER BY id DESC  LIMIT  ? OFFSET  ? ";
+        // }
+        $sql = "SELECT * FROM $this->table ORDER BY $order_by $type LIMIT ? OFFSET ?";
 
-        $sql = "SELECT * FROM $this->table LIMIT  ? OFFSET  ? ";
+
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('ii', $this->limit, $offset);
         $stmt->execute();

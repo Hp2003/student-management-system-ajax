@@ -1,7 +1,9 @@
 <?php 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/Dbconnect.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/utils/Paginator.php');
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 class Student extends Dbconnect {
 
@@ -63,11 +65,11 @@ class Student extends Dbconnect {
 
         $conn = $this->connect();
 
-        $query = "INSERT INTO $this->table (first_name, last_name, email, gender, course_id, phone_number)
-        VALUES(?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO $this->table (first_name, last_name, email, gender, course_id, phone_number, status)
+        VALUES(?, ?, ?, ?, ?, ?, ?)";
         $statement = $conn->prepare($query);
-        $statement->bind_param('ssssis', $this->first_name, $this->last_name, $this->email, $this->gender, $course_id, $this->phone_number);
-        $statement->execute();
+        $statement->bind_param('ssssisi', $this->first_name, $this->last_name, $this->email, $this->gender, $course_id, $this->phone_number, $status);
+        // $statement->execute();
         $conn->close();
         
         return true;
@@ -240,8 +242,8 @@ class Student extends Dbconnect {
 
     }
 
-    public function paginate($page, $limit) {
-        return $this->pagination($page, $limit);
+    public function paginate($page, $limit, $column, $type) {
+        return $this->pagination($page, $limit, $column, $type);
     }
 
 }
