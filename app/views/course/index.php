@@ -38,12 +38,13 @@ $courses = $pagination_data;
     <div class="container mt-5">
       <div class="container d-flex justify-content-end">
         <form action="<?php echo $_SERVER['REQUEST_URI']  ?>" class="w-25 limit-form">
-          <select class="form-select limit" aria-label="Default select example" name="limit" onchange="submit()">
+          <select class="form-select limit" aria-label="Default select example" name="limit" >
             <option value="5" <?php echo ($_GET['limit'] ?? 5) == 5 ? 'selected' : '' ?>>5</option>
             <option value="10" <?php echo ($_GET['limit'] ?? 5) == 10 ? 'selected' : '' ?>>10</option>
             <option value="20" <?php echo ($_GET['limit'] ?? 5) == 20 ? 'selected' : '' ?>>20</option>
             <option value="50" <?php echo ($_GET['limit'] ?? 5) == 50 ? 'selected' : '' ?>>50</option>
           </select>
+          <input type="button" value="filter" class="btn btn-primary">
         </form>
       </div>
       <table class="table table-striped">
@@ -89,14 +90,7 @@ $courses = $pagination_data;
     <?php require_once('../paginator.php') ?>
   <?php } ?>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  <script>
-    function send_request() {
-      let limit = document.querySelector('.limit').value;
-      let form = document.querySelector('.limit-form');
 
-
-    }
-  </script>
 </body>
 
 </html>
