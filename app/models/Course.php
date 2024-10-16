@@ -9,7 +9,7 @@ class Course extends Paginator  {
     public $name;
     public $created_at;
     public $updated_at;
-    private $table = 'courses';
+    protected $table = 'courses';
 
     /**
      * Finds uesr with given id
@@ -42,6 +42,11 @@ class Course extends Paginator  {
 
     }
 
+    /**
+     * makes connection with database
+     *
+     * @return object
+     */
     public function connect() {
         $conn = new Dbconnect();
         return $conn->connect();
