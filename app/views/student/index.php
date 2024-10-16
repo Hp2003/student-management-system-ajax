@@ -51,7 +51,7 @@ $limit = $_GET['limit'] ?? 5;
         <form action="<?php echo $_SERVER['REQUEST_URI'] ?>" class="w-25 limit-form d-flex ">
           <input type="hidden" name="sort_by" value=<?php echo $sort_by ?>>
           <input type="hidden" name="type" value=<?php echo $type ?>>
-          <select class="form-select limit" aria-label="Default select example" name="limit" >
+          <select class="form-select limit" aria-label="Default select example" name="limit">
             <option value="5" <?php echo $limit == 5 ? 'selected' : '' ?>>5</option>
             <option value="10" <?php echo $limit == 10 ? 'selected' : '' ?>>10</option>
             <option value="20" <?php echo $limit == 20 ? 'selected' : '' ?>>20</option>
@@ -59,39 +59,122 @@ $limit = $_GET['limit'] ?? 5;
           </select>
           <input type="submit" value="Filter" class="btn btn-primary">
         </form>
-        <form action="<?php echo $_SERVER['REQUEST_URI']  ?>" class="w-25 limit-form d-flex">
-          <input type="hidden" name="limit" value="<?php echo $limit ?>">
-          <select class="form-select" aria-label="Default select example" name="sort_by">
-              <option value="id" >id</option>
-              <option value="first_name" <?php echo $sort_by === "first_name" ? 'selected' : '' ?> >first_name</option>
-              <option value="last_name" <?php echo $sort_by === "last_name" ? 'selected' : '' ?> >last_name</option>
-              <option value="email" <?php echo $sort_by === "email" ? 'selected' : '' ?> >email</option>
-              <option value="gender" <?php echo $sort_by === "gender" ? 'selected' : '' ?> >gender</option>
-              <option value="course" <?php echo $sort_by === "course" ? 'selected' : '' ?> >course</option>
-              <option value="status" <?php echo $sort_by === "status" ? 'selected' : '' ?> >status</option>
-              <option value="phone_number" <?php echo $sort_by === "phone_number" ? 'selected' : '' ?> >phone</option>
-              <option value="created_at" <?php echo $sort_by === "created_at" ? 'selected' : '' ?> >created_at</option>
-              <option value="updated_at" <?php echo $sort_by === "updated_at" ? 'selected' : '' ?> >updated_at</option>
-          </select>
-          <input type="submit" class="btn <?php $type === "ASC" ? "btn btn-primary" : "btn btn-warning" ?>" name="type" value="ASC">
-          <input type="submit" class="btn <?php $type === "DESC" ? "btn btn-primary" : "btn btn-warning" ?> " name="type" value="DESC">
-        </form>
       </div>
       <table class="table table-striped">
         <thead>
           <tr class="user-select-none text-center">
-            <th scope="col " class="heading"  >id</th>
-            <th scope="col " class="heading" >first_name</th>
-            <th scope="col " class="heading" >last_name</th>
-            <th scope="col " class="heading" >email</th>
-            <th scope="col " class="heading" >gender</th>
-            <th scope="col " class="heading" >course</th>
-            <th scope="col " class="heading" >status</th>
-            <th scope="col " class="heading" >phone</th>
-            <th scope="col " class="heading" >created_at</th>
-            <th scope="col " class="heading" >updated_at</th>
-            <th scope="col " ></th>
-            <th scope="col " ></th>
+            <th scope="col " class="heading">
+              <form action="/hiren/mvc2/app/views/student/">
+                <input type="hidden" name="sort_by" value="id">
+                <input type="hidden" name="page" value="<?php echo $page ?>">
+                <input type="hidden" name="limit" value="<?php echo $limit ?>">
+                <input type="hidden" name="type" value="<?php echo $type ?>">
+                <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+                <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+              </form>
+              <p>id</p>
+            </th>
+            <th scope="col " class="heading">
+              <form action="/hiren/mvc2/app/views/student/">
+                <input type="hidden" name="sort_by" value="first_name">
+                <input type="hidden" name="page" value="<?php echo $page ?>">
+                <input type="hidden" name="limit" value="<?php echo $limit ?>">
+                <input type="hidden" name="type" value="<?php echo $type ?>">
+                <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+                <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+              </form>
+              <p>first_name</p>
+            </th>
+            <th scope="col " class="heading">
+              <form action="/hiren/mvc2/app/views/student/">
+                <input type="hidden" name="sort_by" value="last_name">
+                <input type="hidden" name="page" value="<?php echo $page ?>">
+                <input type="hidden" name="limit" value="<?php echo $limit ?>">
+                <input type="hidden" name="type" value="<?php echo $type ?>">
+                <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+                <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+              </form>
+              <p>last_name</p>
+            </th>
+            <th scope="col " class="heading">
+              <form action="/hiren/mvc2/app/views/student/">
+                <input type="hidden" name="sort_by" value="email">
+                <input type="hidden" name="page" value="<?php echo $page ?>">
+                <input type="hidden" name="limit" value="<?php echo $limit ?>">
+                <input type="hidden" name="type" value="<?php echo $type ?>">
+                <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+                <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+              </form>
+              <p>email</p>
+            </th>
+            <th scope="col " class="heading">
+              <form action="/hiren/mvc2/app/views/student/">
+                <input type="hidden" name="sort_by" value="gender">
+                <input type="hidden" name="page" value="<?php echo $page ?>">
+                <input type="hidden" name="limit" value="<?php echo $limit ?>">
+                <input type="hidden" name="type" value="<?php echo $type ?>">
+                <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+                <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+              </form>
+              <p>gender</p>
+            </th>
+            <th scope="col " class="heading">
+              <form action="/hiren/mvc2/app/views/student/">
+                <input type="hidden" name="sort_by" value="course_id">
+                <input type="hidden" name="page" value="<?php echo $page ?>">
+                <input type="hidden" name="limit" value="<?php echo $limit ?>">
+                <input type="hidden" name="type" value="<?php echo $type ?>">
+                <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+                <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+              </form>
+              <p>course</p>
+            </th>
+            <th scope="col " class="heading">
+              <form action="/hiren/mvc2/app/views/student/">
+                <input type="hidden" name="sort_by" value="status">
+                <input type="hidden" name="page" value="<?php echo $page ?>">
+                <input type="hidden" name="limit" value="<?php echo $limit ?>">
+                <input type="hidden" name="type" value="<?php echo $type ?>">
+                <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+                <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+              </form>
+              <p>status</p>
+            </th>
+            <th scope="col " class="heading">
+              <form action="/hiren/mvc2/app/views/student/">
+                <input type="hidden" name="sort_by" value="phone_number">
+                <input type="hidden" name="page" value="<?php echo $page ?>">
+                <input type="hidden" name="limit" value="<?php echo $limit ?>">
+                <input type="hidden" name="type" value="<?php echo $type ?>">
+                <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+                <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+              </form>
+              <p>phone</p>
+            </th>
+            <th scope="col " class="heading">
+              <form action="/hiren/mvc2/app/views/student/">
+                <input type="hidden" name="sort_by" value="created_at">
+                <input type="hidden" name="page" value="<?php echo $page ?>">
+                <input type="hidden" name="limit" value="<?php echo $limit ?>">
+                <input type="hidden" name="type" value="<?php echo $type ?>">
+                <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+                <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+              </form>
+              <p>created_at</p>
+            </th>
+            <th scope="col " class="heading">
+              <form action="/hiren/mvc2/app/views/student/">
+                <input type="hidden" name="sort_by" value="updated_at">
+                <input type="hidden" name="page" value="<?php echo $page ?>">
+                <input type="hidden" name="limit" value="<?php echo $limit ?>">
+                <input type="hidden" name="type" value="<?php echo $type ?>">
+                <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+                <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+              </form>
+              <p>updated_at</p>
+            </th>
+            <th scope="col "></th>
+            <th scope="col "></th>
           </tr>
         </thead>
         <tbody>
