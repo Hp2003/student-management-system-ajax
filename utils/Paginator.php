@@ -13,11 +13,12 @@ trait Paginator {
      *
      * @return array
      */
-    public function pagination($page) {
+    public function pagination($page, $limit) {
 
         if($page <= 0 ) {
             return [];
         }
+        $this->limit = $limit;
         $this->page = $page;
         $conn = $this->connect();
         $data = [];
