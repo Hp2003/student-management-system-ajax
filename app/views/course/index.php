@@ -81,7 +81,7 @@ $courses = $pagination_data;
             </th>
             <th scope="col">
             <form action="/hiren/mvc2/app/views/course/">
-                <input type="hidden" name="sort_by" value="id">
+                <input type="hidden" name="sort_by" value="students">
                 <input type="hidden" name="page" value="<?php echo $page ?>">
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
                 <input type="hidden" name="type" value="<?php echo $type ?>">
@@ -124,7 +124,7 @@ $courses = $pagination_data;
             <tr>
               <th scope="row"><?php echo $course['id'] ?></th>
               <td><?php echo $course['name'] ?></td>
-              <td><?php echo $student->get_total_students($course['id']) ?></td>
+              <td><?php echo $course['student_count'] ?></td>
               <td><?php echo date('d-m-Y h : i a', strtotime($course['created_at'])) ?></td>
               <td><?php echo date('d-m-Y h : i a', strtotime($course['updated_at'])) ?></td>
               <td>
