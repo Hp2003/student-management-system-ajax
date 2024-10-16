@@ -3,10 +3,10 @@ require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Course.php');
 
 /**
  * 
- * Main trait used to make validation in all modules
+ * Main class used to make validation in all modules
  * 
  */
-trait Validator
+class Validator
 {
     /**
      * Filters input and return senitized data

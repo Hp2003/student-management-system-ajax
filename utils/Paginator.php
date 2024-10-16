@@ -19,18 +19,22 @@ class Paginator extends Dbconnect {
             return [];
         }
         $type = $type === "" ? "DESC" : $type;
-        $order_by = $order_by === "" ? "id"  : $order_by;
+        $order_by = ($order_by === "") ? "id"  : $order_by;
         $this->limit = $limit;
         $this->page = $page;
         $conn = $this->connect();
         $data = [];
         $offset = $this->limit * ( $page - 1 );
         $sql = "";
+        if($order_by === 'students') $order_by = 'student_count';
 
         if($this->table === 'students'){
             $sql = "select students.*, courses.name as course_name from students left join courses on students.course_id = courses.id ORDER BY $order_by $type LIMIT ? OFFSET ?  ";
+            if($order_by === 'course_id'){
+                $sql = "select students.*, courses.name as course_name from students left join courses on students.course_id = courses.id ORDER BY CASE WHEN courses.name IS NULL THEN 1 ELSE 0 END, courses.name $type LIMIT ? OFFSET ?";
+            }
         }else{
-            $sql = "select * from $this->table LIMIT ? OFFSET ?";
+            $sql = "select courses.*, count(students.id) as student_count from courses left join students on courses.id = students.course_id GROUP BY courses.id ORDER BY $order_by $type LIMIT  ? OFFSET  ?";
         }
 
 

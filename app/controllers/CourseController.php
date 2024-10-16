@@ -8,10 +8,8 @@ if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/utils/Validator.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Course.php');
 
-class CourseController
+class CourseController extends Validator
 {
-
-    use Validator;
 
     public $id;
     public $name;
