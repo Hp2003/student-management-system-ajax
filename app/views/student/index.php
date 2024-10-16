@@ -48,15 +48,16 @@ $limit = $_GET['limit'] ?? 5;
     } else {
     ?>
       <div class="container d-flex justify-content-around">
-        <form action="<?php echo $_SERVER['REQUEST_URI'] ?>" class="w-25 limit-form">
+        <form action="<?php echo $_SERVER['REQUEST_URI'] ?>" class="w-25 limit-form d-flex ">
           <input type="hidden" name="sort_by" value=<?php echo $sort_by ?>>
           <input type="hidden" name="type" value=<?php echo $type ?>>
-          <select class="form-select limit" aria-label="Default select example" name="limit" onchange="submit()">
+          <select class="form-select limit" aria-label="Default select example" name="limit" >
             <option value="5" <?php echo $limit == 5 ? 'selected' : '' ?>>5</option>
             <option value="10" <?php echo $limit == 10 ? 'selected' : '' ?>>10</option>
             <option value="20" <?php echo $limit == 20 ? 'selected' : '' ?>>20</option>
             <option value="50" <?php echo $limit == 50 ? 'selected' : '' ?>>50</option>
           </select>
+          <input type="submit" value="Filter" class="btn btn-primary">
         </form>
         <form action="<?php echo $_SERVER['REQUEST_URI']  ?>" class="w-25 limit-form d-flex">
           <input type="hidden" name="limit" value="<?php echo $limit ?>">
@@ -79,16 +80,16 @@ $limit = $_GET['limit'] ?? 5;
       <table class="table table-striped">
         <thead>
           <tr class="user-select-none text-center">
-            <th scope="col " class="heading" onclick="filter_table(0)" >id</th>
-            <th scope="col " class="heading" onclick="filter_table(1)">first_name</th>
-            <th scope="col " class="heading" onclick="filter_table(2)">last_name</th>
-            <th scope="col " class="heading" onclick="filter_table(3)">email</th>
-            <th scope="col " class="heading" onclick="filter_table(4)">gender</th>
-            <th scope="col " class="heading" onclick="filter_table(5)">course</th>
-            <th scope="col " class="heading" onclick="filter_table(6)">status</th>
-            <th scope="col " class="heading" onclick="filter_table(7)">phone</th>
-            <th scope="col " class="heading" onclick="filter_table(8)">created_at</th>
-            <th scope="col " class="heading" onclick="filter_table(9)">updated_at</th>
+            <th scope="col " class="heading"  >id</th>
+            <th scope="col " class="heading" >first_name</th>
+            <th scope="col " class="heading" >last_name</th>
+            <th scope="col " class="heading" >email</th>
+            <th scope="col " class="heading" >gender</th>
+            <th scope="col " class="heading" >course</th>
+            <th scope="col " class="heading" >status</th>
+            <th scope="col " class="heading" >phone</th>
+            <th scope="col " class="heading" >created_at</th>
+            <th scope="col " class="heading" >updated_at</th>
             <th scope="col " ></th>
             <th scope="col " ></th>
           </tr>
@@ -124,18 +125,6 @@ $limit = $_GET['limit'] ?? 5;
 <?php } ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-<script>
-  function filter_table(index) {
-    let value = document.querySelectorAll('.heading')[index].textContent;
-    if(value === 'phone') value = 'phone_number';
-    console.log(value);
-    var currentURL=window.location.href.split('?')[0];
-    const urlParams = new URLSearchParams(window.location.search);
-    let type = urlParams.get('type') === "DESC" || urlParams.get('type') === "" ? 'ASC' : 'DESC';
-
-    window.location.href = (currentURL + "?sort_by=" + value + "&type=" + type);
-  }
-</script>
 </body>
 
 </html>
