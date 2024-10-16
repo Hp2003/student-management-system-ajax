@@ -25,6 +25,10 @@ class Student extends Paginator {
      */
     public function __construct($id = null)
     {
+
+    }
+
+    public function find($id = null) {
         if($id !== null){
 
             // getting student
@@ -49,10 +53,13 @@ class Student extends Paginator {
             $this->phone_number = $student['phone_number'];
 
         }
-
     }
 
-
+    /**
+     * makes connection with database
+     *
+     * @return object
+     */
     public function connect() {
         $conn = new Dbconnect();
         return $conn->connect();
