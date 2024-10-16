@@ -156,8 +156,8 @@ class Course extends Dbconnect {
 
     }
 
-    public function paginate($page) {
-        return $this->pagination($page);
+    public function paginate($page, $limit) {
+        return $this->pagination($page, $limit);
     }
 
 }

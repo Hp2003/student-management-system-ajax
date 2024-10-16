@@ -15,8 +15,8 @@ $courses = $course->get_formatted_course();
 $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
 
 $student = new Student();
-$page = !empty($_GET['page']) ? $_GET['page'] : 1 ;
-$pagination_data = $student->paginate($page);
+$page = !empty($_GET['page']) ? $_GET['page'] : 1;
+$pagination_data = $student->paginate($page, $_GET['limit'] ?? 5);
 
 $pages = $pagination_data['pagination_numbers'] ?? 0;
 unset($pagination_data['pagination_numbers']);
@@ -43,6 +43,16 @@ $students = $pagination_data;
     <?php
     } else {
     ?>
+      <div class="container d-flex justify-content-end">
+        <form action="<?php echo $_SERVER['REQUEST_URI']  ?>" class="w-25 limit-form">
+          <select class="form-select limit" aria-label="Default select example" name="limit" onchange="submit()">
+            <option value="5" <?php echo ($_GET['limit'] ?? 5) == 5 ? 'selected' : '' ?>>5</option>
+            <option value="10" <?php echo ($_GET['limit'] ?? 5) == 10 ? 'selected' : '' ?>>10</option>
+            <option value="20" <?php echo ($_GET['limit'] ?? 5) == 20 ? 'selected' : '' ?>>20</option>
+            <option value="50" <?php echo ($_GET['limit'] ?? 5) == 50 ? 'selected' : '' ?>>50</option>
+          </select>
+        </form>
+      </div>
       <table class="table table-striped">
         <thead>
           <tr>
