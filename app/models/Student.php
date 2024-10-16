@@ -63,13 +63,14 @@ class Student extends Dbconnect {
 
         $course_id = empty($this->course_id) ? NULL : $this->course_id;
 
+        $status = !($course_id === NULL) ;
         $conn = $this->connect();
 
         $query = "INSERT INTO $this->table (first_name, last_name, email, gender, course_id, phone_number, status)
         VALUES(?, ?, ?, ?, ?, ?, ?)";
         $statement = $conn->prepare($query);
         $statement->bind_param('ssssisi', $this->first_name, $this->last_name, $this->email, $this->gender, $course_id, $this->phone_number, $status);
-        // $statement->execute();
+        $statement->execute();
         $conn->close();
         
         return true;
