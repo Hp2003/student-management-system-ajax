@@ -5,7 +5,7 @@ trait Paginator {
 
     private $page ; // current page
     private $total_page;  // total pages can be generated from current table
-    private $limit = 1;
+    private $limit = 10;
     private $from;
     private $to;
     /**
@@ -14,6 +14,10 @@ trait Paginator {
      * @return array
      */
     public function pagination($page) {
+
+        if($page <= 0 ) {
+            return [];
+        }
         $this->page = $page;
         $conn = $this->connect();
         $data = [];
@@ -41,13 +45,15 @@ trait Paginator {
      * @return array
      */
     public function pagination_numbers() {
-        $total_page = !is_int(($this->get_total_records() / $this->limit)) ? ($this->get_total_records() / $this->limit) + 1 :  $this->get_total_records() / $this->limit;
+        // $total_page = !is_int(($this->get_total_records() / $this->limit)) ? ($this->get_total_records() / $this->limit) + 1 :  $this->get_total_records() / $this->limit;
+        $total_page = ceil($this->get_total_records() / $this->limit);
         $this->total_page  = $total_page;
         $to = $this->to = $this->get_to();
         $total_records = $this->get_total_records();
         $prev_page = $this->get_prev_page();
         $next_page = $this->get_next_page();
         $last_page = $this->get_last_page();
+        $from = $this->get_from();
         return array (
             'page' => $this->page,
             'total_pages' => $total_page,
@@ -56,7 +62,7 @@ trait Paginator {
             'next_page' => $next_page,
             'last_page' => $last_page,
             'current' => $this->page,
-            'from' => $this->get_from(),
+            'from' => $from,
             'to' => $to,
         );
     }
@@ -122,36 +128,26 @@ trait Paginator {
      */
     public function get_from() {
 
-        $end = 10;
         $page = $this->page;
         $total_page = $this->total_page;
-        // if($start > $this->total_page ){
-        //     return 0;
-        // }
-
-        // if($start >= $this->total_page - 4 && ($this->total_page - 4  > 0) ){
-        //     return $this->total_page - 9;
-        //     // return 3;
-        // }
-        // if($start > ($end / 2) && ( $start <= $this->total_page )) {
-        //     return $start - 5;
-        //     // return 5;
-        // }
 
         if($page > $total_page) {
-            return false;
+            return 0;
         }
 
         if($total_page < 10 ){
-            return $total_page;
+            return 1;
         }
+        
+        // Checking if current page is in last list
         if($page - ( $total_page - $page ) >= $total_page - 10) {
             return $total_page - 9 ;
         }
+
         if($page < $total_page && $page - 4 > 0 ) {
             return $page - 4;
         }else{
-            return $end;
+            return 1;
         }
     }
     
@@ -163,14 +159,18 @@ trait Paginator {
     public function get_to() {
         $end = 10 ;
         $start = $this->page;
+
+        // base case if user give wrong page number
         if($start > $this->total_page){
             return 0;
         }
 
+        // returns extra 5 page if there can be more then 5 pages
         if($start > 5 && ($this->total_page > $start + 5 ) ) {
             return $start + 5;
         }
 
+        // returns 10 ( max page link values ) if current page is lower then max pages and can't be having more 5 pages
         if($end < $this->total_page && ( $this->page < $end ) && $this->page + 5 < $this->total_page ){
             return $end;
         }

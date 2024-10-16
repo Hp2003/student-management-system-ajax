@@ -15,9 +15,10 @@ $courses = $course->get_formatted_course();
 $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
 
 $student = new Student();
-$pagination_data = $student->paginate($_GET['page'] ?? 1);
+$page = !empty($_GET['page']) ? $_GET['page'] : 1 ;
+$pagination_data = $student->paginate($page);
 
-$pages = $pagination_data['pagination_numbers'];
+$pages = $pagination_data['pagination_numbers'] ?? 0;
 unset($pagination_data['pagination_numbers']);
 $students = $pagination_data;
 

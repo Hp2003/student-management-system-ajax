@@ -17,7 +17,7 @@ $student = new Student();
   $course = new Course();
   $pagination_data = $course->paginate($_GET['page'] ?? 1);
 
-  $pages = $pagination_data['pagination_numbers'];
+  $pages = $pagination_data['pagination_numbers'] ?? 0;
   unset($pagination_data['pagination_numbers']);
   $courses = $pagination_data;
 
