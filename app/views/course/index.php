@@ -8,16 +8,23 @@ if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Course.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Student.php');
 
+$page = !empty($_GET['page']) ? $_GET['page'] : 1;
+$sort_by = !empty($_GET['sort_by']) ? $_GET['sort_by'] : "";
+$type = !empty($_GET['type']) ? $_GET['type'] : "";
+$limit = $_GET['limit'] ?? 5;
+
 $navbar = include_once('../nav.php');
 
 $student = new Student();
 
 $course = new Course();
-$pagination_data = $course->paginate($_GET['page'] ?? 1, $_GET['limit'] ?? 5);
+$pagination_data = $course->paginate($page, $limit, $sort_by, $type);
 
 $pages = $pagination_data['pagination_numbers'] ?? 0;
 unset($pagination_data['pagination_numbers']);
 $courses = $pagination_data;
+
+
 
 ?>
 <!doctype html>
@@ -39,10 +46,10 @@ $courses = $pagination_data;
       <div class="container d-flex justify-content-end ">
         <form action="/hiren/mvc2/app/views/course/" class="w-25 limit-form d-flex">
           <select class="form-select limit" aria-label="Default select example" name="limit" >
-            <option value="5" <?php echo ($_GET['limit'] ?? 5) == 5 ? 'selected' : '' ?>>5</option>
-            <option value="10" <?php echo ($_GET['limit'] ?? 5) == 10 ? 'selected' : '' ?>>10</option>
-            <option value="20" <?php echo ($_GET['limit'] ?? 5) == 20 ? 'selected' : '' ?>>20</option>
-            <option value="50" <?php echo ($_GET['limit'] ?? 5) == 50 ? 'selected' : '' ?>>50</option>
+            <option value="5" <?php  echo $limit == 5 ? 'selected' : '' ?>>5</option>
+            <option value="10" <?php echo $limit == 10 ? 'selected' : '' ?>>10</option>
+            <option value="20" <?php echo $limit == 20 ? 'selected' : '' ?>>20</option>
+            <option value="50" <?php echo $limit == 50 ? 'selected' : '' ?>>50</option>
           </select>
           <input type="submit" value="filter" class="btn btn-primary">
         </form>
@@ -50,11 +57,61 @@ $courses = $pagination_data;
       <table class="table table-striped">
         <thead>
           <tr>
-            <th scope="col">id</th>
-            <th scope="col">name</th>
-            <th scope="col">students</th>
-            <th scope="col">created_at</th>
-            <th scope="col">updated_at</th>
+            <th scope="col">
+            <form action="/hiren/mvc2/app/views/course/">
+                <input type="hidden" name="sort_by" value="id">
+                <input type="hidden" name="page" value="<?php echo $page ?>">
+                <input type="hidden" name="limit" value="<?php echo $limit ?>">
+                <input type="hidden" name="type" value="<?php echo $type ?>">
+                <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+                <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+              </form>
+              id
+            </th>
+            <th scope="col">
+            <form action="/hiren/mvc2/app/views/course/">
+                <input type="hidden" name="sort_by" value="name">
+                <input type="hidden" name="page" value="<?php echo $page ?>">
+                <input type="hidden" name="limit" value="<?php echo $limit ?>">
+                <input type="hidden" name="type" value="<?php echo $type ?>">
+                <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+                <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+              </form>
+              name
+            </th>
+            <th scope="col">
+            <form action="/hiren/mvc2/app/views/course/">
+                <input type="hidden" name="sort_by" value="id">
+                <input type="hidden" name="page" value="<?php echo $page ?>">
+                <input type="hidden" name="limit" value="<?php echo $limit ?>">
+                <input type="hidden" name="type" value="<?php echo $type ?>">
+                <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+                <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+              </form>
+              students
+            </th>
+            <th scope="col">
+            <form action="/hiren/mvc2/app/views/course/">
+                <input type="hidden" name="sort_by" value="created_at">
+                <input type="hidden" name="page" value="<?php echo $page ?>">
+                <input type="hidden" name="limit" value="<?php echo $limit ?>">
+                <input type="hidden" name="type" value="<?php echo $type ?>">
+                <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+                <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+              </form>
+              created_at
+            </th>
+            <th scope="col">
+            <form action="/hiren/mvc2/app/views/course/">
+                <input type="hidden" name="sort_by" value="updated_at">
+                <input type="hidden" name="page" value="<?php echo $page ?>">
+                <input type="hidden" name="limit" value="<?php echo $limit ?>">
+                <input type="hidden" name="type" value="<?php echo $type ?>">
+                <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+                <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+              </form>
+              updated_at
+            </th>
             <th scope="col"></th>
             <th scope="col"></th>
           </tr>

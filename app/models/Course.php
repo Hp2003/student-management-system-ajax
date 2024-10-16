@@ -163,8 +163,8 @@ class Course extends Paginator
         return $courses;
     }
 
-    public function paginate($page, $limit)
+    public function paginate($page, $limit, $order_by = "", $type = "")
     {
-        return $this->pagination($page, $limit);
+        return $this->pagination($page, $limit, $order_by, $type);
     }
 }

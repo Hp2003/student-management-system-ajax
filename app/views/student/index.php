@@ -72,7 +72,7 @@ $limit = $_GET['limit'] ?? 5;
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
               </form>
-              <p>id</p>
+              <p class="mx-2">id</p>
             </th>
             <th scope="col " class="heading">
               <form action="/hiren/mvc2/app/views/student/">
