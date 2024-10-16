@@ -63,13 +63,14 @@ class Student extends Dbconnect {
 
         $course_id = empty($this->course_id) ? NULL : $this->course_id;
 
+        $status = !($course_id === NULL) ;
         $conn = $this->connect();
 
         $query = "INSERT INTO $this->table (first_name, last_name, email, gender, course_id, phone_number, status)
         VALUES(?, ?, ?, ?, ?, ?, ?)";
         $statement = $conn->prepare($query);
         $statement->bind_param('ssssisi', $this->first_name, $this->last_name, $this->email, $this->gender, $course_id, $this->phone_number, $status);
-        // $statement->execute();
+        $statement->execute();
         $conn->close();
         
         return true;
@@ -84,12 +85,13 @@ class Student extends Dbconnect {
     public function update() {
 
         $course_id = empty($this->course_id) ? NULL : $this->course_id;
+        $status = !($course_id === NULL) ;
 
-        $query = "UPDATE $this->table SET first_name = ?, last_name = ?, email = ?, phone_number = ?, gender = ?, course_id = ?  WHERE id = ? ";
+        $query = "UPDATE $this->table SET first_name = ?, last_name = ?, email = ?, phone_number = ?, gender = ?, course_id = ?, status = ?  WHERE id = ? ";
 
         $conn = $this->connect();
         $statement = $conn->prepare($query);
-        $statement->bind_param('sssssii', $this->first_name, $this->last_name, $this->email, $this->phone_number, $this->gender, $course_id, $this->id);
+        $statement->bind_param('sssssiii', $this->first_name, $this->last_name, $this->email, $this->phone_number, $this->gender, $course_id, $status, $this->id);
         $result = $statement->execute();    
         $conn->close();
 

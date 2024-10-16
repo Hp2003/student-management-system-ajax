@@ -183,9 +183,9 @@ class StudentController
         if (!$this->test_name($this->last_name)) {
             $errors['last_name'] = "first name should only contain a-z or ' ";
         }
-        if (!$this->test_course($this->course_id) && $this->course_id != NULL) {
-            $errors['course_id'] = 'please select a valid course';
-        }
+        // if (!$this->test_course($this->course_id) && $this->course_id != NULL) {
+        //     $errors['course_id'] = 'please select a valid course';
+        // }
         if (!$this->test_phone_number($this->phone_number)) {
             $errors['phone_number'] = 'please enter a valid phone number eg: 1234567890';
         }
@@ -222,6 +222,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $student_controller->gender = $_POST['gender'] ?? '';
         $student_controller->course_id = empty($_POST['course_id']) ? NULL : $_POST['course_id'];
 
+        // $student_controller->save();
         if ($student_controller->save()) {
             header('Location:' . '/hiren/mvc2/app/views/student');
         } else {
