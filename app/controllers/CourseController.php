@@ -63,7 +63,8 @@ class CourseController
             $this->set_values_to_session('update_course_form_input_values');
             return false;
         }
-        $course = new Course($this->id);
+        $course = new Course();
+        $course->find($this->id);
         $course->name = $_POST['name'];
         return $course->update();
     }
@@ -76,7 +77,8 @@ class CourseController
     public function delete()
     {
 
-        $course = new Course($this->id);
+        $course = new Course();
+        $course->find($this->id);
         return $course->delete();
     }
 
@@ -92,6 +94,9 @@ class CourseController
         );
     }
 }
+
+
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($_POST['operation'] === 'edit') {

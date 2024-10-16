@@ -7,7 +7,8 @@
 
     require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Course.php');
     $navbar = include_once('../nav.php');
-    $course = new Course($_GET['id']);
+    $course = new Course();
+    $course->find($_GET['id']);
 
     $duplicate_course_error = $_SESSION['update_form_duplicate_course_error'] ?? '';
     $error_value = $_SESSION['update_course_form_input_values'] ?? [];

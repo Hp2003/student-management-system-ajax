@@ -1,9 +1,10 @@
-<?php 
+<?php
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/Dbconnect.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Student.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/utils/Paginator.php');
 
-class Course extends Paginator  {
+class Course extends Paginator
+{
 
     public $id;
     public $name;
@@ -18,10 +19,9 @@ class Course extends Paginator  {
      * 
      */
 
-    public function __construct($id = null)
+    public function find($id = null)
     {
-
-        if($id !== null) {
+        if ($id !== null) {
 
             $conn = $this->connect();
             $query = "SELECT * FROM $this->table WHERE id = ?";
@@ -30,24 +30,22 @@ class Course extends Paginator  {
             $statement->execute();
             $result = $statement->get_result();
             $conn->close();
-            if($result->num_rows > 0 ) {
+            if ($result->num_rows > 0) {
                 $course = $result->fetch_assoc();
                 $this->id = $course['id'];
                 $this->name = $course['name'];
                 $this->created_at = $course['created_at'];
                 $this->updated_at = $course['updated_at'];
             }
-            
         }
-
     }
-
     /**
      * makes connection with database
      *
      * @return object
      */
-    public function connect() {
+    public function connect()
+    {
         $conn = new Dbconnect();
         return $conn->connect();
     }
@@ -59,7 +57,8 @@ class Course extends Paginator  {
      *
      * @return int|bool|string
      */
-    public function save() {
+    public function save()
+    {
 
         $conn = $this->connect();
         $query = "INSERT INTO $this->table (name) 
@@ -69,18 +68,17 @@ class Course extends Paginator  {
         $statement->bind_param('s', $name);
         $id = $conn->insert_id;
         // $conn->close();
-        
+
         try {
             $statement->execute();
             return $id !== false ? $id  : false;
-        }catch (Exception $e){
-            if($conn->errno === 1062){
+        } catch (Exception $e) {
+            if ($conn->errno === 1062) {
                 return FALSE;
             }
-        }finally {
+        } finally {
             $conn->close();
         }
-
     }
 
     /**
@@ -88,19 +86,19 @@ class Course extends Paginator  {
      *
      * @return array
      */
-    public function get() {
+    public function get()
+    {
 
         $courses = [];
         $conn = $this->connect();
         $sql = "SELECT * FROM $this->table ";
         $result = $conn->query($sql);
 
-        while($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch_assoc()) {
             $courses[] = $row;
         }
 
         return $courses;
-        
     }
 
     /**
@@ -108,7 +106,8 @@ class Course extends Paginator  {
      *
      * @return bool
      */
-    public function update() {
+    public function update()
+    {
 
         $conn = $this->connect();
         $sql = "UPDATE $this->table SET name = ? WHERE id = ? ";
@@ -118,7 +117,6 @@ class Course extends Paginator  {
         $conn->close();
 
         return $result;
-
     }
 
     /**
@@ -126,7 +124,8 @@ class Course extends Paginator  {
      *
      * @return bool
      */
-    public function delete() {
+    public function delete()
+    {
 
         // Setting course value to null for all students with this course
         $student = new Student();
@@ -148,24 +147,24 @@ class Course extends Paginator  {
      *
      * @return array
      */
-    public function get_formatted_course(){
+    public function get_formatted_course()
+    {
         $courses = [];
         $conn = $this->connect();
         $sql = "SELECT id, name FROM $this->table ";
 
         $result = $conn->query($sql);
         $conn->close();
-        if($result->num_rows > 0){
-            while($row = $result->fetch_assoc()){
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
                 $courses[$row['id']] = $row['name'];
             }
         }
         return $courses;
-
     }
 
-    public function paginate($page, $limit) {
+    public function paginate($page, $limit)
+    {
         return $this->pagination($page, $limit);
     }
-
 }
