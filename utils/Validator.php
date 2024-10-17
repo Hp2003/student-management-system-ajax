@@ -33,11 +33,7 @@ class Validator
      */
     public function test_email($email)
     {
-
-        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return true;
-        }
-        return false;
+        return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 
     /**
@@ -50,10 +46,7 @@ class Validator
     public function test_phone_number($phone)
     {
 
-        if (preg_match('/^\d{10}$/', $phone)) {
-            return true;
-        }
-        return false;
+        return preg_match('/^\d{10}$/', $phone);
     }
 
     /**
@@ -66,10 +59,7 @@ class Validator
     public function test_name($name)
     {
 
-        if (preg_match("/^[a-zA-Z-']*$/", $name)) {
-            return true;
-        }
-        return false;
+        return preg_match("/^[a-zA-Z-']*$/", $name);
     }
 
     /**
@@ -82,10 +72,7 @@ class Validator
     {
 
         $genders = array('male', 'female', 'other');
-        if (in_array($gender, $genders)) {
-            return true;
-        }
-        return false;
+        return in_array($gender, $genders) ;
     }
 
     /**
@@ -117,10 +104,7 @@ class Validator
         $course = new Course();
         $courses = $course->get_formatted_course();
         $course_names = array_values($courses);
-        if (in_array($course_name, $course_names)) {
-            return true;
-        }
-        return false;
+        return in_array($course_name, $course_names) ;
 
     }
 }

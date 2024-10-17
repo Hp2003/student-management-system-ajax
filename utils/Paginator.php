@@ -8,6 +8,7 @@ class Paginator extends Dbconnect {
     private $limit = 10;
     private $from;
     private $to;
+    
     /**
      * Returns array containing first page last page data for current page 
      *

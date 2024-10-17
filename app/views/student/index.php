@@ -12,6 +12,7 @@ $navbar = include_once('../nav.php');
 $course = new Course();
 $courses = $course->get_formatted_course();
 
+// Pattern to formate phone number
 $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
 
 $student = new Student();
