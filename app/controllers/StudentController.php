@@ -184,9 +184,9 @@ class StudentController extends Validator
         if (!$this->test_name($this->last_name)) {
             $errors['last_name'] = "first name should only contain a-z or ' ";
         }
-        // if (!$this->test_course($this->course_id) && $this->course_id != NULL) {
-        //     $errors['course_id'] = 'please select a valid course';
-        // }
+        if (!$this->test_course($this->course_id) && $this->course_id != NULL) {
+            $errors['course_id'] = 'please select a valid course';
+        }
         if (!$this->test_phone_number($this->phone_number)) {
             $errors['phone_number'] = 'please enter a valid phone number eg: 1234567890';
         }
