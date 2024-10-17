@@ -24,10 +24,6 @@ $pages = $pagination_data['pagination_numbers'] ?? 0;
 unset($pagination_data['pagination_numbers']);
 $courses = $pagination_data;
 
-// if(!empty($_SESSION['course_message'])){
-//   $alert = $_SESSION['course_message'];
-//   unset($_SESSION['course_message']);
-// }
 if($page > $pages['total_pages']){
   header("Location: /hiren/mvc2/app/views/course?limit=$limit&type=$type&sort_by=$sort_by&page=" . $pages['total_pages']);
 }
