@@ -222,7 +222,7 @@ class Student extends Paginator
     {
 
         $conn = $this->connect();
-        $sql = "UPDATE $this->table SET course_id = NULL, status = 0 WHERE course_id = ?";
+        $sql = "update $this->table as students join courses on students.course_id = courses.id set students.course_id = null, students.status = 0 where students.course_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('i', $course_id);
         $result = $stmt->execute();
