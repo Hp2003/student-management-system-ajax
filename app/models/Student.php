@@ -44,8 +44,6 @@ class Student extends Paginator
             $this->last_name = $student['last_name'];
             $this->email = $student['email'];
             $this->gender = $student['gender'];
-            // $this->created_at = $statement['created_at'];
-            // $this->updated_at = $statement['updated_at'];
             $this->course_id = $student['course_id'];
             $this->phone_number = $student['phone_number'];
         }

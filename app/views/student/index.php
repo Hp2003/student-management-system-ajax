@@ -15,17 +15,17 @@ $courses = $course->get_formatted_course();
 // Pattern to formate phone number
 $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
 
-$student = new Student();
+$sort_by = !empty($_GET['sort_by']) ? $_GET['sort_by'] : "";
+$type = !empty($_GET['type']) ? $_GET['type'] : "";
+$limit = $_GET['limit'] ?? 5;
 $page = !empty($_GET['page']) ? $_GET['page'] : 1;
-$pagination_data = $student->paginate($page, $_GET['limit'] ?? 5, $_GET['sort_by'] ?? "", $_GET['type'] ?? "");
+
+$student_controller = new StudentController();
+$pagination_data = $student_controller->paginate($page, $limit, $sort_by, $type);
 
 $pages = $pagination_data['pagination_numbers'] ?? 0;
 unset($pagination_data['pagination_numbers']);
 $students = $pagination_data;
-
-$sort_by = !empty($_GET['sort_by']) ? $_GET['sort_by'] : "";
-$type = !empty($_GET['type']) ? $_GET['type'] : "";
-$limit = $_GET['limit'] ?? 5;
 
 ?>
 <!doctype html>

@@ -195,13 +195,19 @@ class StudentController extends Validator
     }
 
     /**
-     * Returns page numbers 
+     * Returns pagination data 
      *
      * @param int $page
+     * @param int $limit
+     * @param string $column
+     * @param string $type
+     * 
+     * 
      * @return array
      */
-    public function get_pagination($page) {
-        
+    public function paginate($page, $limit, $column = "", $type = "") {
+        $student = new Student();
+        return $student->paginate($page, $limit, $column, $type);
     }
 }
 
@@ -242,7 +248,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($student_controller->update()) {
             header('Location:' . '/hiren/mvc2/app/views/student');
         } else {
-            header('Location:' . $_SERVER['HTTP_REFERER']);
+            header('Location:' . htmlspecialchars($_SERVER['HTTP_REFERER']));
         }
     } else if ($_POST['operation'] === 'delete') {
 
@@ -250,7 +256,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $student_controller->id = $_POST['id'];
 
         if ($student_controller->delete()) {
-            header('Location:' . $_SERVER['HTTP_REFERER']);
+            header('Location:' . htmlspecialchars($_SERVER['HTTP_REFERER']));
         }
     }
 }

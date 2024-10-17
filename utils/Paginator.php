@@ -6,8 +6,8 @@ class Paginator extends Dbconnect {
     private $page ; // current page
     private $total_page;  // total pages can be generated from current table
     private $limit = 10;
-    private $from;
-    private $to;
+    // private $from;
+    // private $to;
 
     /**
      * Returns array containing first page last page data for current page 
@@ -63,7 +63,7 @@ class Paginator extends Dbconnect {
     public function pagination_numbers() {
         $total_page = ceil($this->get_total_records() / $this->limit);
         $this->total_page  = $total_page;
-        $to = $this->to = $this->get_to();
+        $to = $this->get_to();
         $total_records = $this->get_total_records();
         $prev_page = $this->get_prev_page();
         $next_page = $this->get_next_page();
