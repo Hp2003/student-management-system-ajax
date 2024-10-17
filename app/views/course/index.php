@@ -37,6 +37,14 @@ $courses = $pagination_data;
 </head>
 
 <body>
+  <?php if(!empty($_SESSION['course_message'])){ 
+    $alert = $_SESSION['course_message'];
+    ?>
+  <div class="alert alert-<?php echo $alert['type'] ?> alert-dismissible fade show" role="alert">
+    <strong></strong> <?php echo $alert['message'] ?>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<?php } ?>
   <?php $navbar ?>
   <?php if (count($courses) <= 0) { ?>
     <h1 class="text-center mt-5"> No records available :( </h1>
@@ -150,3 +158,4 @@ $courses = $pagination_data;
 </body>
 
 </html>
+<?php unset($_SESSION['course_message']); ?>
