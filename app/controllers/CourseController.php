@@ -25,6 +25,12 @@ class CourseController extends Validator
     public function save()
     {
 
+        $errors = $this->validate();
+        if(count($errors) > 0){
+            $_SESSION['errors'] = $errors;
+            return false;
+        }
+
         $course = new Course();
         $course->name = $this->name;
         $result = $course->save();
@@ -44,9 +50,11 @@ class CourseController extends Validator
     {
         $errors = [];
 
-        if (empty($this->name)) {
-            $errors[] = ['name' => 'Name is required'];
+        if (empty(trim($this->name))) {
+            $errors['name']  = 'Course name is required';
         }
+
+        return $errors;
     }
 
     /**
