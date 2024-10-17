@@ -80,7 +80,6 @@ $students = $pagination_data;
                 <input type="hidden" name="sort_by" value="id">
                 <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
-                <input type="hidden" name="type" value="<?php echo $type ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
               </form>
@@ -91,7 +90,6 @@ $students = $pagination_data;
                 <input type="hidden" name="sort_by" value="first_name">
                 <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
-                <input type="hidden" name="type" value="<?php echo $type ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
               </form>
@@ -102,7 +100,6 @@ $students = $pagination_data;
                 <input type="hidden" name="sort_by" value="last_name">
                 <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
-                <input type="hidden" name="type" value="<?php echo $type ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
               </form>
@@ -113,7 +110,6 @@ $students = $pagination_data;
                 <input type="hidden" name="sort_by" value="email">
                 <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
-                <input type="hidden" name="type" value="<?php echo $type ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
               </form>
@@ -124,7 +120,6 @@ $students = $pagination_data;
                 <input type="hidden" name="sort_by" value="gender">
                 <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
-                <input type="hidden" name="type" value="<?php echo $type ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
               </form>
@@ -135,7 +130,6 @@ $students = $pagination_data;
                 <input type="hidden" name="sort_by" value="course_id">
                 <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
-                <input type="hidden" name="type" value="<?php echo $type ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
               </form>
@@ -146,7 +140,6 @@ $students = $pagination_data;
                 <input type="hidden" name="sort_by" value="status">
                 <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
-                <input type="hidden" name="type" value="<?php echo $type ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
               </form>
@@ -157,7 +150,6 @@ $students = $pagination_data;
                 <input type="hidden" name="sort_by" value="phone_number">
                 <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
-                <input type="hidden" name="type" value="<?php echo $type ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
               </form>
@@ -168,7 +160,6 @@ $students = $pagination_data;
                 <input type="hidden" name="sort_by" value="created_at">
                 <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
-                <input type="hidden" name="type" value="<?php echo $type ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
               </form>
@@ -179,7 +170,6 @@ $students = $pagination_data;
                 <input type="hidden" name="sort_by" value="updated_at">
                 <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
-                <input type="hidden" name="type" value="<?php echo $type ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
               </form>

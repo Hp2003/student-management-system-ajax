@@ -21,7 +21,11 @@ class Paginator extends Dbconnect {
         if($page <= 0 ) {
             return [];
         }
-        $type = ($type === "") ? "DESC" : $type;
+        // $type = ($type === "") ? "DESC" : $type;
+        if(strtoupper($type) !== 'ASC' && strtoupper($type) !== "DESC"){
+            $type = "DESC";
+        }
+
         $order_by = ($order_by === "") ? "id"  : $order_by;
         $this->limit = $limit;
         $this->page = $page;

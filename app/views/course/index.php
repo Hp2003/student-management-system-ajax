@@ -73,7 +73,6 @@ if($page > $pages['total_pages']){
                 <input type="hidden" name="sort_by" value="id">
                 <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
-                <input type="hidden" name="type" value="<?php echo $type ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
               </form>
@@ -84,7 +83,6 @@ if($page > $pages['total_pages']){
                 <input type="hidden" name="sort_by" value="name">
                 <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>"> 
-                <input type="hidden" name="type" value="<?php echo $type ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
               </form>
@@ -95,7 +93,6 @@ if($page > $pages['total_pages']){
                 <input type="hidden" name="sort_by" value="student_count">
                 <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
-                <input type="hidden" name="type" value="<?php echo $type ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
               </form>
@@ -106,7 +103,6 @@ if($page > $pages['total_pages']){
                 <input type="hidden" name="sort_by" value="created_at">
                 <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
-                <input type="hidden" name="type" value="<?php echo $type ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
               </form>
@@ -117,7 +113,6 @@ if($page > $pages['total_pages']){
                 <input type="hidden" name="sort_by" value="updated_at">
                 <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
-                <input type="hidden" name="type" value="<?php echo $type ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
               </form>
