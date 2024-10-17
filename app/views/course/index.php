@@ -24,6 +24,10 @@ $pages = $pagination_data['pagination_numbers'] ?? 0;
 unset($pagination_data['pagination_numbers']);
 $courses = $pagination_data;
 
+// if(!empty($_SESSION['course_message'])){
+//   $alert = $_SESSION['course_message'];
+//   unset($_SESSION['course_message']);
+// }
 if($page > $pages['total_pages']){
   header("Location: /hiren/mvc2/app/views/course?limit=$limit&type=$type&sort_by=$sort_by&page=" . $pages['total_pages']);
 }
@@ -39,14 +43,16 @@ if($page > $pages['total_pages']){
 </head>
 
 <body>
-  <?php if(!empty($_SESSION['course_message'])){ 
-    $alert = $_SESSION['course_message'];
+  <?php
+   if(!empty($_SESSION['course_message'])){ 
+      $alert = $_SESSION['course_message'];
     ?>
   <div class="alert alert-<?php echo $alert['type'] ?> alert-dismissible fade show" role="alert">
     <strong></strong> <?php echo $alert['message'] ?>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
-<?php } ?>
+<?php } 
+  ?>
   <?php $navbar ?>
   <?php if (count($courses) <= 0) { ?>
     <h1 class="text-center mt-5"> No records available :( </h1>
@@ -160,4 +166,9 @@ if($page > $pages['total_pages']){
 </body>
 
 </html>
-<?php unset($_SESSION['course_message']); ?>
+<?php 
+
+if($pages['page'] <= $pages['total_pages']) { 
+  unset($_SESSION['course_message']);
+}
+  ?>

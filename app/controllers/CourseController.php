@@ -125,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $_SESSION['course_message'] = array(
                 'type' => 'success',
-                'message' => 'Course has beed updated',
+                'message' => 'Course has been updated',
             );
             header('Location:' .  '/hiren/mvc2/app/views/course');
         }
@@ -141,8 +141,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('Location:' .  $_SERVER['HTTP_REFERER']);
         }else{
             $_SESSION['course_message'] = array(
-                'type' => 'danger',
-                'message' => 'Course has beed deleted',
+                'type' => 'success',
+                'message' => 'Course has been deleted',
             );
             header('Location:' .  $_SERVER['HTTP_REFERER']);
         }
@@ -155,9 +155,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $_SESSION['course_message'] = array(
                 'type' => 'success',
-                'message' => 'Course has beed added',
+                'message' => 'Course has been added',
             );
-            header('Location:' .  '/hiren/mvc2/app/views/course');
+            header('Location:' .  '/hiren/mvc2/app/views/course?page=1');
         }
     }
 }
