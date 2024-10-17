@@ -7,23 +7,24 @@ if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Course.php');
 require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Student.php');
+require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/controllers/CourseController.php');
+$navbar = include_once('../nav.php');
 
 $page = !empty($_GET['page']) ? $_GET['page'] : 1;
 $sort_by = !empty($_GET['sort_by']) ? $_GET['sort_by'] : "";
 $type = !empty($_GET['type']) ? $_GET['type'] : "";
 $limit = $_GET['limit'] ?? 5;
 
-$navbar = include_once('../nav.php');
 
-$student = new Student();
+// $student = new Student();
 
-$course = new Course();
-$pagination_data = $course->paginate($page, $limit, $sort_by, $type);
+$course_controller = new CourseController();
+// $course = new Course();
+$pagination_data = $course_controller->paginate($page, $limit, $sort_by, $type);
 
 $pages = $pagination_data['pagination_numbers'] ?? 0;
 unset($pagination_data['pagination_numbers']);
 $courses = $pagination_data;
-
 
 
 ?>

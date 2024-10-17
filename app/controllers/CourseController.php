@@ -30,7 +30,7 @@ class CourseController extends Validator
         if ($result === FALSE) {
             $_SESSION['duplicate_course_error'] = 'The course name is already avaialble';
             $this->set_values_to_session('add_course_form_input_values');
-        } 
+        }
         return $result;
     }
 
@@ -86,10 +86,28 @@ class CourseController extends Validator
      *
      * @return void
      */
-    public function set_values_to_session($key_name) {
-        $_SESSION[$key_name] = array (
+    public function set_values_to_session($key_name)
+    {
+        $_SESSION[$key_name] = array(
             'name' => $this->name,
         );
+    }
+
+    /**
+     * Returns pagination data 
+     *
+     * @param int $page
+     * @param int $limit
+     * @param string $column
+     * @param string $type
+     * 
+     * 
+     * @return array
+     */
+    public function paginate($page, $limit, $column = "", $type = "")
+    {
+        $course = new Course();
+        return $course->paginate($page, $limit, $column, $type);
     }
 }
 
