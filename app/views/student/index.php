@@ -56,7 +56,7 @@ $students = $pagination_data;
     } else {
     ?>
       <div class="container d-flex justify-content-around">
-        <form action="<?php echo $_SERVER['REQUEST_URI'] ?>" class="w-25 limit-form d-flex ">
+        <form action="/hiren/mvc2/app/views/student" class="w-25 limit-form d-flex ">
           <?php /*<input type="hidden" name="sort_by" value=<?php echo $sort_by ?>>
           <input type="hidden" name="type" value=<?php echo $type ?>> */ ?>
           <select class="form-select limit" aria-label="Default select example" name="limit">
