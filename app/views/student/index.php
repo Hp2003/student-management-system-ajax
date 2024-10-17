@@ -23,8 +23,7 @@ $student_controller = new StudentController();
 $pagination_data = $student_controller->paginate($page, $limit, $sort_by, $type);
 
 $pages = $pagination_data['pagination_numbers'] ?? 0;
-// /hiren/mvc2/app/views/student/index.php?page=5&amp;amp;amp;amp;limit=5&amp;amp;amp;amp;sort_by=&amp;amp;amp;amp;type=
-// var_dump($pages['total_pages']);
+
 if($page > $pages['total_pages']){
   header("Location: /hiren/mvc2/app/views/student?limit=$limit&type=$type&sort_by=$sort_by&page=" . $pages['total_pages']);
 }

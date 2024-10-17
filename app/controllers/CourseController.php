@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $course_controller->name = $_POST['name'] ?? '';
         $course_controller->id = $_POST['id'] ?? '';
         if ($course_controller->update() === FALSE) {
-            header('Location:' .  htmlspecialchars($_SERVER['HTTP_REFERER']));
+            header('Location:' .  $_SERVER['HTTP_REFERER']);
         } else {
             $_SESSION['course_message'] = array(
                 'type' => 'success',
@@ -138,20 +138,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'type' => 'danger',
                 'message' => 'Failed deleting course',
             );
-            header('Location:' .  htmlspecialchars($_SERVER['HTTP_REFERER']));
+            header('Location:' .  $_SERVER['HTTP_REFERER']);
         }else{
             $_SESSION['course_message'] = array(
                 'type' => 'danger',
                 'message' => 'Course has beed deleted',
             );
-            header('Location:' .  htmlspecialchars($_SERVER['HTTP_REFERER']));
+            header('Location:' .  $_SERVER['HTTP_REFERER']);
         }
 
     } else {
         $course_controller = new CourseController();
         $course_controller->name = $_POST['name'];
         if ($course_controller->save() === FALSE) {
-            header('Location:' .  htmlspecialchars($_SERVER['HTTP_REFERER']));
+            header('Location:' .  $_SERVER['HTTP_REFERER']);
         } else {
             $_SESSION['course_message'] = array(
                 'type' => 'success',
