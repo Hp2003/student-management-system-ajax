@@ -8,7 +8,7 @@ class Paginator extends Dbconnect {
     private $limit = 10;
     private $from;
     private $to;
-    
+
     /**
      * Returns array containing first page last page data for current page 
      *
@@ -19,7 +19,7 @@ class Paginator extends Dbconnect {
         if($page <= 0 ) {
             return [];
         }
-        $type = $type === "" ? "DESC" : $type;
+        $type = ($type === "") ? "DESC" : $type;
         $order_by = ($order_by === "") ? "id"  : $order_by;
         $this->limit = $limit;
         $this->page = $page;
