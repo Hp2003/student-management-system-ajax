@@ -224,4 +224,4 @@ $students = $pagination_data;
 
 </html>
 
-<?php unset($_SESSION['student_message']) ?>
+<?php if($pages['page'] <= $pages['total_pages']) unset($_SESSION['student_message']) ?>
