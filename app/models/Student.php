@@ -23,7 +23,7 @@ class Student extends Paginator
     protected $table = 'students';
 
     /**
-     * set values of current object to given id (if given)
+     * set values of current object to given id returns false if no record found
      *
      * @param int $id
      */
@@ -40,9 +40,12 @@ class Student extends Paginator
         $statement->execute();
         $result = $statement->get_result();
         $conn->close();
-        $student = $result->fetch_assoc();
-
+        
+        if($result->num_rows === 0){
+            return false;
+        }
         // setting values to current object
+        $student = $result->fetch_assoc();
         $this->id = $student['id'];
         $this->first_name = $student['first_name'];
         $this->last_name = $student['last_name'];
@@ -50,6 +53,8 @@ class Student extends Paginator
         $this->gender = $student['gender'];
         $this->course_id = $student['course_id'];
         $this->phone_number = $student['phone_number'];
+
+        return true;
     }
 
     /**
@@ -132,7 +137,7 @@ class Student extends Paginator
     }
 
     /**
-     * delets student and return true if deleted 
+     * delets student and return true if deleted false if not
      *
      * @return bool
      */
@@ -143,10 +148,11 @@ class Student extends Paginator
         $sql = "DELETE FROM $this->table WHERE id = ? ";
         $statement = $conn->prepare($sql);
         $statement->bind_param('i', $this->id);
-        $result = $statement->execute();
+        $statement->execute();
+        $affected_rows = $conn->affected_rows;
         $conn->close();
 
-        return $result;
+        return $affected_rows > 0;
     }
 
     /**
@@ -276,24 +282,4 @@ class Student extends Paginator
         return $this->pagination($page, $limit, $column, $type);
     }
 
-    /**
-     * returns array of formatted courses key = id, val = name
-     *
-     * @return array
-     */
-    public function get_formatted_course()
-    {
-        $courses = [];
-        $conn = $this->connect();
-        $sql = "SELECT id, name FROM $this->table ";
-
-        $result = $conn->query($sql);
-        $conn->close();
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $courses[$row['id']] = $row['name'];
-            }
-        }
-        return $courses;
-    }
 }

@@ -184,9 +184,9 @@ class StudentController extends Validator
         if (!$this->test_name($this->last_name)) {
             $errors['last_name'] = "first name should only contain a-z or ' ";
         }
-        // if (!$this->test_course($this->course_id) && $this->course_id != NULL) {
-        //     $errors['course_id'] = 'please select a valid course';
-        // }
+        if (!$this->test_course($this->course_id) && $this->course_id != NULL) {
+            $errors['course_id'] = 'please select a valid course';
+        }
         if (!$this->test_phone_number($this->phone_number)) {
             $errors['phone_number'] = 'please enter a valid phone number eg: 1234567890';
         }
@@ -271,11 +271,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($student_controller->delete()) {
             $_SESSION['student_message'] = array(
-                'type' => 'danger',
+                'type' => 'success',
                 'message' => 'Student has been deleted',
             );
 
-            header('Location:' . htmlspecialchars($_SERVER['HTTP_REFERER']));
+            header('Location:' . $_SERVER['HTTP_REFERER']);
+        }else{
+            $_SESSION['student_message'] = array(
+                'type' => 'danger',
+                'message' => 'Failed deleting student',
+            );
+            header('Location:' . $_SERVER['HTTP_REFERER']);
         }
     }
 }

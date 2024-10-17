@@ -14,10 +14,13 @@ $course = new Course();
 $courses = $course->get_formatted_course();
 
 if(!isset($_GET['id']) || empty($_GET['id'])){
-    header('Location:' . ($_SERVER['HTTP_ACCEPT'] ? 'http://' : 'https://')  .  $_SERVER['HTTP_HOST'] . '/hiren/mvc2/app/views/404.php'  )   ;
+    header('Location:' . '/hiren/mvc2/app/views/404.php')   ;
 }
 $student = new Student();
-$student->find($_GET['id']);
+
+if(!$student->find($_GET['id'])){
+    header('Location:' . '/hiren/mvc2/app/views/404.php')   ;
+}
 
 $errors = $_SESSION['edit_student_errors'] ?? [];
 $inputs = $_SESSION['edit_student_inputs'] ?? [];

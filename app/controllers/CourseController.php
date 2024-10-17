@@ -25,6 +25,12 @@ class CourseController extends Validator
     public function save()
     {
 
+        $errors = $this->validate();
+        if(count($errors) > 0){
+            $_SESSION['add_course_errors'] = $errors;
+            return false;
+        }
+
         $course = new Course();
         $course->name = $this->name;
         $result = $course->save();
@@ -44,9 +50,11 @@ class CourseController extends Validator
     {
         $errors = [];
 
-        if (empty($this->name)) {
-            $errors[] = ['name' => 'Name is required'];
+        if (empty(trim($this->name))) {
+            $errors['name']  = 'Course name is required';
         }
+
+        return $errors;
     }
 
     /**
@@ -56,6 +64,13 @@ class CourseController extends Validator
      */
     public function update()
     {
+
+        $errors = $this->validate();
+        if($errors){
+            $_SESSION['edit_course_errors'] = $errors;
+            return false;
+        }
+
         $is_duplicate = $this->test_duplicate_course(strtoupper($this->name));
         if ($is_duplicate) {
             $_SESSION['update_form_duplicate_course_error'] = 'The course name is already avaialble';
@@ -118,38 +133,46 @@ class CourseController extends Validator
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($_POST['operation'] === 'edit') {
         $course_controller = new CourseController();
-        $course_controller->name = $_POST['name'] ?? '';
+        $course_controller->name = trim($_POST['name']) ?? '';
         $course_controller->id = $_POST['id'] ?? '';
         if ($course_controller->update() === FALSE) {
-            header('Location:' .  htmlspecialchars($_SERVER['HTTP_REFERER']));
+            header('Location:' .  $_SERVER['HTTP_REFERER']);
         } else {
             $_SESSION['course_message'] = array(
                 'type' => 'success',
-                'message' => 'Course has beed updated',
+                'message' => 'Course has been updated',
             );
             header('Location:' .  '/hiren/mvc2/app/views/course');
         }
     } elseif ($_POST['operation'] === 'delete') {
         $course_controller = new CourseController();
         $course_controller->id = $_POST['id'];
-        $course_controller->delete();
 
-        $_SESSION['course_message'] = array(
-            'type' => 'danger',
-            'message' => 'Course has beed deleted',
-        );
-        header('Location:' .  htmlspecialchars($_SERVER['HTTP_REFERER']));
+        if(!$course_controller->delete()){
+            $_SESSION['course_message'] = array(
+                'type' => 'danger',
+                'message' => 'Failed deleting course',
+            );
+            header('Location:' .  $_SERVER['HTTP_REFERER']);
+        }else{
+            $_SESSION['course_message'] = array(
+                'type' => 'success',
+                'message' => 'Course has been deleted',
+            );
+            header('Location:' .  $_SERVER['HTTP_REFERER']);
+        }
+
     } else {
         $course_controller = new CourseController();
-        $course_controller->name = $_POST['name'];
+        $course_controller->name = trim($_POST['name']);
         if ($course_controller->save() === FALSE) {
-            header('Location:' .  htmlspecialchars($_SERVER['HTTP_REFERER']));
+            header('Location:' .  $_SERVER['HTTP_REFERER']);
         } else {
             $_SESSION['course_message'] = array(
                 'type' => 'success',
-                'message' => 'Course has beed added',
+                'message' => 'Course has been added',
             );
-            header('Location:' .  '/hiren/mvc2/app/views/course');
+            header('Location:' .  '/hiren/mvc2/app/views/course?page=1');
         }
     }
 }

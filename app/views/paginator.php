@@ -13,7 +13,7 @@ $type = !empty($_GET['type']) ? $_GET['type'] : "";
 
 $url = htmlspecialchars($_SERVER['PHP_SELF']);
 ?>
-<?php if ($pages['total_pages'] > 1) { ?>
+<?php if (!empty($pages) && $pages['total_pages'] > 1) { ?>
     <div class="container d-flex justify-content-center h-auto user-select-none">
       <nav aria-label="Page navigation example">
         <ul class="pagination">

@@ -21,7 +21,11 @@ class Paginator extends Dbconnect {
         if($page <= 0 ) {
             return [];
         }
-        $type = ($type === "") ? "DESC" : $type;
+        // $type = ($type === "") ? "DESC" : $type;
+        if(strtoupper($type) !== 'ASC' && strtoupper($type) !== "DESC"){
+            $type = "DESC";
+        }
+
         $order_by = ($order_by === "") ? "id"  : $order_by;
         $this->limit = $limit;
         $this->page = $page;
@@ -42,19 +46,28 @@ class Paginator extends Dbconnect {
         }
 
 
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param('ii', $this->limit, $offset);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $conn->close();
-        
-        if($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()){
-                $data[] = $row;
+        try{
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('ii', $this->limit, $offset);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()){
+                    $data[] = $row;
+                }
             }
+            $data['pagination_numbers'] = $this->pagination_numbers();
+            return $data;
+
+        }catch(Exception $e){
+            if($conn->errno === 1054){
+                return false;   
+            }
+        }finally{
+            $conn->close();
         }
-        $data['pagination_numbers'] = $this->pagination_numbers();
-        return $data;
+        
     }
 
     /**
@@ -74,7 +87,7 @@ class Paginator extends Dbconnect {
         
         return array (
             'page' => $this->page,
-            'total_pages' => $total_page,
+            'total_pages' => (int) $total_page,
             'total_records' => $total_records,
             'prev_page' => $prev_page,
             'next_page' => $next_page,

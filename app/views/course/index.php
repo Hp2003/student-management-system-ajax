@@ -20,10 +20,18 @@ $limit = $_GET['limit'] ?? 5;
 $course_controller = new CourseController();
 $pagination_data = $course_controller->paginate($page, $limit, $sort_by, $type);
 
-$pages = $pagination_data['pagination_numbers'] ?? 0;
-unset($pagination_data['pagination_numbers']);
-$courses = $pagination_data;
-
+$pages = [];
+$courses = [];
+if($pagination_data !== false){
+  $pages = $pagination_data['pagination_numbers'] ?? 0;
+  unset($pagination_data['pagination_numbers']);
+  $courses = $pagination_data;
+  if($page > $pages['total_pages']){
+    header("Location: /hiren/mvc2/app/views/course?limit=$limit&type=$type&sort_by=$sort_by&page=" . $pages['total_pages']);
+  }
+}else{
+  $courses = [];
+}
 
 ?>
 <!doctype html>
@@ -37,17 +45,19 @@ $courses = $pagination_data;
 </head>
 
 <body>
-  <?php if(!empty($_SESSION['course_message'])){ 
-    $alert = $_SESSION['course_message'];
+  <?php
+   if(!empty($_SESSION['course_message'])){ 
+      $alert = $_SESSION['course_message'];
     ?>
   <div class="alert alert-<?php echo $alert['type'] ?> alert-dismissible fade show" role="alert">
     <strong></strong> <?php echo $alert['message'] ?>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
-<?php } ?>
+<?php } 
+  ?>
   <?php $navbar ?>
   <?php if (count($courses) <= 0) { ?>
-    <h1 class="text-center mt-5"> No records available :( </h1>
+    <h1 class="text-center mt-5"> No records found :( </h1>
   <?php } else { ?>
     <div class="container mt-5">
       <div class="container d-flex justify-content-center ">
@@ -69,7 +79,6 @@ $courses = $pagination_data;
                 <input type="hidden" name="sort_by" value="id">
                 <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
-                <input type="hidden" name="type" value="<?php echo $type ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
               </form>
@@ -80,7 +89,6 @@ $courses = $pagination_data;
                 <input type="hidden" name="sort_by" value="name">
                 <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>"> 
-                <input type="hidden" name="type" value="<?php echo $type ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
               </form>
@@ -91,7 +99,6 @@ $courses = $pagination_data;
                 <input type="hidden" name="sort_by" value="student_count">
                 <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
-                <input type="hidden" name="type" value="<?php echo $type ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
               </form>
@@ -102,7 +109,6 @@ $courses = $pagination_data;
                 <input type="hidden" name="sort_by" value="created_at">
                 <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
-                <input type="hidden" name="type" value="<?php echo $type ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
               </form>
@@ -113,7 +119,6 @@ $courses = $pagination_data;
                 <input type="hidden" name="sort_by" value="updated_at">
                 <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
-                <input type="hidden" name="type" value="<?php echo $type ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
               </form>
@@ -158,4 +163,9 @@ $courses = $pagination_data;
 </body>
 
 </html>
-<?php unset($_SESSION['course_message']); ?>
+<?php 
+
+if(!empty($pages) && $pages['page'] <= $pages['total_pages']) { 
+  unset($_SESSION['course_message']);
+}
+  ?>

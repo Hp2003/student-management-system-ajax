@@ -15,10 +15,11 @@ class Course extends Paginator
     protected $table = 'courses';
 
     /**
-     * Finds uesr with given id
+     * Finds uesr with given id returns false if no record is found
      * 
      * @param int $id
      * 
+     * @return bool
      */
 
     public function find($id = null)
@@ -39,7 +40,10 @@ class Course extends Paginator
             $this->name = $course['name'];
             $this->created_at = $course['created_at'];
             $this->updated_at = $course['updated_at'];
+
+            return true;
         }
+        return false;
     }
     /**
      * makes connection with database
@@ -139,9 +143,11 @@ class Course extends Paginator
         $statement = $conn->prepare($sql);
         $statement->bind_param('i', $this->id);
         $result = $statement->execute();
+        $affected_rows = $conn->affected_rows;
         $conn->close();
 
-        return $result;
+        return $affected_rows > 0 ;
+        
     }
 
     /**
@@ -165,6 +171,17 @@ class Course extends Paginator
         return $courses;
     }
 
+    /**
+     * Returns paginated data
+     *
+     * @param string $page
+     * @param int $limit
+     * @param string $column
+     * @param string $type
+     * 
+     * 
+     * @return array
+     */
     public function paginate($page, $limit, $order_by = "", $type = "")
     {
         return $this->pagination($page, $limit, $order_by, $type);

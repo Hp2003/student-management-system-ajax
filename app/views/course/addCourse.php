@@ -25,7 +25,8 @@ $error_inputs = $_SESSION['add_course_form_input_values'];
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label" >Course Name : </label>
                 <input type="text" name="name" class="form-control" id="" value="<?php echo $error_inputs['name'] ?>" required>
-                <span class="text-danger"><?php echo $duplicate_course_error ?></span>
+                <span class="text-danger"><?php echo $duplicate_course_error   ?></span>
+                <span class="text-danger"><?php echo $_SESSION['add_course_errors']['name']   ?></span>
             </div>
             <button type="submit" class="btn btn-primary w-100">Add Course</button>
         </form>
@@ -37,4 +38,5 @@ $error_inputs = $_SESSION['add_course_form_input_values'];
 <?php 
     unset($_SESSION['duplicate_course_error']);
     unset($_SESSION['add_course_form_input_values']);
+    unset($_SESSION['add_course_errors']);
 ?>
