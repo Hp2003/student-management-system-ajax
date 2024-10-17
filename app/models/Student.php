@@ -23,33 +23,33 @@ class Student extends Paginator
     protected $table = 'students';
 
     /**
-     * set values of object to given id (if given)
+     * set values of current object to given id (if given)
      *
      * @param int $id
      */
     public function find($id = null)
     {
-        if ($id !== null) {
-
-            // getting student
-            $conn = $this->connect();
-            $query = "SELECT id, first_name, last_name, email, gender, created_at, updated_at, course_id, phone_number FROM $this->table WHERE id = ?";
-            $statement = $conn->prepare($query);
-            $statement->bind_param('i', $id);
-            $statement->execute();
-            $result = $statement->get_result();
-            $conn->close();
-            $student = $result->fetch_assoc();
-
-            // setting values to current object
-            $this->id = $student['id'];
-            $this->first_name = $student['first_name'];
-            $this->last_name = $student['last_name'];
-            $this->email = $student['email'];
-            $this->gender = $student['gender'];
-            $this->course_id = $student['course_id'];
-            $this->phone_number = $student['phone_number'];
+        if ($id === null || empty($id)) {
+            throw new Error('id is not provided');
         }
+        // getting student
+        $conn = $this->connect();
+        $query = "SELECT id, first_name, last_name, email, gender, created_at, updated_at, course_id, phone_number FROM $this->table WHERE id = ?";
+        $statement = $conn->prepare($query);
+        $statement->bind_param('i', $id);
+        $statement->execute();
+        $result = $statement->get_result();
+        $conn->close();
+        $student = $result->fetch_assoc();
+
+        // setting values to current object
+        $this->id = $student['id'];
+        $this->first_name = $student['first_name'];
+        $this->last_name = $student['last_name'];
+        $this->email = $student['email'];
+        $this->gender = $student['gender'];
+        $this->course_id = $student['course_id'];
+        $this->phone_number = $student['phone_number'];
     }
 
     /**
@@ -155,6 +155,8 @@ class Student extends Paginator
      *
      * @param string $column
      * @param string $value
+     * 
+     * 
      * @return array
      */
     public function find_with_column($column, $value)
@@ -187,6 +189,8 @@ class Student extends Paginator
      *
      * @param string $column
      * @param int|string|float $value
+     * 
+     * 
      * @return bool
      */
     public function check_unique_except($column, $value)

@@ -23,22 +23,22 @@ class Course extends Paginator
 
     public function find($id = null)
     {
-        if ($id !== null) {
-
-            $conn = $this->connect();
-            $query = "SELECT * FROM $this->table WHERE id = ?";
-            $statement = $conn->prepare($query);
-            $statement->bind_param('i', $id);
-            $statement->execute();
-            $result = $statement->get_result();
-            $conn->close();
-            if ($result->num_rows > 0) {
-                $course = $result->fetch_assoc();
-                $this->id = $course['id'];
-                $this->name = $course['name'];
-                $this->created_at = $course['created_at'];
-                $this->updated_at = $course['updated_at'];
-            }
+        if ($id === null || empty($id)) {
+            throw new Error('id is not provided');
+        }
+        $conn = $this->connect();
+        $query = "SELECT * FROM $this->table WHERE id = ?";
+        $statement = $conn->prepare($query);
+        $statement->bind_param('i', $id);
+        $statement->execute();
+        $result = $statement->get_result();
+        $conn->close();
+        if ($result->num_rows > 0) {
+            $course = $result->fetch_assoc();
+            $this->id = $course['id'];
+            $this->name = $course['name'];
+            $this->created_at = $course['created_at'];
+            $this->updated_at = $course['updated_at'];
         }
     }
     /**
