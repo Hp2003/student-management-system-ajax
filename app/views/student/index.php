@@ -80,7 +80,7 @@ if($pagination_data !== false){
       </div>
       <table class="table table-striped">
         <thead>
-          <tr class="user-select-none text-center">
+          <tr class="user-select-none">
             <th scope="col " class="heading">
               <form action="/hiren/mvc2/app/views/student/">
                 <input type="hidden" name="sort_by" value="id">
