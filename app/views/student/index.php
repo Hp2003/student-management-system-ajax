@@ -3,14 +3,12 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Student.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Course.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/controllers/StudentController.php');
+$root = $_SERVER['DOCUMENT_ROOT'];
+require_once($root . '/hiren/mvc2/app/models/Student.php');
+require_once($root . '/hiren/mvc2/app/models/Course.php');
+require_once($root . '/hiren/mvc2/app/controllers/StudentController.php');
 
 $navbar = include_once('../nav.php');
-
-$course = new Course();
-$courses = $course->get_formatted_course();
 
 // Pattern to formate phone number
 $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
