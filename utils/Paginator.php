@@ -71,6 +71,7 @@ class Paginator extends Dbconnect {
         $next_page = $this->get_next_page();
         $last_page = $this->get_last_page();
         $from = $this->get_from();
+        
         return array (
             'page' => $this->page,
             'total_pages' => $total_page,

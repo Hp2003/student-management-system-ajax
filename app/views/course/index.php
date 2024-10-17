@@ -42,7 +42,7 @@ $courses = $pagination_data;
     <h1 class="text-center mt-5"> No records available :( </h1>
   <?php } else { ?>
     <div class="container mt-5">
-      <div class="container d-flex justify-content-end ">
+      <div class="container d-flex justify-content-center ">
         <form action="/hiren/mvc2/app/views/course/" class="w-25 limit-form d-flex">
           <select class="form-select limit" aria-label="Default select example" name="limit" >
             <option value="5" <?php  echo $limit == 5 ? 'selected' : '' ?>>5</option>
