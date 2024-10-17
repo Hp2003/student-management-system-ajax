@@ -21,14 +21,20 @@ $page = !empty($_GET['page']) ? $_GET['page'] : 1;
 // Getting paginated students data
 $student_controller = new StudentController();
 $pagination_data = $student_controller->paginate($page, $limit, $sort_by, $type);
+$pages = [];
+$students = [];
 
-$pages = $pagination_data['pagination_numbers'] ?? 0;
-
-if($page > $pages['total_pages']){
-  header("Location: /hiren/mvc2/app/views/student?limit=$limit&type=$type&sort_by=$sort_by&page=" . $pages['total_pages']);
+if($pagination_data !== false){
+  $pages = $pagination_data['pagination_numbers'] ?? 0;
+  
+  if($page > $pages['total_pages']){
+    header("Location: /hiren/mvc2/app/views/student?limit=$limit&type=$type&sort_by=$sort_by&page=" . $pages['total_pages']);
+  }
+  unset($pagination_data['pagination_numbers']);
+  $students = $pagination_data;
+}else{
+  $courses = [];
 }
-unset($pagination_data['pagination_numbers']);
-$students = $pagination_data;
 
 ?>
 <!doctype html>
@@ -214,4 +220,4 @@ $students = $pagination_data;
 
 </html>
 
-<?php if($pages['page'] <= $pages['total_pages']) unset($_SESSION['student_message']) ?>
+<?php if(!empty($pages) && $pages['page'] <= $pages['total_pages']) unset($_SESSION['student_message']) ?>
