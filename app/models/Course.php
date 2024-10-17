@@ -165,6 +165,17 @@ class Course extends Paginator
         return $courses;
     }
 
+    /**
+     * Returns paginated data
+     *
+     * @param string $page
+     * @param int $limit
+     * @param string $column
+     * @param string $type
+     * 
+     * 
+     * @return array
+     */
     public function paginate($page, $limit, $order_by = "", $type = "")
     {
         return $this->pagination($page, $limit, $order_by, $type);
