@@ -14,7 +14,7 @@ $course = new Course();
 $courses = $course->get_formatted_course();
 
 if(!isset($_GET['id']) || empty($_GET['id'])){
-    header('Location:' . ($_SERVER['HTTP_ACCEPT'] ? 'http://' : 'https://')  .  $_SERVER['HTTP_HOST'] . '/hiren/mvc2/app/views/404.php'  )   ;
+    header('Location:' . '/hiren/mvc2/app/views/404.php')   ;
 }
 $student = new Student();
 $student->find($_GET['id']);

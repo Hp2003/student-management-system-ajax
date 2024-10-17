@@ -34,18 +34,16 @@ class Course extends Paginator
         $statement->execute();
         $result = $statement->get_result();
         $conn->close();
-        
-        if(!$result){
-            return false;
-        }
-
         if ($result->num_rows > 0) {
             $course = $result->fetch_assoc();
             $this->id = $course['id'];
             $this->name = $course['name'];
             $this->created_at = $course['created_at'];
             $this->updated_at = $course['updated_at'];
+
+            return true;
         }
+        return false;
     }
     /**
      * makes connection with database
