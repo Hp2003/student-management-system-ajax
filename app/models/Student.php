@@ -240,6 +240,7 @@ class Student extends Paginator
      * returns total number of students associated to a course
      *
      * @param int $course_id
+     * 
      * @return int
      */
     public function get_total_students($course_id)
