@@ -271,10 +271,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($student_controller->delete()) {
             $_SESSION['student_message'] = array(
-                'type' => 'danger',
+                'type' => 'success',
                 'message' => 'Student has been deleted',
             );
 
+            header('Location:' . htmlspecialchars($_SERVER['HTTP_REFERER']));
+        }else{
+            $_SESSION['student_message'] = array(
+                'type' => 'danger',
+                'message' => 'Failed deleting student',
+            );
             header('Location:' . htmlspecialchars($_SERVER['HTTP_REFERER']));
         }
     }

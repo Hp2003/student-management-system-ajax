@@ -137,7 +137,7 @@ class Student extends Paginator
     }
 
     /**
-     * delets student and return true if deleted 
+     * delets student and return true if deleted false if not
      *
      * @return bool
      */
@@ -148,10 +148,11 @@ class Student extends Paginator
         $sql = "DELETE FROM $this->table WHERE id = ? ";
         $statement = $conn->prepare($sql);
         $statement->bind_param('i', $this->id);
-        $result = $statement->execute();
+        $statement->execute();
+        $affected_rows = $conn->affected_rows;
         $conn->close();
 
-        return $result;
+        return $affected_rows > 0;
     }
 
     /**
