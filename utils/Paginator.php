@@ -18,7 +18,8 @@ class Paginator extends Dbconnect {
      */
     public function pagination($page, $limit, $order_by = "", $type = "") {
 
-        if($page <= 0 || !is_int($page) ) {
+        $page = (int) $page;
+        if($page <= 0  ) {
             return [];
         }
         // $type = ($type === "") ? "DESC" : $type;
