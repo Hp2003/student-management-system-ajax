@@ -275,13 +275,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'message' => 'Student has been deleted',
             );
 
-            header('Location:' . htmlspecialchars($_SERVER['HTTP_REFERER']));
+            header('Location:' . $_SERVER['HTTP_REFERER']);
         }else{
             $_SESSION['student_message'] = array(
                 'type' => 'danger',
                 'message' => 'Failed deleting student',
             );
-            header('Location:' . htmlspecialchars($_SERVER['HTTP_REFERER']));
+            header('Location:' . $_SERVER['HTTP_REFERER']);
         }
     }
 }
