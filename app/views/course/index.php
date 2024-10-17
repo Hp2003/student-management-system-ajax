@@ -67,7 +67,7 @@ $courses = $pagination_data;
             <th scope="col">
             <form action="/hiren/mvc2/app/views/course/">
                 <input type="hidden" name="sort_by" value="id">
-                <input type="hidden" name="page" value="<?php echo $page ?>">
+                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
                 <input type="hidden" name="type" value="<?php echo $type ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
@@ -78,8 +78,8 @@ $courses = $pagination_data;
             <th scope="col">
             <form action="/hiren/mvc2/app/views/course/">
                 <input type="hidden" name="sort_by" value="name">
-                <input type="hidden" name="page" value="<?php echo $page ?>">
-                <input type="hidden" name="limit" value="<?php echo $limit ?>">
+                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
+                <input type="hidden" name="limit" value="<?php echo $limit ?>"> 
                 <input type="hidden" name="type" value="<?php echo $type ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
@@ -89,7 +89,7 @@ $courses = $pagination_data;
             <th scope="col">
             <form action="/hiren/mvc2/app/views/course/">
                 <input type="hidden" name="sort_by" value="student_count">
-                <input type="hidden" name="page" value="<?php echo $page ?>">
+                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
                 <input type="hidden" name="type" value="<?php echo $type ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
@@ -100,7 +100,7 @@ $courses = $pagination_data;
             <th scope="col">
             <form action="/hiren/mvc2/app/views/course/">
                 <input type="hidden" name="sort_by" value="created_at">
-                <input type="hidden" name="page" value="<?php echo $page ?>">
+                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
                 <input type="hidden" name="type" value="<?php echo $type ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
@@ -111,7 +111,7 @@ $courses = $pagination_data;
             <th scope="col">
             <form action="/hiren/mvc2/app/views/course/">
                 <input type="hidden" name="sort_by" value="updated_at">
-                <input type="hidden" name="page" value="<?php echo $page ?>">
+                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
                 <input type="hidden" name="type" value="<?php echo $type ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
