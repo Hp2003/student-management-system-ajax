@@ -143,9 +143,11 @@ class Course extends Paginator
         $statement = $conn->prepare($sql);
         $statement->bind_param('i', $this->id);
         $result = $statement->execute();
+        $affected_rows = $conn->affected_rows;
         $conn->close();
 
-        return $result;
+        return $affected_rows > 0 ;
+        
     }
 
     /**

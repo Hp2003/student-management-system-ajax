@@ -132,13 +132,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ($_POST['operation'] === 'delete') {
         $course_controller = new CourseController();
         $course_controller->id = $_POST['id'];
-        $course_controller->delete();
 
-        $_SESSION['course_message'] = array(
-            'type' => 'danger',
-            'message' => 'Course has beed deleted',
-        );
-        header('Location:' .  htmlspecialchars($_SERVER['HTTP_REFERER']));
+        if(!$course_controller->delete()){
+            $_SESSION['course_message'] = array(
+                'type' => 'danger',
+                'message' => 'Failed deleting course',
+            );
+            header('Location:' .  htmlspecialchars($_SERVER['HTTP_REFERER']));
+        }else{
+            $_SESSION['course_message'] = array(
+                'type' => 'danger',
+                'message' => 'Course has beed deleted',
+            );
+            header('Location:' .  htmlspecialchars($_SERVER['HTTP_REFERER']));
+        }
+
     } else {
         $course_controller = new CourseController();
         $course_controller->name = $_POST['name'];
