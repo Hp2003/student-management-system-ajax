@@ -18,6 +18,7 @@ $type = !empty($_GET['type']) ? $_GET['type'] : "";
 $limit = $_GET['limit'] ?? 5;
 $page = !empty($_GET['page']) ? $_GET['page'] : 1;
 
+// Getting paginated students data
 $student_controller = new StudentController();
 $pagination_data = $student_controller->paginate($page, $limit, $sort_by, $type);
 

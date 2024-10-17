@@ -3,10 +3,12 @@
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 
+    $root = $_SERVER['DOCUMENT_ROOT'];
+    require_once($root . '/hiren/mvc2/app/models/Course.php');
+    $navbar = include_once('../nav.php');
+    
     if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 
-    require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Course.php');
-    $navbar = include_once('../nav.php');
     $course = new Course();
     $course->find($_GET['id']);
 

@@ -2,10 +2,12 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
 if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Student.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/utils/Validator.php');
+$root = $_SERVER['DOCUMENT_ROOT'];
+require_once($root . '/hiren/mvc2/app/models/Student.php');
+require_once($root . '/hiren/mvc2/utils/Validator.php');
 
 class StudentController extends Validator
 {

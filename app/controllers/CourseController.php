@@ -5,8 +5,9 @@ error_reporting(E_ALL);
 
 if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/utils/Validator.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Course.php');
+$root = $_SERVER['DOCUMENT_ROOT'];
+require_once($root . '/hiren/mvc2/utils/Validator.php');
+require_once($root . '/hiren/mvc2/app/models/Course.php');
 
 class CourseController extends Validator
 {

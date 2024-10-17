@@ -1,6 +1,9 @@
 <?php 
-require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/models/Course.php');
-require_once($_SERVER['DOCUMENT_ROOT'] . '/hiren/mvc2/app/controllers/StudentController.php');
+
+$root = $_SERVER['DOCUMENT_ROOT'];
+require_once($root . '/hiren/mvc2/app/models/Course.php');
+require_once($root . '/hiren/mvc2/app/controllers/StudentController.php');
+
 if(session_status() !== PHP_SESSION_ACTIVE) session_start();
 
 $navbar = include_once('../nav.php');

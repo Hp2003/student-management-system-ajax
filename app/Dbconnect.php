@@ -1,5 +1,8 @@
 <?php 
 
+/**
+ * Main class to connect with database (mysql)
+ */
 class Dbconnect{
     private $hostname = 'localhost';
     private $username = 'root';
