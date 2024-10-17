@@ -64,6 +64,13 @@ class CourseController extends Validator
      */
     public function update()
     {
+
+        $errors = $this->validate();
+        if($errors){
+            $_SESSION['edit_course_errors'] = $errors;
+            return false;
+        }
+
         $is_duplicate = $this->test_duplicate_course(strtoupper($this->name));
         if ($is_duplicate) {
             $_SESSION['update_form_duplicate_course_error'] = 'The course name is already avaialble';
@@ -126,7 +133,7 @@ class CourseController extends Validator
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($_POST['operation'] === 'edit') {
         $course_controller = new CourseController();
-        $course_controller->name = $_POST['name'] ?? '';
+        $course_controller->name = trim($_POST['name']) ?? '';
         $course_controller->id = $_POST['id'] ?? '';
         if ($course_controller->update() === FALSE) {
             header('Location:' .  $_SERVER['HTTP_REFERER']);
@@ -157,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     } else {
         $course_controller = new CourseController();
-        $course_controller->name = $_POST['name'];
+        $course_controller->name = trim($_POST['name']);
         if ($course_controller->save() === FALSE) {
             header('Location:' .  $_SERVER['HTTP_REFERER']);
         } else {
