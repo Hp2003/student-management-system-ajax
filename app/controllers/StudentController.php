@@ -239,7 +239,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             header('Location:' . '/hiren/mvc2/app/views/student');
         } else {
-            header('Location:' . $_SERVER['HTTP_REFERER']);
+            header('Location:' . htmlspecialchars($_SERVER['HTTP_REFERER']));
         }
     } else if ($_POST['operation'] === 'edit') {
 

@@ -80,10 +80,10 @@ class Student extends Paginator
         VALUES(?, ?, ?, ?, ?, ?, ?)";
         $statement = $conn->prepare($query);
         $statement->bind_param('ssssisi', $this->first_name, $this->last_name, $this->email, $this->gender, $course_id, $this->phone_number, $status);
-        $statement->execute();
+        $result = $statement->execute();
         $conn->close();
 
-        return true;
+        return $result;
     }
 
     /**
@@ -255,6 +255,17 @@ class Student extends Paginator
         return 0;
     }
 
+    /**
+     * Returns paginated data
+     *
+     * @param string $page
+     * @param int $limit
+     * @param string $column
+     * @param string $type
+     * 
+     * 
+     * @return array
+     */
     public function paginate($page, $limit, $column, $type)
     {
         return $this->pagination($page, $limit, $column, $type);
