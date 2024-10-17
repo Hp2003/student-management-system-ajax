@@ -27,7 +27,7 @@ class CourseController extends Validator
 
         $errors = $this->validate();
         if(count($errors) > 0){
-            $_SESSION['errors'] = $errors;
+            $_SESSION['add_course_errors'] = $errors;
             return false;
         }
 
