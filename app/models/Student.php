@@ -276,24 +276,4 @@ class Student extends Paginator
         return $this->pagination($page, $limit, $column, $type);
     }
 
-    /**
-     * returns array of formatted courses key = id, val = name
-     *
-     * @return array
-     */
-    public function get_formatted_course()
-    {
-        $courses = [];
-        $conn = $this->connect();
-        $sql = "SELECT id, name FROM $this->table ";
-
-        $result = $conn->query($sql);
-        $conn->close();
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $courses[$row['id']] = $row['name'];
-            }
-        }
-        return $courses;
-    }
 }
