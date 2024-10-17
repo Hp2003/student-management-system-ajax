@@ -9,8 +9,14 @@
     
     if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 
+    if(empty($_GET['id'])){
+        header('Location:' . '/hiren/mvc2/app/views/404.php');
+    }
     $course = new Course();
-    $course->find($_GET['id']);
+
+    if(!$course->find($_GET['id'])){
+        header('Location:' . '/hiren/mvc2/app/views/404.php');
+    }
 
     $duplicate_course_error = $_SESSION['update_form_duplicate_course_error'] ?? '';
     $error_value = $_SESSION['update_course_form_input_values'] ?? [];

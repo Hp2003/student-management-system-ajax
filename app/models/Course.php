@@ -15,10 +15,11 @@ class Course extends Paginator
     protected $table = 'courses';
 
     /**
-     * Finds uesr with given id
+     * Finds uesr with given id returns false if no record is found
      * 
      * @param int $id
      * 
+     * @return bool
      */
 
     public function find($id = null)
@@ -33,6 +34,11 @@ class Course extends Paginator
         $statement->execute();
         $result = $statement->get_result();
         $conn->close();
+        
+        if(!$result){
+            return false;
+        }
+
         if ($result->num_rows > 0) {
             $course = $result->fetch_assoc();
             $this->id = $course['id'];
