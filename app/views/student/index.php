@@ -49,8 +49,8 @@ $limit = $_GET['limit'] ?? 5;
     ?>
       <div class="container d-flex justify-content-around">
         <form action="<?php echo $_SERVER['REQUEST_URI'] ?>" class="w-25 limit-form d-flex ">
-          <input type="hidden" name="sort_by" value=<?php echo $sort_by ?>>
-          <input type="hidden" name="type" value=<?php echo $type ?>>
+          <?php /*<input type="hidden" name="sort_by" value=<?php echo $sort_by ?>>
+          <input type="hidden" name="type" value=<?php echo $type ?>> */?>
           <select class="form-select limit" aria-label="Default select example" name="limit">
             <option value="5" <?php echo $limit == 5 ? 'selected' : '' ?>>5</option>
             <option value="10" <?php echo $limit == 10 ? 'selected' : '' ?>>10</option>

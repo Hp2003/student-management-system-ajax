@@ -26,7 +26,8 @@ class Paginator extends Dbconnect {
         $data = [];
         $offset = $this->limit * ( $page - 1 );
         $sql = "";
-        if($order_by === 'students') $order_by = 'student_count';
+
+        // if($order_by === 'students') $order_by = 'student_count';
 
         if($this->table === 'students'){
             $sql = "select students.*, courses.name as course_name from students left join courses on students.course_id = courses.id ORDER BY $order_by $type LIMIT ? OFFSET ?  ";
