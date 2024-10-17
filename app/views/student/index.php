@@ -57,7 +57,7 @@ if($pagination_data !== false){
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   <?php } ?>
-  <div class="container mt-5">
+  <div class=" mx-auto mt-5" style="width : 90%;">
     <?php
     if (count($students) <= 0) {
     ?>
