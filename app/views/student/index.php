@@ -39,6 +39,14 @@ $students = $pagination_data;
 
 <body>
   <?php $navbar ?>
+  <?php if (!empty($_SESSION['student_message'])) {
+    $alert = $_SESSION['student_message'];
+  ?>
+    <div class="alert alert-<?php echo $alert['type'] ?> alert-dismissible fade show" role="alert">
+      <strong></strong> <?php echo $alert['message'] ?>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <?php } ?>
   <div class="container mt-5">
     <?php
     if (count($students) <= 0) {
@@ -50,7 +58,7 @@ $students = $pagination_data;
       <div class="container d-flex justify-content-around">
         <form action="<?php echo $_SERVER['REQUEST_URI'] ?>" class="w-25 limit-form d-flex ">
           <?php /*<input type="hidden" name="sort_by" value=<?php echo $sort_by ?>>
-          <input type="hidden" name="type" value=<?php echo $type ?>> */?>
+          <input type="hidden" name="type" value=<?php echo $type ?>> */ ?>
           <select class="form-select limit" aria-label="Default select example" name="limit">
             <option value="5" <?php echo $limit == 5 ? 'selected' : '' ?>>5</option>
             <option value="10" <?php echo $limit == 10 ? 'selected' : '' ?>>10</option>
@@ -211,3 +219,5 @@ $students = $pagination_data;
 </body>
 
 </html>
+
+<?php unset($_SESSION['student_message']) ?>

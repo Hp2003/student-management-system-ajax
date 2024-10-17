@@ -231,6 +231,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // $student_controller->save();
         if ($student_controller->save()) {
+
+            $_SESSION['student_message'] = array(
+                'type' => 'success',
+                'message' => 'Student has been added',
+            );
+
             header('Location:' . '/hiren/mvc2/app/views/student');
         } else {
             header('Location:' . $_SERVER['HTTP_REFERER']);
@@ -248,6 +254,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $student_controller->course_id = empty($_POST['course_id']) ? NULL : $_POST['course_id'];
 
         if ($student_controller->update()) {
+
+            $_SESSION['student_message'] = array(
+                'type' => 'success',
+                'message' => 'Student has been updated',
+            );
+
             header('Location:' . '/hiren/mvc2/app/views/student');
         } else {
             header('Location:' . htmlspecialchars($_SERVER['HTTP_REFERER']));
@@ -258,6 +270,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $student_controller->id = $_POST['id'];
 
         if ($student_controller->delete()) {
+            $_SESSION['student_message'] = array(
+                'type' => 'danger',
+                'message' => 'Student has been deleted',
+            );
+
             header('Location:' . htmlspecialchars($_SERVER['HTTP_REFERER']));
         }
     }
