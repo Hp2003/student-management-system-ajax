@@ -46,19 +46,28 @@ class Paginator extends Dbconnect {
         }
 
 
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param('ii', $this->limit, $offset);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $conn->close();
-        
-        if($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()){
-                $data[] = $row;
+        try{
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('ii', $this->limit, $offset);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()){
+                    $data[] = $row;
+                }
             }
+            $data['pagination_numbers'] = $this->pagination_numbers();
+            return $data;
+
+        }catch(Exception $e){
+            if($conn->errno === 1054){
+                return false;   
+            }
+        }finally{
+            $conn->close();
         }
-        $data['pagination_numbers'] = $this->pagination_numbers();
-        return $data;
+        
     }
 
     /**

@@ -20,13 +20,19 @@ $limit = $_GET['limit'] ?? 5;
 $course_controller = new CourseController();
 $pagination_data = $course_controller->paginate($page, $limit, $sort_by, $type);
 
-$pages = $pagination_data['pagination_numbers'] ?? 0;
-unset($pagination_data['pagination_numbers']);
-$courses = $pagination_data;
-
-if($page > $pages['total_pages']){
-  header("Location: /hiren/mvc2/app/views/course?limit=$limit&type=$type&sort_by=$sort_by&page=" . $pages['total_pages']);
+$pages = [];
+$courses = [];
+if($pagination_data !== false){
+  $pages = $pagination_data['pagination_numbers'] ?? 0;
+  unset($pagination_data['pagination_numbers']);
+  $courses = $pagination_data;
+  if($page > $pages['total_pages']){
+    header("Location: /hiren/mvc2/app/views/course?limit=$limit&type=$type&sort_by=$sort_by&page=" . $pages['total_pages']);
+  }
+}else{
+  $courses = [];
 }
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -159,7 +165,7 @@ if($page > $pages['total_pages']){
 </html>
 <?php 
 
-if($pages['page'] <= $pages['total_pages']) { 
+if(!empty($pages) && $pages['page'] <= $pages['total_pages']) { 
   unset($_SESSION['course_message']);
 }
   ?>
