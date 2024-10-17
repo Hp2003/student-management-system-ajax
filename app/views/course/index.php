@@ -57,7 +57,7 @@ if($pagination_data !== false){
   ?>
   <?php $navbar ?>
   <?php if (count($courses) <= 0) { ?>
-    <h1 class="text-center mt-5"> No records available :( </h1>
+    <h1 class="text-center mt-5"> No records found :( </h1>
   <?php } else { ?>
     <div class="container mt-5">
       <div class="container d-flex justify-content-center ">

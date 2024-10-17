@@ -61,7 +61,7 @@ if($pagination_data !== false){
     <?php
     if (count($students) <= 0) {
     ?>
-      <h1 class="text-center mt-5"> No records available :( </h1>
+      <h1 class="text-center mt-5"> No records found :( </h1>
     <?php
     } else {
     ?>
