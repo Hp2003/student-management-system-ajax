@@ -28,6 +28,12 @@ class Paginator extends Dbconnect {
         }
 
         $order_by = ($order_by === "") ? "id"  : $order_by;
+
+        // changing limit to 5 if it's not in decimal
+        if((int) $limit <= 0){
+            $limit = 5;
+        }
+
         $this->limit = $limit;
         $this->page = $page;
         $conn = $this->connect();
