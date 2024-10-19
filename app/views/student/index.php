@@ -3,6 +3,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+
 $root = $_SERVER['DOCUMENT_ROOT'];
 require_once($root . '/hiren/mvc2/app/models/Student.php');
 require_once($root . '/hiren/mvc2/app/models/Course.php');
@@ -27,7 +28,7 @@ $students = [];
 if($pagination_data !== false){
   $pages = $pagination_data['pagination_numbers'] ?? 0;
   
-  if($page > $pages['total_pages']){
+  if($page > $pages['total_pages'] && $page > 1){
     header("Location: /hiren/mvc2/app/views/student?limit=$limit&type=$type&sort_by=$sort_by&page=" . $pages['total_pages']);
   }
   unset($pagination_data['pagination_numbers']);

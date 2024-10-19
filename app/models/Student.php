@@ -4,8 +4,10 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 $root = $_SERVER['DOCUMENT_ROOT'];
-require_once($root . '/hiren/mvc2/app/Dbconnect.php');
-require_once($root . '/hiren/mvc2/utils/Paginator.php');
+// require_once($root . '/hiren/mvc2/app/Dbconnect.php');
+// require_once($root . '/hiren/mvc2/utils/Paginator.php');
+require_once(__DIR__ . '/../Dbconnect.php');
+require_once(__DIR__ . '/../../utils/Paginator.php');
 
 
 class Student extends Paginator
