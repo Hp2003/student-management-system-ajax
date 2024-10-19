@@ -60,7 +60,7 @@ if($pagination_data !== false){
     <h1 class="text-center mt-5"> No records found :( </h1>
   <?php } else { ?>
     <div class="container mt-5">
-      <div class="container d-flex justify-content-center ">
+      <div class="container d-flex justify-content-center d-flex justify-content-around">
         <form action="/hiren/mvc2/app/views/course/" class="w-25 limit-form d-flex">
           <select class="form-select limit" aria-label="Default select example" name="limit" >
             <option value="5" <?php  echo $limit == 5 ? 'selected' : '' ?>>5</option>
@@ -69,6 +69,10 @@ if($pagination_data !== false){
             <option value="50" <?php echo $limit == 50 ? 'selected' : '' ?>>50</option>
           </select>
           <input type="submit" value="filter" class="btn btn-primary">
+        </form>
+        <form action="../../controllers/CourseController.php" method="post">
+          <input type="hidden" name="operation" value="csv">
+          <button type="submit" class="btn btn-primary">Download</button>
         </form>
       </div>
       <table class="table table-striped">

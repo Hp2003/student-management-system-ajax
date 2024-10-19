@@ -125,6 +125,31 @@ class CourseController extends Validator
         $course = new Course();
         return $course->paginate($page, $limit, $column, $type);
     }
+
+    /**
+     * Generates csv file for all courses
+     *
+     * @return void
+     */
+    public function gen_csv() {
+        $course = new Course();
+        $data = $course->get();
+
+        $file = fopen(__DIR__ . '/../../storage/csv/courses.csv', 'w');
+        $headings = "id, name, students, created_at,  updated_at \n";
+
+        fwrite($file, $headings);
+        foreach($data as $row) {
+            $status = $row['status'] ? 'active' : 'inactive';
+            $line = $row['id'] . ',' . $row['name'] . ',' . $row['students_count'] . ',' . $row['created_at'] . ','  . $row['updated_at'] . "\n";
+            fwrite($file, $line);
+        }
+
+        fclose($file);
+
+        return true;
+
+    }
 }
 
 
@@ -161,6 +186,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             );
             header('Location:' .  $_SERVER['HTTP_REFERER']);
         }
+
+    }else if($_POST['operation'] === 'csv'){
+        $course_controller = new CourseController();
+        $result = $course_controller->gen_csv();
+
+        
+        $file_path = '../../storage/csv/courses.csv';
+
+        header('Content-Type: application/octet-stream');
+
+        header('Content-Disposition: attachment; filename="'. basename($file_path));
+
+        readfile($file_path);
+
+        // header('Location:' . $_SERVER['HTTP_REFERER']);
 
     } else {
         $course_controller = new CourseController();

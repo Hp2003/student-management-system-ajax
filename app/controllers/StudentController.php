@@ -319,6 +319,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         readfile($file_path);
 
-        header('Location:' . $_SERVER['HTTP_REFERER']);
+        // header('Location:' . $_SERVER['HTTP_REFERER']);
     }
 }

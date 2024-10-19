@@ -1,9 +1,7 @@
 <?php
 
 $root = $_SERVER['DOCUMENT_ROOT'];
-// require_once($root . '/hiren/mvc2/app/Dbconnect.php');
-// require_once($root . '/hiren/mvc2/app/models/Student.php');
-// require_once($root . '/hiren/mvc2/utils/Paginator.php');
+
 require_once __DIR__ . '/../Dbconnect.php';
 require_once __DIR__ . '/Student.php';
 require_once __DIR__ . '/../../utils/Paginator.php';
@@ -100,7 +98,7 @@ class Course extends Paginator
 
         $courses = [];
         $conn = $this->connect();
-        $sql = "SELECT * FROM $this->table ";
+        $sql = "select count(students.id) as students_count, courses.* from courses right join students on courses.id = students.course_id GROUP BY courses.id ";
         $result = $conn->query($sql);
 
         while ($row = $result->fetch_assoc()) {
