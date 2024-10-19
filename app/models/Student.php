@@ -125,7 +125,7 @@ class Student extends Paginator
 
         $students = [];
         $conn = $this->connect();
-        $sql = "SELECT * FROM $this->table";
+        $sql = "SELECT students.*, courses.name AS course_name FROM $this->table LEFT JOIN courses on students.course_id = courses.id";
         $result = $conn->query($sql);
         $conn->close();
 
