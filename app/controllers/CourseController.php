@@ -125,6 +125,56 @@ class CourseController extends Validator
         $course = new Course();
         return $course->paginate($page, $limit, $column, $type);
     }
+
+    /**
+     * Generates csv file for all courses
+     *
+     * @return void
+     */
+    public function gen_csv() {
+        $course = new Course();
+        $data = $course->get();
+
+        $file = fopen(__DIR__ . '/../../storage/csv/courses.csv', 'w');
+        $headings = "id, name, students, created_at,  updated_at \n";
+
+        fwrite($file, $headings);
+        foreach($data as $row) {
+            $line = $row['id'] . ',' . $row['name'] . ',' . $row['students_count'] . ',' . $row['created_at'] . ','  . $row['updated_at'] . "\n";
+            fwrite($file, $line);
+        }
+
+        fclose($file);
+
+        return true;
+
+    }
+
+    /**
+     * Generates csv of all students in a course
+     * 
+     * @param int $id
+     *
+     * @return bool
+     */
+    public function students_from_course_csv($id) {
+
+        $course = new Course($id);
+        $course->id = $id;
+        $data = $course->get_all_students();
+
+        $file = fopen(__DIR__ . '/../../storage/csv/' . $id . '.csv', 'w');
+        $headings = "id, first_name, last_name, email, status, course, created_at, updated_at\n";
+
+        fwrite($file, $headings);
+        foreach($data as $row) {
+            $status = $row['status'] ? 'active' : 'inactive';
+            $line = $row['id'] . ',' . $row['first_name'] . ',' . $row['last_name'] . ',' . $row['email'] . ',' . $status . ',' . $row['course_name'] . ',' . $row['created_at'] . ',' . $row['updated_at'] . "\n";
+            fwrite($file, $line);
+        }
+
+        return true;
+    }
 }
 
 
@@ -161,6 +211,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             );
             header('Location:' .  $_SERVER['HTTP_REFERER']);
         }
+
+    }else if($_POST['operation'] === 'csv'){
+        // Generated csv file and get all students from one course
+        if(!empty($_POST['id'])){
+            $course_controller = new CourseController();
+            $course_controller->students_from_course_csv($_POST['id']);
+
+            $file_path = '../../storage/csv/' . $_POST['id'] . '.csv';
+    
+            header('Content-Type: application/octet-stream');
+    
+            header('Content-Disposition: attachment; filename="'. basename($file_path));
+    
+            readfile($file_path);
+
+            unlink($file_path);
+
+        }else{
+            // Generates csv file for all courses details
+            $course_controller = new CourseController();
+            $result = $course_controller->gen_csv();
+    
+            
+            $file_path = '../../storage/csv/courses.csv';
+    
+            header('Content-Type: application/octet-stream');
+    
+            header('Content-Disposition: attachment; filename="'. basename($file_path));
+    
+            readfile($file_path);
+
+            unlink($file_path);
+        }
+
+        // header('Location:' . $_SERVER['HTTP_REFERER']);
 
     } else {
         $course_controller = new CourseController();
