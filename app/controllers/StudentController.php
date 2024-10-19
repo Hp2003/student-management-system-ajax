@@ -211,6 +211,30 @@ class StudentController extends Validator
         $student = new Student();
         return $student->paginate($page, $limit, $column, $type);
     }
+
+    /**
+     * generates csv file
+     *
+     * @return bool
+     */
+    public function gen_csv() {
+        $student = new Student();
+        $data = $student->get();
+        $file = fopen(__DIR__ . '/../../storage/csv/students.csv', 'w');
+        $headings = "id, first_name, last_name, email, status, course, created_at, updated_at\n";
+
+        fwrite($file, $headings);
+        foreach($data as $row) {
+            $status = $row['status'] ? 'active' : 'inactive';
+            $line = $row['id'] . ',' . $row['first_name'] . ',' . $row['last_name'] . ',' . $row['email'] . ',' . $status . ',' . $row['course_name'] . ',' . $row['created_at'] . ',' . $row['updated_at'] . "\n";
+            fwrite($file, $line);
+        }
+
+        fclose($file);
+
+        return true;
+        
+    }
 }
 
 
@@ -283,5 +307,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             );
             header('Location:' . $_SERVER['HTTP_REFERER']);
         }
+    }else if($_POST['operation'] === 'csv'){
+        $student_controller = new StudentController();
+        $student_controller->gen_csv();
+
+        $file_path = '../../storage/csv/students.csv';
+
+        header('Content-Type: application/octet-stream');
+
+        header('Content-Disposition: attachment; filename="'. basename($file_path));
+
+        readfile($file_path);
     }
 }

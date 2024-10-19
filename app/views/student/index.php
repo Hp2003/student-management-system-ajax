@@ -78,6 +78,10 @@ if($pagination_data !== false){
           </select>
           <input type="submit" value="Filter" class="btn btn-primary">
         </form>
+        <form action="../../controllers/StudentController.php" method="post">
+          <input type="hidden" name="operation" value="csv">
+          <button type="submit" class="btn btn-primary">Download</button>
+        </form>
       </div>
       <table class="table table-striped">
         <thead>
