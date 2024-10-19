@@ -236,7 +236,7 @@ class StudentController extends Validator
         return true;
         
     }
-    
+
 }
 
 
@@ -322,6 +322,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         readfile($file_path);
 
+        unlink($file_path);
         // header('Location:' . $_SERVER['HTTP_REFERER']);
     }
 }

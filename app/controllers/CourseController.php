@@ -226,6 +226,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
             readfile($file_path);
 
+            unlink($file_path);
+
         }else{
             // Generates csv file for all courses details
             $course_controller = new CourseController();
@@ -239,6 +241,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('Content-Disposition: attachment; filename="'. basename($file_path));
     
             readfile($file_path);
+
+            unlink($file_path);
         }
 
         // header('Location:' . $_SERVER['HTTP_REFERER']);
