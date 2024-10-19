@@ -214,12 +214,13 @@ class StudentController extends Validator
 
     /**
      * generates csv file for studdnts
-     *
+     * 
      * @return bool
      */
     public function gen_csv() {
         $student = new Student();
         $data = $student->get();
+
         $file = fopen(__DIR__ . '/../../storage/csv/students.csv', 'w');
         $headings = "id, first_name, last_name, email, status, course, created_at, updated_at\n";
 
@@ -235,6 +236,7 @@ class StudentController extends Validator
         return true;
         
     }
+    
 }
 
 
@@ -308,6 +310,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('Location:' . $_SERVER['HTTP_REFERER']);
         }
     }else if($_POST['operation'] === 'csv'){
+        $id = $_POST['id'] ?? null;
         $student_controller = new StudentController();
         $student_controller->gen_csv();
 

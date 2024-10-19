@@ -153,6 +153,13 @@ if($pagination_data !== false){
                   <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
               </td>
+              <td>
+                <form action="../../controllers/CourseController.php" method="post">
+                  <input type="hidden" name="operation" value="csv">
+                  <input type="hidden" name="id" value="<?php echo $course['id'] ?>">
+                  <input type="submit" value="Download" class="btn btn-primary">
+                </form>
+              </td>
             </tr>
           <?php
           }
