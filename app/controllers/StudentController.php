@@ -213,7 +213,7 @@ class StudentController extends Validator
     }
 
     /**
-     * generates csv file
+     * generates csv file for studdnts
      *
      * @return bool
      */
@@ -318,5 +318,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Content-Disposition: attachment; filename="'. basename($file_path));
 
         readfile($file_path);
+
+        header('Location:' . $_SERVER['HTTP_REFERER']);
     }
 }
