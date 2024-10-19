@@ -26,7 +26,8 @@ if($pagination_data !== false){
   $pages = $pagination_data['pagination_numbers'] ?? 0;
   unset($pagination_data['pagination_numbers']);
   $courses = $pagination_data;
-  if($page > $pages['total_pages']){
+  // var_dump($pages);
+  if($page > $pages['total_pages'] && $pages['total_pages'] > 0){
     header("Location: /hiren/mvc2/app/views/course?limit=$limit&type=$type&sort_by=$sort_by&page=" . $pages['total_pages']);
   }
 }else{
