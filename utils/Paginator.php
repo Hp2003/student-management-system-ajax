@@ -1,7 +1,8 @@
 <?php 
 
 $root = $_SERVER['DOCUMENT_ROOT'];
-require_once($root . '/hiren/mvc2/app/Dbconnect.php');
+// require_once($root . '/hiren/mvc2/app/Dbconnect.php');
+require_once(__DIR__ . '/../app/Dbconnect.php');
 
 class Paginator extends Dbconnect {
 

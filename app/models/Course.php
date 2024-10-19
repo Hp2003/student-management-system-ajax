@@ -1,9 +1,12 @@
 <?php
 
 $root = $_SERVER['DOCUMENT_ROOT'];
-require_once($root . '/hiren/mvc2/app/Dbconnect.php');
-require_once($root . '/hiren/mvc2/app/models/Student.php');
-require_once($root . '/hiren/mvc2/utils/Paginator.php');
+// require_once($root . '/hiren/mvc2/app/Dbconnect.php');
+// require_once($root . '/hiren/mvc2/app/models/Student.php');
+// require_once($root . '/hiren/mvc2/utils/Paginator.php');
+require_once __DIR__ . '/../Dbconnect.php';
+require_once __DIR__ . '/Student.php';
+require_once __DIR__ . '/../../utils/Paginator.php';
 
 class Course extends Paginator
 {
