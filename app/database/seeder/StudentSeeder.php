@@ -49,7 +49,7 @@ class StudentSeeder {
     }
 }
 
-$seeder = new StudentSeeder(100);
+// $seeder = new StudentSeeder(100);
 
 
 

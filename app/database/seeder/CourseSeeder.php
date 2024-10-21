@@ -34,4 +34,4 @@ class CourseSeeder
     }
 }
 
-$course_seeder = new CourseSeeder();
+// $course_seeder = new CourseSeeder();
