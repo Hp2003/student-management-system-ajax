@@ -14,28 +14,11 @@ $navbar = include_once('../nav.php');
 // Pattern to formate phone number
 $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
 
-$sort_by = !empty($_GET['sort_by']) ? $_GET['sort_by'] : "";
-$type = !empty($_GET['type']) ? $_GET['type'] : "";
-$limit = $_GET['limit'] ?? 5;
-$page = !empty($_GET['page']) ? $_GET['page'] : 1;
 
-// Getting paginated students data
-$student_controller = new StudentController();
-$pagination_data = $student_controller->paginate($page, $limit, $sort_by, $type);
-$pages = [];
-$students = [];
 
-if($pagination_data !== false){
-  $pages = $pagination_data['pagination_numbers'] ?? 0;
-  
-  if($page > $pages['total_pages'] && $page > 1){
-    header("Location: /hiren/mvc2/app/views/student?limit=$limit&type=$type&sort_by=$sort_by&page=" . $pages['total_pages']);
-  }
-  unset($pagination_data['pagination_numbers']);
-  $students = $pagination_data;
-}else{
-  $courses = [];
-}
+
+
+
 
 ?>
 <!doctype html>
@@ -89,7 +72,7 @@ if($pagination_data !== false){
             <th scope="col " class="heading">
               <form action="/hiren/mvc2/app/views/student/">
                 <input type="hidden" name="sort_by" value="id">
-                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
+                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */ ?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
@@ -99,7 +82,7 @@ if($pagination_data !== false){
             <th scope="col " class="heading">
               <form action="/hiren/mvc2/app/views/student/">
                 <input type="hidden" name="sort_by" value="first_name">
-                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
+                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */ ?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
@@ -109,7 +92,7 @@ if($pagination_data !== false){
             <th scope="col " class="heading">
               <form action="/hiren/mvc2/app/views/student/">
                 <input type="hidden" name="sort_by" value="last_name">
-                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
+                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */ ?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
@@ -119,7 +102,7 @@ if($pagination_data !== false){
             <th scope="col " class="heading">
               <form action="/hiren/mvc2/app/views/student/">
                 <input type="hidden" name="sort_by" value="email">
-                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
+                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */ ?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
@@ -129,7 +112,7 @@ if($pagination_data !== false){
             <th scope="col " class="heading">
               <form action="/hiren/mvc2/app/views/student/">
                 <input type="hidden" name="sort_by" value="gender">
-                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
+                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */ ?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
@@ -139,7 +122,7 @@ if($pagination_data !== false){
             <th scope="col " class="heading">
               <form action="/hiren/mvc2/app/views/student/">
                 <input type="hidden" name="sort_by" value="course_id">
-                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
+                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */ ?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
@@ -149,7 +132,7 @@ if($pagination_data !== false){
             <th scope="col " class="heading">
               <form action="/hiren/mvc2/app/views/student/">
                 <input type="hidden" name="sort_by" value="status">
-                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
+                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */ ?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
@@ -159,7 +142,7 @@ if($pagination_data !== false){
             <th scope="col " class="heading">
               <form action="/hiren/mvc2/app/views/student/">
                 <input type="hidden" name="sort_by" value="phone_number">
-                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
+                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */ ?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
@@ -169,7 +152,7 @@ if($pagination_data !== false){
             <th scope="col " class="heading">
               <form action="/hiren/mvc2/app/views/student/">
                 <input type="hidden" name="sort_by" value="created_at">
-                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
+                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */ ?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
@@ -179,7 +162,7 @@ if($pagination_data !== false){
             <th scope="col " class="heading">
               <form action="/hiren/mvc2/app/views/student/">
                 <input type="hidden" name="sort_by" value="updated_at">
-                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
+                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */ ?>
                 <input type="hidden" name="limit" value="<?php echo $limit ?>">
                 <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
                 <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
@@ -191,38 +174,65 @@ if($pagination_data !== false){
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($students as $student) { ?>
-            <tr>
-              <th scope="row"><?php echo $student['id'] ?></th>
-              <td><?php echo $student['first_name'] ?></td>
-              <td><?php echo $student['last_name'] ?></td>
-              <td><?php echo $student['email'] ?></td>
-              <td><?php echo $student['gender'] ?></td>
-              <td><?php echo $student['course_name'] ?? 'N/A' ?></td>
-              <td><?php echo $student['status'] ? 'Active' : 'Inactive' ?></td>
-              <td><?php echo preg_replace($pattern, '$1-$2-$3', $student['phone_number']) ?></td>
-              <td><?php echo date('d-m-Y h : i a', strtotime($student['created_at'])) ?></td>
-              <td><?php echo date('d-m-Y h : i a', strtotime($student['updated_at'])) ?></td>
-              <td><a type="button" href="<?php echo "/hiren/mvc2/app/views/student/editStudent.php?id=" . $student['id']  ?>" class="btn btn-primary">Edit</a></td>
-              <td>
-                <form action="../../controllers/StudentController.php" method="POST">
-                  <input type="hidden" name="id" value="<?php echo $student['id'] ?>">
-                  <input type="hidden" name="operation" value="delete">
-                  <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-              </td>
-            </tr>
-          <?php } ?>
+
         </tbody>
       </table>
   </div>
 
-  <?php require_once('../paginator.php') ?>
+  <div class="container d-flex justify-content-center h-auto user-select-none">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+
+      </ul>
+    </nav>
+  </div>
 <?php } ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
+<!-- <script src="../../../public/js/index.js"></script> -->
+<script>
+  let url = window.href;
+  let params = new URL(document.location.toString()).searchParams;
+
+  getStudents(params.get('page'));
+
+  function getStudents(currentPage) {
+
+    $.get(`http://localhost/hiren/mvc2/app/controllers/StudentController.php?page=${currentPage}&limit=${params.get('limit') }&sort_by=${params.get('sort_by')}&type=${params.get('type')}`,function(data) {
+      const paginationData = JSON.parse(data);
+
+      // console.log(JSON.parse(data));
+      if (paginationData.total_pages > 1) {
+        if (paginationData.prev_page) {
+          $('.pagination').append(`
+        <li class="page-item ">
+          <a class="page-link" onclick="getStudents(${params.get('page') - 1})">Previous</a>
+        </li>`)
+        }
+
+        for (let page = paginationData.from; page <= paginationData.to; page++) {
+          $('.pagination').append(`
+          <li class="page-item">
+            <a class="page-link"  onclick="getStudents(${page}) >${page}</a>
+          </li>
+        `)
+        }
+
+        if (paginationData.next_page) {
+
+          $('.pagination').append(`
+          <li class="page-item ">
+             <a class="page-link"  onclick="getStudents(${params.get('page') + 1})>Next</a>
+          </li>
+        `)
+        }
+      }
+    })
+  }
+</script>
 </body>
 
 </html>
 
-<?php if(!empty($pages) && $pages['page'] <= $pages['total_pages']) unset($_SESSION['student_message']) ?>
+<?php if (!empty($pages) && $pages['page'] <= $pages['total_pages']) unset($_SESSION['student_message']) ?>
