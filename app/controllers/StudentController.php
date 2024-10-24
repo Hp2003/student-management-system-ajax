@@ -316,8 +316,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $student_controller = new StudentController();
         $student_controller->id = $_POST['id'];
 
-        // if ($student_controller->delete()) {
-        if (true) {
+        if ($student_controller->delete()) {
+        // if (true) {
 
             header("HTTP/1.1 200 Success");
             header('Content-Type: application/json; charset=utf-8');
