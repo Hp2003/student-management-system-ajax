@@ -167,11 +167,28 @@ function setpageQueryStrings() {
 
 // sorting by column asc or desc
 $('.sort-by-btn').on('click', function () {
-    pageQueryStrings.sortby = $(this).attr('data-sort-by');
-    pageQueryStrings.type = $(this).attr('data-sort-type');
-    pageQueryStrings.currentPage = 1;
-    changeQueryString()
-    getCourses()
-  
-  })
-  
+  pageQueryStrings.sortby = $(this).attr('data-sort-by')
+  pageQueryStrings.type = $(this).attr('data-sort-type')
+  pageQueryStrings.currentPage = 1
+  changeQueryString()
+  getCourses()
+})
+
+// setting limit option to selected according to current query string
+$('.limit-option').each(function () {
+  if ($(this).val() == pageQueryStrings.limit) {
+    $(this).attr('selected', 'selected')
+  }
+})
+/**
+ * Changing limit to user's selected limit and displays new data
+ *
+ * @return void
+ */
+function setLimit() {
+  pageQueryStrings.limit = Number($('.limit-options').val())
+
+  pageQueryStrings.currentPage = 1
+  changeQueryString()
+  getCourses()
+}

@@ -47,11 +47,11 @@ $navbar = include_once('../nav.php');
     <div class="container mt-5">
       <div class="container d-flex justify-content-center d-flex justify-content-around">
         <form action="/hiren/mvc2/app/views/course/" class="w-25 limit-form d-flex">
-          <select class="form-select limit" aria-label="Default select example" name="limit" >
-            <option value="5" <?php  echo $limit == 5 ? 'selected' : '' ?>>5</option>
-            <option value="10" <?php echo $limit == 10 ? 'selected' : '' ?>>10</option>
-            <option value="20" <?php echo $limit == 20 ? 'selected' : '' ?>>20</option>
-            <option value="50" <?php echo $limit == 50 ? 'selected' : '' ?>>50</option>
+          <select class="form-select limit limit-options" onchange="setLimit()" aria-label="Default select example" name="limit" >
+            <option class="limit-option" value="5">5</option>
+            <option class="limit-option" value="10">10</option>
+            <option class="limit-option" value="20">20</option>
+            <option class="limit-option" value="50">50</option>
           </select>
           <input type="submit" value="filter" class="btn btn-primary">
         </form>
