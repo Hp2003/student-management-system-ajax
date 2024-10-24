@@ -193,7 +193,12 @@ $('.limit-option').each(function () {
   }
 })
 
+// sorting by column asc or desc
 $('.sort-by-btn').on('click', function () {
-  console.log($(this).attr('data-sort-by'))
-  console.log($(this).attr('data-type'))
+  pageQueryStrings.sortby = $(this).attr('data-sort-by');
+  pageQueryStrings.type = $(this).attr('data-sort-type');
+
+  changeQueryString()
+  getStudents()
+  
 })
