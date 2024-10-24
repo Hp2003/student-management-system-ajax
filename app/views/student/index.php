@@ -5,9 +5,9 @@ error_reporting(E_ALL);
 
 
 $root = $_SERVER['DOCUMENT_ROOT'];
-require_once($root . '/hiren/mvc2/app/models/Student.php');
-require_once($root . '/hiren/mvc2/app/models/Course.php');
-require_once($root . '/hiren/mvc2/app/controllers/StudentController.php');
+// require_once($root . '/hiren/mvc2/app/models/Student.php');
+// require_once($root . '/hiren/mvc2/app/models/Course.php');
+// require_once($root . '/hiren/mvc2/app/controllers/StudentController.php');
 
 $navbar = include_once('../nav.php');
 
@@ -185,8 +185,8 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
 
     $.get(`http://localhost/hiren/student_management_system/app/controllers/StudentController.php?page=${currentPage}&limit=${params.get('limit') }&sort_by=${params.get('sort_by')}&type=${params.get('type')}`,function(data) {
       const paginationData = JSON.parse(data);
-      
       console.log(paginationData);
+      displayStudents(paginationData);
       // console.log(JSON.parse(data));
       if (paginationData.total_pages > 1) {
         if (paginationData.prev_page) {
@@ -215,9 +215,13 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
       }
     })
   }
+
+  function displayStudents(students) {
+    for(student in students) {
+      console.log(student);
+    }
+  }
 </script>
 </body>
 
 </html>
-
-<?php if (!empty($pages) && $pages['page'] <= $pages['total_pages']) unset($_SESSION['student_message']) ?>
