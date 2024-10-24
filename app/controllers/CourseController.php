@@ -195,6 +195,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     echo json_encode($pagination_data);
 }
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($_POST['operation'] === 'edit') {
         $course_controller = new CourseController();
@@ -213,19 +214,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $course_controller = new CourseController();
         $course_controller->id = $_POST['id'];
 
-        if (!$course_controller->delete()) {
-            $_SESSION['course_message'] = array(
-                'type' => 'danger',
-                'message' => 'Failed deleting course',
-            );
-            header('Location:' .  $_SERVER['HTTP_REFERER']);
-        } else {
-            $_SESSION['course_message'] = array(
-                'type' => 'success',
-                'message' => 'Course has been deleted',
-            );
-            header('Location:' .  $_SERVER['HTTP_REFERER']);
-        }
+        if ($course_controller->delete()) {
+
+            header("HTTP/1.1 200 Success");
+            header('Content-Type: application/json; charset=utf-8');
+
+            echo json_encode([ 'message' => 'Course deleted!' ]);
+            
+        } 
     } else if ($_POST['operation'] === 'csv') {
         // Generated csv file and get all students from one course
         if (!empty($_POST['id'])) {
