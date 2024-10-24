@@ -197,6 +197,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    if($_POST['operation'] === 'get_all_course'){
+        $course = new Course();
+        $courses = $course->get_formatted_course();
+
+        header("HTTP/1.1 200 Success");
+        header('Content-Type: application/json; charset=utf-8');
+
+        echo json_encode(array('courses' => $courses));
+
+        return ;
+    }
+
     if ($_POST['operation'] === 'edit') {
         $course_controller = new CourseController();
         $course_controller->name = trim($_POST['name']) ?? '';
