@@ -239,6 +239,36 @@ class StudentController extends Validator
 
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+
+    $student_controller = new StudentController();
+
+    $sort_by = !empty($_GET['sort_by']) ? $_GET['sort_by'] : "";
+    $type = !empty($_GET['type']) ? $_GET['type'] : "";
+    $limit = $_GET['limit'] ?? 5;
+    $page = !empty($_GET['page']) ? $_GET['page'] : 1;
+
+    // Getting paginated students data
+    $student_controller = new StudentController();
+    $pagination_data = $student_controller->paginate($page, $limit, $sort_by, $type);
+    $pages = [];
+    $students = [];
+
+    if ($pagination_data !== false) {
+        $pages = $pagination_data['pagination_numbers'] ?? 0;
+
+        if ($page > $pages['total_pages'] && $page > 1) {
+            header("Location: /hiren/mvc2/app/views/student?limit=$limit&type=$type&sort_by=$sort_by&page=" . $pages['total_pages']);
+        }
+        // unset($pagination_data['pagination_numbers']);
+        $students = $pagination_data;
+    } else {
+        $courses = [];
+    }
+
+    echo json_encode($pagination_data);
+}
+
 
 
 

@@ -199,9 +199,10 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
 
   function getStudents(currentPage) {
 
-    $.get(`http://localhost/hiren/mvc2/app/controllers/StudentController.php?page=${currentPage}&limit=${params.get('limit') }&sort_by=${params.get('sort_by')}&type=${params.get('type')}`,function(data) {
+    $.get(`http://localhost/hiren/student_management_system/app/controllers/StudentController.php?page=${currentPage}&limit=${params.get('limit') }&sort_by=${params.get('sort_by')}&type=${params.get('type')}`,function(data) {
       const paginationData = JSON.parse(data);
-
+      
+      console.log(paginationData);
       // console.log(JSON.parse(data));
       if (paginationData.total_pages > 1) {
         if (paginationData.prev_page) {
