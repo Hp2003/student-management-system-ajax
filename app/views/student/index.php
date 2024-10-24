@@ -32,12 +32,29 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
 </head>
 
 <body>
-  
+
+<div class="toast-container position-fixed top-0 end-0 p-3 z-5">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <strong class="me-auto heading" >Delete? </strong>
+      <small class="message"></small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body" >
+      <p class="toast-message">message</p>
+      <div class="mt-2 pt-2">
+        <button class="btn btn-danger toast-del-button" >Delete</button>
+        <button class="btn btn-secondary" data-bs-dismiss="toast">cancel</button>
+      </div>
+    </div>
+  </div>
+
+</div>
   <?php $navbar ?>
   <div class=" mx-auto mt-5" style="width : 90%;">
     <div class="container d-flex justify-content-around">
       <form class="w-25 limit-form d-flex ">
-        <select class="form-select limit-options" onchange="setLimit()" aria-label="Default select example"  name="limit">
+        <select class="form-select limit-options" onchange="setLimit()" aria-label="Default select example" name="limit">
           <option class="limit-option" value="1">1</option>
           <option class="limit-option" value="5">5</option>
           <option class="limit-option" value="10">10</option>
@@ -54,53 +71,53 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
       <thead>
         <tr class="user-select-none">
           <th scope="col " class="heading">
-              <button class="sort-by-btn" data-sort-by="id" data-sort-type="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
-              <button class="sort-by-btn" data-sort-by="id" data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+            <button class="sort-by-btn" data-sort-by="id" data-sort-type="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+            <button class="sort-by-btn" data-sort-by="id" data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
             <p class="mx-2">id</p>
           </th>
           <th scope="col " class="heading">
-              <button class="sort-by-btn" data-sort-by="first_name" data-sort-type="ASC" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
-              <button class="sort-by-btn" data-sort-by="first_name" data-sort-type="DESC" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+            <button class="sort-by-btn" data-sort-by="first_name" data-sort-type="ASC" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+            <button class="sort-by-btn" data-sort-by="first_name" data-sort-type="DESC" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
             <p>first_name</p>
           </th>
           <th scope="col " class="heading">
-              <button class="sort-by-btn" data-sort-by="last_name" data-sort-type="ASC" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
-              <button class="sort-by-btn" data-sort-by="last_name" data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+            <button class="sort-by-btn" data-sort-by="last_name" data-sort-type="ASC" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+            <button class="sort-by-btn" data-sort-by="last_name" data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
             <p>last_name</p>
           </th>
           <th scope="col " class="heading">
-              <button class="sort-by-btn" data-sort-by="email" data-sort-type="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
-              <button class="sort-by-btn" data-sort-by="email" data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+            <button class="sort-by-btn" data-sort-by="email" data-sort-type="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+            <button class="sort-by-btn" data-sort-by="email" data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
             <p>email</p>
           </th>
           <th scope="col " class="heading">
-              <button class="sort-by-btn" data-sort-by="gender" data-sort-type="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
-              <button class="sort-by-btn" data-sort-by="gender" data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+            <button class="sort-by-btn" data-sort-by="gender" data-sort-type="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+            <button class="sort-by-btn" data-sort-by="gender" data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
             <p>gender</p>
           </th>
           <th scope="col " class="heading">
-              <button class="sort-by-btn" data-sort-by="course_id" data-sort-type="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
-              <button class="sort-by-btn" data-sort-by="course_id" data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+            <button class="sort-by-btn" data-sort-by="course_id" data-sort-type="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+            <button class="sort-by-btn" data-sort-by="course_id" data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
             <p>course</p>
           </th>
           <th scope="col " class="heading">
-              <button class="sort-by-btn" data-sort-by="status" data-sort-type="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
-              <button class="sort-by-btn" data-sort-by="status" data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+            <button class="sort-by-btn" data-sort-by="status" data-sort-type="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+            <button class="sort-by-btn" data-sort-by="status" data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
             <p>status</p>
           </th>
           <th scope="col " class="heading">
-              <button class="sort-by-btn" data-sort-by="phone_number" data-sort-type="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
-              <button class="sort-by-btn" data-sort-by="phone_number" data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+            <button class="sort-by-btn" data-sort-by="phone_number" data-sort-type="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+            <button class="sort-by-btn" data-sort-by="phone_number" data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
             <p>phone</p>
           </th>
           <th scope="col " class="heading">
-              <button class="sort-by-btn" data-sort-by="created_at" data-sort-type="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
-              <button class="sort-by-btn" data-sort-by="created_at" data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+            <button class="sort-by-btn" data-sort-by="created_at" data-sort-type="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+            <button class="sort-by-btn" data-sort-by="created_at" data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
             <p>created_at</p>
           </th>
           <th scope="col " class="heading">
-              <button class="sort-by-btn" data-sort-by="updated_at" data-sort-type="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
-              <button class="sort-by-btn" data-sort-by="updated_at" data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+            <button class="sort-by-btn" data-sort-by="updated_at" data-sort-type="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+            <button class="sort-by-btn" data-sort-by="updated_at" data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
             <p>updated_at</p>
           </th>
           <th scope="col "></th>
@@ -124,7 +141,7 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
   <script src="../../../public/js/alert.js"></script>
   <script src="../../../public/js/students.js"></script>
   <script>
-    
+
   </script>
 </body>
 

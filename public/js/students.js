@@ -9,6 +9,9 @@ const pageQueryStrings = {
   type: 'DESC',
 }
 
+const deleteStudentObj = {
+  
+}
 getStudents() // Getting students when page first loads
 
 /**
@@ -57,7 +60,7 @@ function displayStudents(students) {
             <button class="btn btn-primary">Edit</button>
           </td>`)
     row.append(
-      `<td><button class="btn btn-danger" onclick="deleteStudent(${student.id})">Delete</button></td>`
+      `<td><button class="btn btn-danger" onclick="showToast(${student.id}, '${student.first_name}', '${student.last_name}')">Delete</button></td>`
     )
 
     tableBody.append(row)
@@ -216,9 +219,31 @@ function deleteStudent(id) {
     { operation: 'delete', id: id },
     function (data, status, xhr) {
       if (status === 'success') {
+        console.log('deleted');
         displayAlert('success', 'Deleted!', ' Student deleted successfully!');
         getStudents()
       }
     }
   )
 }
+
+function showToast(id, first_name, last_name) {
+  const toastLiveExample = document.getElementById('liveToast')
+
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+
+  $('.toast-del-button').attr('data-del-id', id);
+  $('.toast-message').text('student ' + first_name + ' ' + last_name + '?');
+
+  toastBootstrap.show();
+}
+
+$('.toast-del-button').click(function () {
+  deleteStudent($(this).attr('data-del-id'));
+
+  const toastLiveExample = document.getElementById('liveToast')
+
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+
+  toastBootstrap.hide();
+});
