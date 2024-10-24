@@ -266,7 +266,7 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
         const mainPaginationContainer = $('.pagination');
         if(links.prev_page){
           const row = $('<li class="page-item"></li>');
-          row.append(`<a class="page-link" href="#">Previous</a>`)
+          row.append(`<a class="page-link" href="#" data-page-value="${pageQueryStrings.currentPage - 1}">Previous</a>`)
           mainPaginationContainer.append(row);
 
           const disabledRow = $('<li class="page-item"></li>');
@@ -276,13 +276,13 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
 
         for(let page = links.from ; page <= links.to ; page++ ){
           const row = $('<li class="page-item"></li>');
-          row.append(`<a class="page-link" href="#">${page}</a>`)
+          row.append(`<a class="page-link" href="#" data-page-value="${page}">${page}</a>`)
           mainPaginationContainer.append(row);
         }
 
         if(links.next_page){
           const disabledRow = $('<li class="page-item"></li>');
-          disabledRow.append(`<a class="page-link disabled" href="#">...</a>`)
+          disabledRow.append(`<a class="page-link disabled" data-page-value="${pageQueryStrings.currentPage + 1}" href="#">...</a>`)
           mainPaginationContainer.append(disabledRow);
 
           const row = $('<li class="page-item"></li>');
