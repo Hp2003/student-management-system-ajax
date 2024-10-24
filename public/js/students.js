@@ -9,9 +9,6 @@ const pageQueryStrings = {
   type: 'DESC',
 }
 
-const deleteStudentObj = {
-  
-}
 getStudents() // Getting students when page first loads
 
 /**
@@ -21,11 +18,11 @@ getStudents() // Getting students when page first loads
  */
 function getStudents() {
   setpageQueryStrings()
+  let maxPage = 0;
   $.get(
     `http://localhost/hiren/student_management_system/app/controllers/StudentController.php?page=${pageQueryStrings.currentPage}&limit=${pageQueryStrings.limit}&sort_by=${pageQueryStrings.sortby}&type=${pageQueryStrings.type}`,
     function (data, status) {
       if (status === 'success') {
-        //   console.log(data.pagination_data[0].first_name);
         displayStudents(data.pagination_data)
         displayPaginationLinks(data.pagination_numbers)
       }
@@ -33,6 +30,9 @@ function getStudents() {
   )
 }
 
+$(document).ajaxSuccess(function (event, xhr, options) {
+  console.log(event)
+})
 /**
  * Main function to display students
  *
@@ -75,7 +75,7 @@ function displayStudents(students) {
 function setpageQueryStrings() {
   // getting querystrings
   let url = window.href
-  let params = new URL(document.location.toString()).searchParams
+  let params = new URL(document.location.toString()).searchParams;
 
   pageQueryStrings.limit = params.get('limit') ?? 5
   pageQueryStrings.currentPage = params.get('page') ?? 1
@@ -93,6 +93,7 @@ function setpageQueryStrings() {
 function displayPaginationLinks(links) {
   const mainPaginationContainer = $('.pagination')
   mainPaginationContainer.empty()
+
   if (links.total_pages > 1) {
     if (links.prev_page) {
       const row = $('<li class="page-item"></li>')
@@ -219,8 +220,8 @@ function deleteStudent(id) {
     { operation: 'delete', id: id },
     function (data, status, xhr) {
       if (status === 'success') {
-        console.log('deleted');
-        displayAlert('success', 'Deleted!', ' Student deleted successfully!');
+        console.log('deleted')
+        displayAlert('success', 'Deleted!', ' Student deleted successfully!')
         getStudents()
       }
     }
@@ -228,35 +229,35 @@ function deleteStudent(id) {
 }
 
 /**
- * shows delete student toast 
- * 
- * @param int id 
- * @param string first_name 
- * @param string last_name 
- * 
+ * shows delete student toast
+ *
+ * @param int id
+ * @param string first_name
+ * @param string last_name
+ *
  * @return void
  */
 function showToast(id, first_name, last_name) {
   const toastLiveExample = document.getElementById('liveToast')
 
-  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
 
-  $('.toast-del-button').attr('data-del-id', id);
-  $('.toast-message').text('student ' + first_name + ' ' + last_name + '?');
+  $('.toast-del-button').attr('data-del-id', id)
+  $('.toast-message').text('student ' + first_name + ' ' + last_name + '?')
 
-  toastBootstrap.show();
+  toastBootstrap.show()
 }
 
 /**
- * calles delete function after use clicks on delete button 
+ * calles delete function after use clicks on delete button
  * in confirmation toast
  */
 $('.toast-del-button').click(function () {
-  deleteStudent($(this).attr('data-del-id'));
+  deleteStudent($(this).attr('data-del-id'))
 
   const toastLiveExample = document.getElementById('liveToast')
 
-  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
 
-  toastBootstrap.hide();
-});
+  toastBootstrap.hide()
+})
