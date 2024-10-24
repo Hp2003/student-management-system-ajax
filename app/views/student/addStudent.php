@@ -22,7 +22,7 @@ $navbar = include_once('../nav.php');
 <body>
     <?php $navbar ?>
     <div class="container">
-        <form action="../../controllers/StudentController.php" method="POST">
+        <form action="" id="addStudentForm" method="POST">
             <input type="hidden" name="operation" value="add">
             <div class="mb-3">
                 <label class="form-label">First name : </label>
@@ -53,7 +53,7 @@ $navbar = include_once('../nav.php');
             <span class="text-danger" ></span>
             <div class="mb-3">
                 <select class="form-select course-select" name="course_id" aria-label="Default select example" >
-                    <option value="">Select Course</option>
+                    <option value="default">Select Course</option>
                 </select>
                 <span class="text-danger" > </span>
             </div>
@@ -89,6 +89,23 @@ $navbar = include_once('../nav.php');
                 courseSelectTag.append(option);
             })
         }
+
+        $('#addStudentForm').submit(function (e) {
+            e.preventDefault();
+
+            const studentObject = {
+
+                first_name : $(this).find('[name=first_name]').val(),
+                last_name : $(this).find('[name=last_name]').val(),
+                email : $(this).find('[name=email]').val(),
+                phone_number : $(this).find('[name=phone_number]').val(),
+                gender : $(this).find('[name=gender]:checked').val(),
+                course : $(this).find('[name=course_id]').find(':selected').val(),
+
+            }
+
+            console.log(studentObject);
+        })
     </script>
 </body>
 
