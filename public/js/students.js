@@ -56,7 +56,9 @@ function displayStudents(students) {
     row.append(`<td>
             <button class="btn btn-primary">Edit</button>
           </td>`)
-    row.append(`<td><button class="btn btn-danger">Delete</button></td>`)
+    row.append(
+      `<td><button class="btn btn-danger" onclick="deleteStudent(${student.id})">Delete</button></td>`
+    )
 
     tableBody.append(row)
   })
@@ -182,7 +184,7 @@ function changeQueryString() {
 function setLimit() {
   pageQueryStrings.limit = Number($('.limit-options').val())
 
-  pageQueryStrings.currentPage = 1;
+  pageQueryStrings.currentPage = 1
   changeQueryString()
   getStudents()
 }
@@ -196,10 +198,40 @@ $('.limit-option').each(function () {
 
 // sorting by column asc or desc
 $('.sort-by-btn').on('click', function () {
-  pageQueryStrings.sortby = $(this).attr('data-sort-by');
-  pageQueryStrings.type = $(this).attr('data-sort-type');
-  pageQueryStrings.currentPage = 1;
+  pageQueryStrings.sortby = $(this).attr('data-sort-by')
+  pageQueryStrings.type = $(this).attr('data-sort-type')
+  pageQueryStrings.currentPage = 1
   changeQueryString()
   getStudents()
-
 })
+
+/**
+ * makes request to delete student
+ *
+ * @return void
+ */
+function deleteStudent(id) {
+  $.post(
+    'http://localhost/hiren/student_management_system/app/controllers/StudentController.php',
+    { operation: 'delete', id: id },
+    function (data, status, xhr) {
+      if (status === 'success') {
+        displayAlert('success', 'Deleted!', ' Student deleted successfully!');
+        getStudents()
+      }
+    }
+  )
+}
+
+function displayAlert(type, heading, description) {
+  $('body').prepend(`
+      <div class="alert alert-${type} alert-dismissible w-100 fade show position-fixed top-0 z-3" role="alert">
+        <strong>${heading}</strong> ${description}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    `);
+  
+  setTimeout(() => {
+    $('.alert-dismissible').remove();
+  }, 5000);
+}

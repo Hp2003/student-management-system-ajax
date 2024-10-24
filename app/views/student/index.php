@@ -32,6 +32,7 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
 </head>
 
 <body>
+  
   <?php $navbar ?>
   <div class=" mx-auto mt-5" style="width : 90%;">
     <div class="container d-flex justify-content-around">
