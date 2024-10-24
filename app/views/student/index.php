@@ -195,11 +195,11 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
      * @return void
      */
     function getStudents() {
-
       setpageQueryStrings();
       $.get(`http://localhost/hiren/student_management_system/app/controllers/StudentController.php?page=${pageQueryStrings.currentPage}&limit=${pageQueryStrings.limit }&sort_by=${pageQueryStrings.sortby}&type=${pageQueryStrings.type}`,
         function(data, status) {
           if (status === 'success') {
+            console.log(data.pagination_data);
             displayStudents(data.pagination_data);
             displayPaginationLinks(data.pagination_numbers);
           }
@@ -215,8 +215,9 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
      */
 
     function displayStudents(students) {
+      const tableBody = $('.table-body');
+      tableBody.empty();
       students.forEach(student => {
-        const tableBody = $('.table-body');
         let row = $('<tr></tr>');
         row.append(`<th>${student.id}</th>`)
         row.append(`<td>${student.first_name}</td>`)
@@ -264,9 +265,10 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
     function displayPaginationLinks(links) {
       if (links.total_pages > 1) {
         const mainPaginationContainer = $('.pagination');
-        if(links.prev_page){
+        mainPaginationContainer.empty();
+        if (links.prev_page) {
           const row = $('<li class="page-item"></li>');
-          row.append(`<a class="page-link" href="#" data-page-value="${pageQueryStrings.currentPage - 1}">Previous</a>`)
+          row.append(`<a class="page-link" href="#" data-page-value="${pageQueryStrings.currentPage - 1}" onclick="changePage(event)" >Previous</a>`)
           mainPaginationContainer.append(row);
 
           const disabledRow = $('<li class="page-item"></li>');
@@ -274,50 +276,52 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
           mainPaginationContainer.append(disabledRow);
         }
 
-        for(let page = links.from ; page <= links.to ; page++ ){
+        for (let page = links.from; page <= links.to; page++) {
           const row = $('<li class="page-item"></li>');
-          row.append(`<a class="page-link" href="#" data-page-value="${page}">${page}</a>`)
+          row.append(`<a class="page-link" href="#" data-page-value="${page}" onclick="changePage(event)" >${page}</a>`)
           mainPaginationContainer.append(row);
         }
 
-        if(links.next_page){
+        if (links.next_page) {
           const disabledRow = $('<li class="page-item"></li>');
-          disabledRow.append(`<a class="page-link disabled" data-page-value="${pageQueryStrings.currentPage + 1}" href="#">...</a>`)
+          disabledRow.append(`<a class="page-link disabled" href="#">...</a>`)
           mainPaginationContainer.append(disabledRow);
 
           const row = $('<li class="page-item"></li>');
-          row.append(`<a class="page-link" href="#">Next</a>`)
+          row.append(`<a class="page-link" href="#" data-page-value="${pageQueryStrings.currentPage + 1}" onclick="changePage(event)">Next</a>`)
           mainPaginationContainer.append(row);
         }
       }
     }
+
+    /**
+     * Changes page according to selected link
+     * 
+     * @param event (javascript event) event 
+     * 
+     * @return void
+     */
+    function changePage(event) {
+      event.preventDefault();
+      const pageNumber = event.target.getAttribute('data-page-value');
+
+      pageQueryStrings.currentPage = pageNumber;
+      changeQueryString();
+      getStudents();
+
+    }
+
+    /**
+     * Changing querystring to current url
+     *
+     * @return void
+     */
+    function changeQueryString() {
+      let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + `?page=${pageQueryStrings.currentPage}&type=${pageQueryStrings.type}&limit=${pageQueryStrings.limit}&sort_by=${pageQueryStrings.sortby}` ;
+      window.history.pushState({},'',newurl);
+    }
+
   </script>
 </body>
 
 </html>
-
-<!-- if (paginationData.total_pages > 1) {
-        if (paginationData.prev_page) {
-          $('.pagination').append(`
-        <li class="page-item ">
-          <a class="page-link" onclick="getStudents(${params.get('page') - 1})">Previous</a>
-        </li>`)
-        }
-
-        for (let page = paginationData.from; page <= paginationData.to; page++) {
-          $('.pagination').append(`
-          <li class="page-item">
-            <a class="page-link"  onclick="getStudents(${page}) >${page}</a>
-          </li>
-        `)
-        }
-
-        if (paginationData.next_page) {
-
-          $('.pagination').append(`
-          <li class="page-item ">
-             <a class="page-link"  onclick="getStudents(${params.get('page') + 1})>Next</a>
-          </li>
-        `)
-        }
-      } -->
