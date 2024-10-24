@@ -175,19 +175,18 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
 
   <!-- <script src="../../../public/js/index.js"></script> -->
   <script>
-
     /**
      * Contains all values of current query string
      * 
      */
-    const pageQueryStrings =  {
-      currentPage : 1,
-      limit : 5,
-      sortby : 'id',
-      type : 'DESC',
+    const pageQueryStrings = {
+      currentPage: 1,
+      limit: 5,
+      sortby: 'id',
+      type: 'DESC',
     };
 
-    getStudents();  // Getting students when page first loads
+    getStudents(); // Getting students when page first loads
 
 
     /**
@@ -198,13 +197,12 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
     function getStudents() {
 
       setpageQueryStrings();
-      $.get(`http://localhost/hiren/student_management_system/app/controllers/StudentController.php?page=${pageQueryStrings.currentPage}&limit=${pageQueryStrings.limit }&sort_by=${pageQueryStrings.sortby}&type=${pageQueryStrings.type}`, function(data) {
-        const paginationData = JSON.parse(data);
-
-        displayStudents(paginationData.pagination_data);
-
-
-      })
+      $.get(`http://localhost/hiren/student_management_system/app/controllers/StudentController.php?page=${pageQueryStrings.currentPage}&limit=${pageQueryStrings.limit }&sort_by=${pageQueryStrings.sortby}&type=${pageQueryStrings.type}`,
+        function(data, status) {
+          if (status === 'success') {
+            displayStudents(data.pagination_data);
+          }
+        })
     }
 
     /**
@@ -214,7 +212,7 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
      * 
      * @return void
      */
-    
+
     function displayStudents(students) {
       students.forEach(student => {
         const tableBody = $('.table-body');
@@ -229,6 +227,10 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
         row.append(`<td>${student.phone_number}</td>`)
         row.append(`<td>${student.created_at}</td>`)
         row.append(`<td>${student.updated_at}</td>`)
+        row.append(`<td>
+          <button class="btn btn-primary">Edit</button>
+        </td>`)
+        row.append(`<td><button class="btn btn-danger">Delete</button></td>`)
 
         tableBody.append(row);
       })

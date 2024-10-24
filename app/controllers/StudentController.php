@@ -239,6 +239,7 @@ class StudentController extends Validator
 
 }
 
+// Returning pagination data
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     $student_controller = new StudentController();
@@ -251,9 +252,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     // Getting paginated students data
     $student_controller = new StudentController();
     $pagination_data = $student_controller->paginate($page, $limit, $sort_by, $type);
-    $students = [];
+
+    header("HTTP/1.1 200 Success");
+    header('Content-Type: application/json; charset=utf-8');
 
     echo json_encode($pagination_data);
+
 }
 
 
