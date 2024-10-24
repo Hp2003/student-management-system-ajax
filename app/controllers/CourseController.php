@@ -5,9 +5,8 @@ error_reporting(E_ALL);
 
 if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 
-$root = $_SERVER['DOCUMENT_ROOT'];
-require_once($root . '/hiren/mvc2/utils/Validator.php');
-require_once($root . '/hiren/mvc2/app/models/Course.php');
+require_once(__DIR__ . '/../../utils/Validator.php');
+require_once(__DIR__ . '/../models/Course.php');
 
 class CourseController extends Validator
 {
@@ -26,7 +25,7 @@ class CourseController extends Validator
     {
 
         $errors = $this->validate();
-        if(count($errors) > 0){
+        if (count($errors) > 0) {
             $_SESSION['add_course_errors'] = $errors;
             return false;
         }
@@ -66,7 +65,7 @@ class CourseController extends Validator
     {
 
         $errors = $this->validate();
-        if($errors){
+        if ($errors) {
             $_SESSION['edit_course_errors'] = $errors;
             return false;
         }
@@ -131,7 +130,8 @@ class CourseController extends Validator
      *
      * @return void
      */
-    public function gen_csv() {
+    public function gen_csv()
+    {
         $course = new Course();
         $data = $course->get();
 
@@ -139,7 +139,7 @@ class CourseController extends Validator
         $headings = "id, name, students, created_at,  updated_at \n";
 
         fwrite($file, $headings);
-        foreach($data as $row) {
+        foreach ($data as $row) {
             $line = $row['id'] . ',' . $row['name'] . ',' . $row['students_count'] . ',' . $row['created_at'] . ','  . $row['updated_at'] . "\n";
             fwrite($file, $line);
         }
@@ -147,7 +147,6 @@ class CourseController extends Validator
         fclose($file);
 
         return true;
-
     }
 
     /**
@@ -157,7 +156,8 @@ class CourseController extends Validator
      *
      * @return bool
      */
-    public function students_from_course_csv($id) {
+    public function students_from_course_csv($id)
+    {
 
         $course = new Course($id);
         $course->id = $id;
@@ -167,7 +167,7 @@ class CourseController extends Validator
         $headings = "id, first_name, last_name, email, status, course, created_at, updated_at\n";
 
         fwrite($file, $headings);
-        foreach($data as $row) {
+        foreach ($data as $row) {
             $status = $row['status'] ? 'active' : 'inactive';
             $line = $row['id'] . ',' . $row['first_name'] . ',' . $row['last_name'] . ',' . $row['email'] . ',' . $status . ',' . $row['course_name'] . ',' . $row['created_at'] . ',' . $row['updated_at'] . "\n";
             fwrite($file, $line);
@@ -178,8 +178,23 @@ class CourseController extends Validator
 }
 
 
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
+    $page = !empty($_GET['page']) ? $_GET['page'] : 1;
+    $sort_by = !empty($_GET['sort_by']) ? $_GET['sort_by'] : "";
+    $type = !empty($_GET['type']) ? $_GET['type'] : "";
+    $limit = $_GET['limit'] ?? 5;
 
+    $course_controller = new CourseController();
+    $pagination_data = $course_controller->paginate($page, $limit, $sort_by, $type);
+
+    $pages = $pagination_data['pagination_numbers'] ?? 0;
+
+    header("HTTP/1.1 200 Success");
+    header('Content-Type: application/json; charset=utf-8');
+
+    echo json_encode($pagination_data);
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($_POST['operation'] === 'edit') {
         $course_controller = new CourseController();
@@ -198,48 +213,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $course_controller = new CourseController();
         $course_controller->id = $_POST['id'];
 
-        if(!$course_controller->delete()){
+        if (!$course_controller->delete()) {
             $_SESSION['course_message'] = array(
                 'type' => 'danger',
                 'message' => 'Failed deleting course',
             );
             header('Location:' .  $_SERVER['HTTP_REFERER']);
-        }else{
+        } else {
             $_SESSION['course_message'] = array(
                 'type' => 'success',
                 'message' => 'Course has been deleted',
             );
             header('Location:' .  $_SERVER['HTTP_REFERER']);
         }
-
-    }else if($_POST['operation'] === 'csv'){
+    } else if ($_POST['operation'] === 'csv') {
         // Generated csv file and get all students from one course
-        if(!empty($_POST['id'])){
+        if (!empty($_POST['id'])) {
             $course_controller = new CourseController();
             $course_controller->students_from_course_csv($_POST['id']);
 
             $file_path = '../../storage/csv/' . $_POST['id'] . '.csv';
-    
+
             header('Content-Type: application/octet-stream');
-    
-            header('Content-Disposition: attachment; filename="'. basename($file_path));
-    
+
+            header('Content-Disposition: attachment; filename="' . basename($file_path));
+
             readfile($file_path);
 
             unlink($file_path);
-
-        }else{
+        } else {
             // Generates csv file for all courses details
             $course_controller = new CourseController();
             $result = $course_controller->gen_csv();
-    
-            
+
+
             $file_path = '../../storage/csv/courses.csv';
-    
+
             header('Content-Type: application/octet-stream');
-    
-            header('Content-Disposition: attachment; filename="'. basename($file_path));
-    
+
+            header('Content-Disposition: attachment; filename="' . basename($file_path));
+
             readfile($file_path);
 
             unlink($file_path);

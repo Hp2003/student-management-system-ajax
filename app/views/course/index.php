@@ -5,34 +5,7 @@ error_reporting(E_ALL);
 
 if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 
-$root = $_SERVER['DOCUMENT_ROOT'];
-require_once($root . '/hiren/mvc2/app/models/Course.php');
-require_once($root . '/hiren/mvc2/app/models/Student.php');
-require_once($root . '/hiren/mvc2/app/controllers/CourseController.php');
 $navbar = include_once('../nav.php');
-
-$page = !empty($_GET['page']) ? $_GET['page'] : 1;
-$sort_by = !empty($_GET['sort_by']) ? $_GET['sort_by'] : "";
-$type = !empty($_GET['type']) ? $_GET['type'] : "";
-$limit = $_GET['limit'] ?? 5;
-
-// Getting paginated data
-$course_controller = new CourseController();
-$pagination_data = $course_controller->paginate($page, $limit, $sort_by, $type);
-
-$pages = [];
-$courses = [];
-if($pagination_data !== false){
-  $pages = $pagination_data['pagination_numbers'] ?? 0;
-  unset($pagination_data['pagination_numbers']);
-  $courses = $pagination_data;
-  // var_dump($pages);
-  if($page > $pages['total_pages'] && $pages['total_pages'] > 0){
-    header("Location: /hiren/mvc2/app/views/course?limit=$limit&type=$type&sort_by=$sort_by&page=" . $pages['total_pages']);
-  }
-}else{
-  $courses = [];
-}
 
 ?>
 <!doctype html>
@@ -46,30 +19,17 @@ if($pagination_data !== false){
 </head>
 
 <body>
-  <?php
-   if(!empty($_SESSION['course_message'])){ 
-      $alert = $_SESSION['course_message'];
-    ?>
-  <div class="alert alert-<?php echo $alert['type'] ?> alert-dismissible fade show" role="alert">
-    <strong></strong> <?php echo $alert['message'] ?>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
-<?php } 
-  ?>
   <?php $navbar ?>
-  <?php if (count($courses) <= 0) { ?>
-    <h1 class="text-center mt-5"> No records found :( </h1>
-  <?php } else { ?>
     <div class="container mt-5">
       <div class="container d-flex justify-content-center d-flex justify-content-around">
         <form action="/hiren/mvc2/app/views/course/" class="w-25 limit-form d-flex">
-          <select class="form-select limit" aria-label="Default select example" name="limit" >
-            <option value="5" <?php  echo $limit == 5 ? 'selected' : '' ?>>5</option>
-            <option value="10" <?php echo $limit == 10 ? 'selected' : '' ?>>10</option>
-            <option value="20" <?php echo $limit == 20 ? 'selected' : '' ?>>20</option>
-            <option value="50" <?php echo $limit == 50 ? 'selected' : '' ?>>50</option>
+          <select class="form-select limit limit-options" onchange="setLimit()" aria-label="Default select example" name="limit" >
+            <option class="limit-option" value="1">1</option>
+            <option class="limit-option" value="5">5</option>
+            <option class="limit-option" value="10">10</option>
+            <option class="limit-option" value="20">20</option>
+            <option class="limit-option" value="50">50</option>
           </select>
-          <input type="submit" value="filter" class="btn btn-primary">
         </form>
         <form action="../../controllers/CourseController.php" method="post">
           <input type="hidden" name="operation" value="csv">
@@ -80,104 +40,49 @@ if($pagination_data !== false){
         <thead>
           <tr>
             <th scope="col">
-            <form action="/hiren/mvc2/app/views/course/">
-                <input type="hidden" name="sort_by" value="id">
-                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
-                <input type="hidden" name="limit" value="<?php echo $limit ?>">
-                <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
-                <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
-              </form>
-              id
+                <button class="sort-by-btn" data-sort-by="id"  data-sort-type="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+                <button class="sort-by-btn" data-sort-by="id"  data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+              <p>id</p>
             </th>
             <th scope="col">
-            <form action="/hiren/mvc2/app/views/course/">
-                <input type="hidden" name="sort_by" value="name">
-                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
-                <input type="hidden" name="limit" value="<?php echo $limit ?>"> 
-                <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
-                <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
-              </form>
-              name
+                <button class="sort-by-btn" data-sort-by="name" data-sort-type="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+                <button class="sort-by-btn" data-sort-by="name" data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+              <p>name</p>
             </th>
             <th scope="col">
-            <form action="/hiren/mvc2/app/views/course/">
-                <input type="hidden" name="sort_by" value="student_count">
-                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
-                <input type="hidden" name="limit" value="<?php echo $limit ?>">
-                <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
-                <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
-              </form>
-              students
+                <button class="sort-by-btn" data-sort-by="student_count" data-sort-type="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+                <button class="sort-by-btn" data-sort-by="student_count" data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+              <p>students</p>
             </th>
             <th scope="col">
-            <form action="/hiren/mvc2/app/views/course/">
-                <input type="hidden" name="sort_by" value="created_at">
-                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
-                <input type="hidden" name="limit" value="<?php echo $limit ?>">
-                <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
-                <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
-              </form>
-              created_at
+                <button class="sort-by-btn" data-sort-by="created_at" data-sort-type="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+                <button class="sort-by-btn" data-sort-by="created_at" data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+              <p>created_at</p>
             </th>
             <th scope="col">
-            <form action="/hiren/mvc2/app/views/course/">
-                <input type="hidden" name="sort_by" value="updated_at">
-                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
-                <input type="hidden" name="limit" value="<?php echo $limit ?>">
-                <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
-                <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
-              </form>
-              updated_at
+                <button class="sort-by-btn" data-sort-by="updated_at" data-sort-type="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+                <button class="sort-by-btn" data-sort-by="updated_at" data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+              <p>updated_at</p>
             </th>
             <th scope="col"></th>
             <th scope="col"></th>
           </tr>
         </thead>
-        <tbody>
-          <?php
-          foreach ($courses as $course) {
-
-          ?>
-            <tr>
-              <th scope="row"><?php echo $course['id'] ?></th>
-              <td><?php echo $course['name'] ?></td>
-              <td><?php echo $course['student_count'] ?></td>
-              <td><?php echo date('d-m-Y h : i a', strtotime($course['created_at'])) ?></td>
-              <td><?php echo date('d-m-Y h : i a', strtotime($course['updated_at'])) ?></td>
-              <td>
-                <a type="button" href="<?php echo "../course/editCourse.php?id=" . $course['id'] ?>" class="btn btn-primary">Edit</a>
-              </td>
-              <td>
-                <form action="../../controllers/CourseController.php" method="POST">
-                  <input type="hidden" name="operation" value="delete">
-                  <input type="hidden" name="id" value="<?php echo $course['id'] ?>">
-                  <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-              </td>
-              <td>
-                <form action="../../controllers/CourseController.php" method="post">
-                  <input type="hidden" name="operation" value="csv">
-                  <input type="hidden" name="id" value="<?php echo $course['id'] ?>">
-                  <input type="submit" value="Download" class="btn btn-primary">
-                </form>
-              </td>
-            </tr>
-          <?php
-          }
-          ?>
+        <tbody class="table-body">
+        
         </tbody>
       </table>
     </div>
-    <?php require_once('../paginator.php') ?>
-  <?php } ?>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <div class="container d-flex justify-content-center h-auto user-select-none">
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
 
+    </ul>
+  </nav>
+</div>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="../../../public/js/courses.js"></script>
 </body>
 
 </html>
-<?php 
-
-if(!empty($pages) && $pages['page'] <= $pages['total_pages']) { 
-  unset($_SESSION['course_message']);
-}
-  ?>
