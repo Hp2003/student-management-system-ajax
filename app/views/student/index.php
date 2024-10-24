@@ -37,10 +37,10 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
     <div class="container d-flex justify-content-around">
       <form class="w-25 limit-form d-flex ">
         <select class="form-select limit-options" onchange="setLimit()" aria-label="Default select example"  name="limit">
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="20">20</option>
-          <option value="50">50</option>
+          <option class="limit-option" value="5">5</option>
+          <option class="limit-option" value="10">10</option>
+          <option class="limit-option" value="20">20</option>
+          <option class="limit-option" value="50">50</option>
         </select>
       </form>
       <form action="../../controllers/StudentController.php" method="post">
@@ -318,6 +318,11 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
       window.history.pushState({},'',newurl);
     }
 
+    /**
+     * Changing limit to user's selected limit and displays new data
+     *
+     * @return void
+     */
     function setLimit() {
 
       pageQueryStrings.limit = Number($('.limit-options').val());
@@ -327,6 +332,12 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
 
     }
 
+    // setting limit option to selected according to current query string 
+    $('.limit-option').each(function () {
+      if($(this).val() == pageQueryStrings.limit){
+        $(this).attr('selected', 'selected');
+      }
+    })
   </script>
 </body>
 
