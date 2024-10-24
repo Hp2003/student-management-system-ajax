@@ -37,6 +37,7 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
     <div class="container d-flex justify-content-around">
       <form class="w-25 limit-form d-flex ">
         <select class="form-select limit-options" onchange="setLimit()" aria-label="Default select example"  name="limit">
+          <option class="limit-option" value="1">1</option>
           <option class="limit-option" value="5">5</option>
           <option class="limit-option" value="10">10</option>
           <option class="limit-option" value="20">20</option>
@@ -268,6 +269,12 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
           row.append(`<a class="page-link" href="#" data-page-value="${pageQueryStrings.currentPage - 1}" onclick="changePage(event)" >Previous</a>`)
           mainPaginationContainer.append(row);
 
+          if(links.page >= 6 ) {
+            const firstPage = $('<li class="page-item"></li>');
+            firstPage.append(`<a class="page-link" href="#" data-page-value="1" onclick="changePage(event)" >1</a>`)
+            mainPaginationContainer.append(firstPage);
+          }
+
           const disabledRow = $('<li class="page-item"></li>');
           disabledRow.append(`<a class="page-link disabled" href="#">...</a>`)
           mainPaginationContainer.append(disabledRow);
@@ -283,6 +290,12 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
           const disabledRow = $('<li class="page-item"></li>');
           disabledRow.append(`<a class="page-link disabled" href="#">...</a>`)
           mainPaginationContainer.append(disabledRow);
+
+          if(links.total_pages > 10 && links.page < (links.total_pages - 5)) {
+            const lastPage = $('<li class="page-item"></li>');
+            lastPage.append(`<a class="page-link " data-page-value="${links.total_pages}" onclick="changePage(event)"  href="#">${links.total_pages}</a>`)
+            mainPaginationContainer.append(lastPage);
+          }
 
           const row = $('<li class="page-item"></li>');
           row.append(`<a class="page-link" href="#" data-page-value="${links.next_page}" onclick="changePage(event)">Next</a>`)
