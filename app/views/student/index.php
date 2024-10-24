@@ -278,7 +278,7 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
 
         for (let page = links.from; page <= links.to; page++) {
           const row = $('<li class="page-item"></li>');
-          row.append(`<a class="page-link" href="#" data-page-value="${page}" onclick="changePage(event)" >${page}</a>`)
+          row.append(`<a class="page-link" href="#" data-page-value="${page}" onclick="changePage(event)" >${page}</a>`).addClass(pageQueryStrings.currentPage == page ? 'active' : '')
           mainPaginationContainer.append(row);
         }
 
@@ -288,7 +288,7 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
           mainPaginationContainer.append(disabledRow);
 
           const row = $('<li class="page-item"></li>');
-          row.append(`<a class="page-link" href="#" data-page-value="${pageQueryStrings.currentPage + 1}" onclick="changePage(event)">Next</a>`)
+          row.append(`<a class="page-link" href="#" data-page-value="${links.next_page}" onclick="changePage(event)">Next</a>`)
           mainPaginationContainer.append(row);
         }
       }
