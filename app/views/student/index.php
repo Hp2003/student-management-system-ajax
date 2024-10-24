@@ -224,7 +224,7 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
         row.append(`<td>${student.last_name}</td>`)
         row.append(`<td>${student.email}</td>`)
         row.append(`<td>${student.gender}</td>`)
-        row.append(`<td>${student.course}</td>`)
+        row.append(`<td>${student.course_name ?? 'N/A'}</td>`)
         row.append(`<td>${student.status ? 'Active' : 'Inactive'}</td>`)
         row.append(`<td>${student.phone_number}</td>`)
         row.append(`<td>${student.created_at}</td>`)
