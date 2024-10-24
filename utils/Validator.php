@@ -1,7 +1,7 @@
 <?php
 
 $root = $_SERVER['DOCUMENT_ROOT'];
-require_once($root . '/hiren/mvc2/app/models/Course.php');
+require_once(__DIR__ . '/../app/models/Course.php');
 
 /**
  * 

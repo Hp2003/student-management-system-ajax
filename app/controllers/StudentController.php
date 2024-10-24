@@ -6,8 +6,8 @@ error_reporting(E_ALL);
 if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 
 $root = $_SERVER['DOCUMENT_ROOT'];
-require_once($root . '/hiren/mvc2/app/models/Student.php');
-require_once($root . '/hiren/mvc2/utils/Validator.php');
+require_once(__DIR__ . '/../models/Student.php');
+require_once(__DIR__ . '/../../utils/Validator.php');
 
 class StudentController extends Validator
 {
@@ -239,6 +239,7 @@ class StudentController extends Validator
 
 }
 
+// Returning pagination data
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     $student_controller = new StudentController();
@@ -251,22 +252,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     // Getting paginated students data
     $student_controller = new StudentController();
     $pagination_data = $student_controller->paginate($page, $limit, $sort_by, $type);
-    $pages = [];
-    $students = [];
 
-    if ($pagination_data !== false) {
-        $pages = $pagination_data['pagination_numbers'] ?? 0;
-
-        if ($page > $pages['total_pages'] && $page > 1) {
-            header("Location: /hiren/mvc2/app/views/student?limit=$limit&type=$type&sort_by=$sort_by&page=" . $pages['total_pages']);
-        }
-        // unset($pagination_data['pagination_numbers']);
-        $students = $pagination_data;
-    } else {
-        $courses = [];
-    }
+    header("HTTP/1.1 200 Success");
+    header('Content-Type: application/json; charset=utf-8');
 
     echo json_encode($pagination_data);
+
 }
 
 
