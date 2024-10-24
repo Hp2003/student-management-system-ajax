@@ -86,9 +86,9 @@ function setpageQueryStrings() {
  * @return void
  */
 function displayPaginationLinks(links) {
+  const mainPaginationContainer = $('.pagination')
+  mainPaginationContainer.empty()
   if (links.total_pages > 1) {
-    const mainPaginationContainer = $('.pagination')
-    mainPaginationContainer.empty()
     if (links.prev_page) {
       const row = $('<li class="page-item"></li>')
       row.append(
@@ -181,6 +181,7 @@ function changeQueryString() {
  */
 function setLimit() {
   pageQueryStrings.limit = Number($('.limit-options').val())
+
   pageQueryStrings.currentPage = 1;
   changeQueryString()
   getStudents()
