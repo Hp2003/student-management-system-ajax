@@ -33,22 +33,7 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
 
 <body>
   <?php $navbar ?>
-  <?php if (!empty($_SESSION['student_message'])) {
-    $alert = $_SESSION['student_message'];
-  ?>
-    <div class="alert alert-<?php echo $alert['type'] ?> alert-dismissible fade show" role="alert">
-      <strong></strong> <?php echo $alert['message'] ?>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  <?php } ?>
   <div class=" mx-auto mt-5" style="width : 90%;">
-    <?php
-    if (count($students) <= 0) {
-    ?>
-      <h1 class="text-center mt-5"> No records found :( </h1>
-    <?php
-    } else {
-    ?>
       <div class="container d-flex justify-content-around">
         <form action="/hiren/mvc2/app/views/student" class="w-25 limit-form d-flex ">
           <?php /*<input type="hidden" name="sort_by" value=<?php echo $sort_by ?>>
@@ -186,7 +171,6 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
       </ul>
     </nav>
   </div>
-<?php } ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
