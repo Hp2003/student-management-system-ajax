@@ -5,31 +5,7 @@ error_reporting(E_ALL);
 
 if (session_status() !== PHP_SESSION_ACTIVE) session_start();
 
-// $root = $_SERVER['DOCUMENT_ROOT'];
-// require_once($root . '/hiren/mvc2/app/models/Course.php');
-// require_once($root . '/hiren/mvc2/app/models/Student.php');
-// require_once($root . '/hiren/mvc2/app/controllers/CourseController.php');
 $navbar = include_once('../nav.php');
-
-
-
-// Getting paginated data
-// $course_controller = new CourseController();
-// $pagination_data = $course_controller->paginate($page, $limit, $sort_by, $type);
-
-// $pages = [];
-// $courses = [];
-// if($pagination_data !== false){
-//   $pages = $pagination_data['pagination_numbers'] ?? 0;
-//   unset($pagination_data['pagination_numbers']);
-//   $courses = $pagination_data;
-//   // var_dump($pages);
-//   if($page > $pages['total_pages'] && $pages['total_pages'] > 0){
-//     header("Location: /hiren/mvc2/app/views/course?limit=$limit&type=$type&sort_by=$sort_by&page=" . $pages['total_pages']);
-//   }
-// }else{
-//   $courses = [];
-// }
 
 ?>
 <!doctype html>
@@ -48,12 +24,12 @@ $navbar = include_once('../nav.php');
       <div class="container d-flex justify-content-center d-flex justify-content-around">
         <form action="/hiren/mvc2/app/views/course/" class="w-25 limit-form d-flex">
           <select class="form-select limit limit-options" onchange="setLimit()" aria-label="Default select example" name="limit" >
+            <option class="limit-option" value="1">1</option>
             <option class="limit-option" value="5">5</option>
             <option class="limit-option" value="10">10</option>
             <option class="limit-option" value="20">20</option>
             <option class="limit-option" value="50">50</option>
           </select>
-          <input type="submit" value="filter" class="btn btn-primary">
         </form>
         <form action="../../controllers/CourseController.php" method="post">
           <input type="hidden" name="operation" value="csv">
