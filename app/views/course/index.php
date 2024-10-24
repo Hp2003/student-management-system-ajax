@@ -19,6 +19,23 @@ $navbar = include_once('../nav.php');
 </head>
 
 <body>
+<div class="toast-container position-fixed top-0 end-0 p-3 z-5">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <strong class="me-auto heading" >Delete? </strong>
+      <small class="message"></small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body" >
+      <p class="toast-message">message</p>
+      <div class="mt-2 pt-2">
+        <button class="btn btn-danger toast-del-button" >Delete</button>
+        <button class="btn btn-secondary" data-bs-dismiss="toast">cancel</button>
+      </div>
+    </div>
+  </div>
+
+</div>
   <?php $navbar ?>
     <div class="container mt-5">
       <div class="container d-flex justify-content-center d-flex justify-content-around">
@@ -82,6 +99,7 @@ $navbar = include_once('../nav.php');
 </div>
   <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="../../../public/js/alert.js"></script>
   <script src="../../../public/js/courses.js"></script>
 </body>
 

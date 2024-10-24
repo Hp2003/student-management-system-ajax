@@ -48,7 +48,7 @@ function displayCourse(courses) {
     row.append(`<td>
               <button class="btn btn-primary">Edit</button>
             </td>`)
-    row.append(`<td><button class="btn btn-danger">Delete</button></td>`)
+    row.append(`<td><button class="btn btn-danger" onclick="showToast(${course.id}, '${course.name}')">Delete</button></td>`)
 
     tableBody.append(row)
   })
@@ -192,3 +192,50 @@ function setLimit() {
   changeQueryString()
   getCourses()
 }
+
+/**
+ * delete's course according to given id
+ * 
+ * @param int id 
+ * 
+ * @return void
+ */
+function deleteCourse(id) {
+  $.post('http://localhost/hiren/student_management_system/app/controllers/CourseController.php', { operation : 'delete', id : id },  function (data, status, xhr) {
+    if(status === 'success'){
+      displayAlert('success', 'Deleted! ', 'Course Deleted Successfully! ');
+      getCourses();
+    }
+  })
+}
+
+/**
+ * shows toast for delete course
+ * 
+ * @param int id 
+ * @param string name 
+ */
+function showToast(id, name) {
+  const toastLiveExample = document.getElementById('liveToast')
+
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+
+  $('.toast-del-button').attr('data-del-id', id);
+  $('.toast-message').text('course ' + name + '?');
+
+  toastBootstrap.show();
+}
+
+/**
+ * calles delete function after use clicks on delete button 
+ * in confirmation toast
+ */
+$('.toast-del-button').click(function () {
+  deleteCourse($(this).attr('data-del-id'));
+
+  const toastLiveExample = document.getElementById('liveToast')
+
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+
+  toastBootstrap.hide();
+});

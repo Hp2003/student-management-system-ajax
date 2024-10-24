@@ -9,6 +9,9 @@ const pageQueryStrings = {
   type: 'DESC',
 }
 
+const deleteStudentObj = {
+  
+}
 getStudents() // Getting students when page first loads
 
 /**
@@ -56,7 +59,9 @@ function displayStudents(students) {
     row.append(`<td>
             <button class="btn btn-primary">Edit</button>
           </td>`)
-    row.append(`<td><button class="btn btn-danger">Delete</button></td>`)
+    row.append(
+      `<td><button class="btn btn-danger" onclick="showToast(${student.id}, '${student.first_name}', '${student.last_name}')">Delete</button></td>`
+    )
 
     tableBody.append(row)
   })
@@ -182,7 +187,7 @@ function changeQueryString() {
 function setLimit() {
   pageQueryStrings.limit = Number($('.limit-options').val())
 
-  pageQueryStrings.currentPage = 1;
+  pageQueryStrings.currentPage = 1
   changeQueryString()
   getStudents()
 }
@@ -196,10 +201,49 @@ $('.limit-option').each(function () {
 
 // sorting by column asc or desc
 $('.sort-by-btn').on('click', function () {
-  pageQueryStrings.sortby = $(this).attr('data-sort-by');
-  pageQueryStrings.type = $(this).attr('data-sort-type');
-  pageQueryStrings.currentPage = 1;
+  pageQueryStrings.sortby = $(this).attr('data-sort-by')
+  pageQueryStrings.type = $(this).attr('data-sort-type')
+  pageQueryStrings.currentPage = 1
   changeQueryString()
   getStudents()
-
 })
+
+/**
+ * makes request to delete student
+ *
+ * @return void
+ */
+function deleteStudent(id) {
+  $.post(
+    'http://localhost/hiren/student_management_system/app/controllers/StudentController.php',
+    { operation: 'delete', id: id },
+    function (data, status, xhr) {
+      if (status === 'success') {
+        console.log('deleted');
+        displayAlert('success', 'Deleted!', ' Student deleted successfully!');
+        getStudents()
+      }
+    }
+  )
+}
+
+function showToast(id, first_name, last_name) {
+  const toastLiveExample = document.getElementById('liveToast')
+
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+
+  $('.toast-del-button').attr('data-del-id', id);
+  $('.toast-message').text('student ' + first_name + ' ' + last_name + '?');
+
+  toastBootstrap.show();
+}
+
+$('.toast-del-button').click(function () {
+  deleteStudent($(this).attr('data-del-id'));
+
+  const toastLiveExample = document.getElementById('liveToast')
+
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+
+  toastBootstrap.hide();
+});
