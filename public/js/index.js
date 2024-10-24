@@ -181,7 +181,7 @@ function changeQueryString() {
  */
 function setLimit() {
   pageQueryStrings.limit = Number($('.limit-options').val())
-
+  pageQueryStrings.currentPage = 1;
   changeQueryString()
   getStudents()
 }
@@ -200,5 +200,5 @@ $('.sort-by-btn').on('click', function () {
 
   changeQueryString()
   getStudents()
-  
+
 })
