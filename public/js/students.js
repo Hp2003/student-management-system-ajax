@@ -227,6 +227,15 @@ function deleteStudent(id) {
   )
 }
 
+/**
+ * shows delete student toast 
+ * 
+ * @param int id 
+ * @param string first_name 
+ * @param string last_name 
+ * 
+ * @return void
+ */
 function showToast(id, first_name, last_name) {
   const toastLiveExample = document.getElementById('liveToast')
 
@@ -238,6 +247,10 @@ function showToast(id, first_name, last_name) {
   toastBootstrap.show();
 }
 
+/**
+ * calles delete function after use clicks on delete button 
+ * in confirmation toast
+ */
 $('.toast-del-button').click(function () {
   deleteStudent($(this).attr('data-del-id'));
 
