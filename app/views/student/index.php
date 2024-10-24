@@ -35,16 +35,13 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
   <?php $navbar ?>
   <div class=" mx-auto mt-5" style="width : 90%;">
     <div class="container d-flex justify-content-around">
-      <form action="/hiren/mvc2/app/views/student" class="w-25 limit-form d-flex ">
-        <?php /*<input type="hidden" name="sort_by" value=<?php echo $sort_by ?>>
-          <input type="hidden" name="type" value=<?php echo $type ?>> */ ?>
-        <select class="form-select limit" aria-label="Default select example" name="limit">
-          <option value="5" <?php echo $limit == 5 ? 'selected' : '' ?>>5</option>
-          <option value="10" <?php echo $limit == 10 ? 'selected' : '' ?>>10</option>
-          <option value="20" <?php echo $limit == 20 ? 'selected' : '' ?>>20</option>
-          <option value="50" <?php echo $limit == 50 ? 'selected' : '' ?>>50</option>
+      <form class="w-25 limit-form d-flex ">
+        <select class="form-select limit-options" onchange="setLimit()" aria-label="Default select example"  name="limit">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
         </select>
-        <input type="submit" value="Filter" class="btn btn-primary">
       </form>
       <form action="../../controllers/StudentController.php" method="post">
         <input type="hidden" name="operation" value="csv">
@@ -312,13 +309,22 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
     }
 
     /**
-     * Changing querystring to current url
+     * Changing querystring in current url
      *
      * @return void
      */
     function changeQueryString() {
       let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + `?page=${pageQueryStrings.currentPage}&type=${pageQueryStrings.type}&limit=${pageQueryStrings.limit}&sort_by=${pageQueryStrings.sortby}` ;
       window.history.pushState({},'',newurl);
+    }
+
+    function setLimit() {
+
+      pageQueryStrings.limit = Number($('.limit-options').val());
+      
+      changeQueryString();
+      getStudents();
+
     }
 
   </script>
