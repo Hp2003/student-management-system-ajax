@@ -201,6 +201,7 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
         function(data, status) {
           if (status === 'success') {
             displayStudents(data.pagination_data);
+            displayPaginationLinks(data.pagination_numbers);
           }
         })
     }
@@ -251,6 +252,44 @@ $pattern = "/^(\d{3})(\d{3})(\d{4})$/";
       pageQueryStrings.sortby = params.get('sort_by') ?? 'id';
       pageQueryStrings.type = params.get('type') ?? 'DESC';
 
+    }
+
+    /**
+     * displays pagination links in ui param links should contain object of page numbers returned by server
+     * 
+     * @param links object 
+     * 
+     * @return void
+     */
+    function displayPaginationLinks(links) {
+      if (links.total_pages > 1) {
+        const mainPaginationContainer = $('.pagination');
+        if(links.prev_page){
+          const row = $('<li class="page-item"></li>');
+          row.append(`<a class="page-link" href="#">Previous</a>`)
+          mainPaginationContainer.append(row);
+
+          const disabledRow = $('<li class="page-item"></li>');
+          disabledRow.append(`<a class="page-link disabled" href="#">...</a>`)
+          mainPaginationContainer.append(disabledRow);
+        }
+
+        for(let page = links.from ; page <= links.to ; page++ ){
+          const row = $('<li class="page-item"></li>');
+          row.append(`<a class="page-link" href="#">${page}</a>`)
+          mainPaginationContainer.append(row);
+        }
+
+        if(links.next_page){
+          const disabledRow = $('<li class="page-item"></li>');
+          disabledRow.append(`<a class="page-link disabled" href="#">...</a>`)
+          mainPaginationContainer.append(disabledRow);
+
+          const row = $('<li class="page-item"></li>');
+          row.append(`<a class="page-link" href="#">Next</a>`)
+          mainPaginationContainer.append(row);
+        }
+      }
     }
   </script>
 </body>
