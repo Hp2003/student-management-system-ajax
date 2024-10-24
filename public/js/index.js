@@ -198,7 +198,7 @@ $('.limit-option').each(function () {
 $('.sort-by-btn').on('click', function () {
   pageQueryStrings.sortby = $(this).attr('data-sort-by');
   pageQueryStrings.type = $(this).attr('data-sort-type');
-
+  pageQueryStrings.currentPage = 1;
   changeQueryString()
   getStudents()
 
