@@ -64,54 +64,29 @@ $navbar = include_once('../nav.php');
         <thead>
           <tr>
             <th scope="col">
-            <form action="/hiren/mvc2/app/views/course/">
-                <input type="hidden" name="sort_by" value="id">
-                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
-                <input type="hidden" name="limit" value="<?php echo $limit ?>">
-                <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
-                <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
-              </form>
-              id
+                <button class="sort-by-btn" data-sort-by="id"  data-sort-type="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+                <button class="sort-by-btn" data-sort-by="id"  data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+              <p>id</p>
             </th>
             <th scope="col">
-            <form action="/hiren/mvc2/app/views/course/">
-                <input type="hidden" name="sort_by" value="name">
-                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
-                <input type="hidden" name="limit" value="<?php echo $limit ?>"> 
-                <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
-                <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
-              </form>
-              name
+                <button class="sort-by-btn" data-sort-by="name" data-sort-type="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+                <button class="sort-by-btn" data-sort-by="name" data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+              <p>name</p>
             </th>
             <th scope="col">
-            <form action="/hiren/mvc2/app/views/course/">
-                <input type="hidden" name="sort_by" value="student_count">
-                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
-                <input type="hidden" name="limit" value="<?php echo $limit ?>">
-                <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
-                <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
-              </form>
-              students
+                <button class="sort-by-btn" data-sort-by="student_count" data-sort-type="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+                <button class="sort-by-btn" data-sort-by="student_count" data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+              <p>students</p>
             </th>
             <th scope="col">
-            <form action="/hiren/mvc2/app/views/course/">
-                <input type="hidden" name="sort_by" value="created_at">
-                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
-                <input type="hidden" name="limit" value="<?php echo $limit ?>">
-                <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
-                <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
-              </form>
-              created_at
+                <button class="sort-by-btn" data-sort-by="created_at" data-sort-type="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+                <button class="sort-by-btn" data-sort-by="created_at" data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+              <p>created_at</p>
             </th>
             <th scope="col">
-            <form action="/hiren/mvc2/app/views/course/">
-                <input type="hidden" name="sort_by" value="updated_at">
-                <?php /*<input type="hidden" name="page" value="<?php echo $page ?>"> */?>
-                <input type="hidden" name="limit" value="<?php echo $limit ?>">
-                <button class="" value="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
-                <button class="" value="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
-              </form>
-              updated_at
+                <button class="sort-by-btn" data-sort-by="updated_at" data-sort-type="ASC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2191;</button>
+                <button class="sort-by-btn" data-sort-by="updated_at" data-sort-type="DESC" name="type" style="font-size: 2rem; padding : 0; margin : 0; ">&#x2193;</button>
+              <p>updated_at</p>
             </th>
             <th scope="col"></th>
             <th scope="col"></th>
